@@ -1,0 +1,20 @@
+# ASISR Project Dependencies
+# ===========================
+# Neural network boundary learning experiments with Belgium-Netherlands border map
+
+# Core scientific computing
+numpy>=1.20.0
+
+# Machine learning frameworks
+torch>=1.9.0              # PyTorch for neural networks
+scikit-learn>=1.0.0        # Traditional ML algorithms and datasets
+
+# Image processing and SVG handling
+cairosvg>=2.5.0           # High-quality SVG rasterization
+Pillow>=8.0.0             # Image processing and manipulation
+
+# Visualization
+matplotlib>=3.3.0         # Plotting and visualization
+
+# Installation:
+# pip install -r requirements.txt
