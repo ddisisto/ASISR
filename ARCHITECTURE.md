@@ -1,415 +1,352 @@
 # ASISR Code Architecture
 
-## Executive Summary
+**Technical Authority**: This document defines all structural decisions, interfaces, and design patterns for the ASISR project.
 
-This document presents the optimal code architecture for the Adaptive Scale-Invariant Spectral Regularization (ASISR) project. The architecture balances research flexibility with engineering rigor, supporting both the current boundary mapping proof-of-concept and future extensions to transformers and other architectures.
-
-## Proposed Directory Structure
+## Package Structure
 
 ```
 ASISR/
 ├── asisr/                           # Core library package
-│   ├── __init__.py
+│   ├── __init__.py                  # Package exports and version
 │   ├── models/                      # Neural network architectures
 │   │   ├── __init__.py
+│   │   ├── base.py                  # Abstract interfaces for spectral regularization
 │   │   ├── mlp.py                   # Enhanced MLP with spectral hooks
-│   │   ├── transformer.py           # Future: Transformer with attention spectral regularization
-│   │   └── base.py                  # Abstract base classes and interfaces
-│   ├── regularization/              # Spectral regularization components
+│   │   └── transformer.py           # Future: Attention matrix regularization
+│   ├── regularization/              # Spectral regularization methods
 │   │   ├── __init__.py
-│   │   ├── spectral.py              # Core spectral regularization methods
-│   │   ├── adaptive.py              # AdaptiveSpectralRegularizer
-│   │   ├── multi_scale.py           # Multi-layer hierarchical regularization
-│   │   └── utils.py                 # Singular value estimation, power iteration
-│   ├── metrics/                     # Criticality and performance metrics
+│   │   ├── base.py                  # Abstract regularizer interface
+│   │   ├── fixed.py                 # Fixed sigma targeting (σ = 1.0)
+│   │   ├── adaptive.py              # Adaptive targeting with criticality feedback
+│   │   └── multi_scale.py           # Hierarchical layer-wise regularization
+│   ├── metrics/                     # Criticality assessment and analysis
 │   │   ├── __init__.py
 │   │   ├── criticality.py           # Dead neurons, sensitivity, fractal dimension
-│   │   ├── boundary.py              # Decision boundary analysis
-│   │   ├── fractal.py               # Multi-scale fractal analysis
-│   │   └── spectral_metrics.py      # Spectral radius tracking, power law analysis
-│   ├── data/                        # Data loading and preprocessing
+│   │   ├── spectral.py              # Singular value analysis and power laws
+│   │   └── boundary.py              # Decision boundary analysis tools
+│   ├── data/                        # Dataset loading and preprocessing
 │   │   ├── __init__.py
-│   │   ├── map_loader.py            # Belgium-Netherlands boundary loader (existing)
-│   │   ├── synthetic.py             # Two-moons and other synthetic datasets
-│   │   └── transforms.py            # Data augmentation and coordinate transforms
-│   ├── training/                    # Training orchestration
+│   │   ├── map_loader.py            # Belgium-Netherlands boundary data
+│   │   ├── synthetic.py             # Two-moons and other test datasets
+│   │   └── Baarle-Nassau_-_Baarle-Hertog-en.svg  # Boundary map data
+│   ├── training/                    # Experiment orchestration
 │   │   ├── __init__.py
-│   │   ├── experiment.py            # Experiment runner with multi-seed support
-│   │   ├── optimization.py          # Scale-invariant optimizers and schedulers
-│   │   └── hooks.py                 # Training hooks for real-time monitoring
-│   ├── visualization/               # Plotting and analysis tools
+│   │   ├── experiment.py            # Multi-seed experiment runner
+│   │   ├── hooks.py                 # Real-time monitoring during training
+│   │   └── optimization.py          # Scale-invariant schedulers
+│   ├── visualization/               # Analysis and plotting tools
 │   │   ├── __init__.py
 │   │   ├── boundaries.py            # Decision boundary visualization
-│   │   ├── dynamics.py              # Training dynamics plots
-│   │   ├── criticality.py           # Criticality indicator plots
-│   │   └── comparative.py           # Multi-experiment comparisons
-│   └── utils/                       # General utilities
+│   │   ├── dynamics.py              # Training trajectory analysis
+│   │   └── criticality.py           # Criticality indicator plots
+│   └── utils/                       # Common utilities
 │       ├── __init__.py
-│       ├── seed.py                  # Reproducibility utilities
-│       ├── device.py                # GPU/CPU management
-│       └── config.py                # Configuration management
-├── experiments/                     # Experiment scripts and notebooks
-│   ├── __init__.py
-│   ├── phase1_boundary_mapping/     # Phase 1: Boundary mapping proof-of-concept
-│   │   ├── baseline_comparison.py
-│   │   ├── baarle_experiment.py
-│   │   └── analysis.ipynb
-│   ├── phase2_adaptive_asisr/       # Phase 2: Adaptive spectral regularization
-│   │   ├── adaptive_targeting.py
-│   │   ├── criticality_monitoring.py
-│   │   └── parameter_sweeps.py
-│   ├── phase3_multi_scale/          # Phase 3: Multi-scale architecture
-│   │   ├── hierarchical_regularization.py
-│   │   ├── layer_analysis.py
-│   │   └── scaling_laws.py
-│   └── notebooks/                   # Analysis and visualization notebooks
-│       ├── boundary_analysis.ipynb
-│       ├── criticality_dashboard.ipynb
-│       └── results_comparison.ipynb
-├── tests/                          # Unit tests and integration tests
-│   ├── __init__.py
+│       ├── seed.py                  # Reproducibility management
+│       ├── device.py                # GPU/CPU handling
+│       └── config.py                # Configuration loading
+├── experiments/                     # Phase-specific experiment implementations
+│   ├── phase1_boundary_mapping/     # Belgium-Netherlands proof-of-concept
+│   ├── phase2_adaptive_asisr/       # Full adaptive system
+│   ├── phase3_multi_scale/          # Hierarchical architectures
+│   └── notebooks/                   # Analysis and exploration
+├── tests/                           # Unit and integration tests
 │   ├── test_models/
 │   ├── test_regularization/
 │   ├── test_metrics/
 │   └── test_integration/
-├── scripts/                        # Utility scripts
-│   ├── setup_environment.py
-│   ├── run_experiments.py
-│   └── generate_figures.py
-├── configs/                        # Configuration files
-│   ├── base_config.yaml
-│   ├── boundary_mapping.yaml
+├── configs/                         # YAML experiment configurations
+│   ├── phase1_baseline.yaml
+│   ├── phase1_spectral.yaml
 │   └── adaptive_asisr.yaml
-├── requirements.txt
-├── setup.py
-└── README.md
+├── scripts/                         # Utility and automation scripts
+│   ├── run_experiments.py
+│   ├── generate_figures.py
+│   └── validate_setup.py
+├── prototypes/                      # Legacy and experimental code
+├── docs/                           # Reference materials and papers
+└── requirements.txt                # Package dependencies
 ```
 
-### Rationale for Structure
+### **Rationale for Structure**
 
-1. **Modular Design**: Clear separation between models, regularization, metrics, and training allows independent development and testing
-2. **Research Phases**: Experiment directory mirrors the project phases, enabling structured progression
-3. **Reusability**: Core components in `asisr/` package can be imported and reused across different experiments
-4. **Extensibility**: Plugin-like architecture for new regularization methods, metrics, and models
-5. **Maintainability**: Standard Python package structure with proper testing and configuration management
+**Plugin Architecture**: Core components implement abstract interfaces, enabling easy extension of regularization methods, models, and metrics without modifying existing code.
 
-## Core Classes and Interfaces
+**Phase Isolation**: Experiment directories mirror research phases, allowing independent development and validation of each stage.
 
-### 1. Base Abstractions
+**Data Co-location**: Dataset files stored within the package ensure they move with the code and are easily accessible for import.
+
+**Testing Symmetry**: Test structure mirrors package structure for clear correspondence and comprehensive coverage.
+
+## Core Interfaces
+
+### **1. Model Interface**
 
 ```python
 # asisr/models/base.py
-class SpectralRegularizedModel(nn.Module):
-    """Abstract base class for models supporting spectral regularization"""
-    
-    def get_spectral_weights(self) -> List[torch.Tensor]:
-        """Return weight matrices subject to spectral regularization"""
-        raise NotImplementedError
-    
-    def spectral_regularization_loss(self, regularizer) -> torch.Tensor:
-        """Compute spectral regularization loss"""
-        raise NotImplementedError
+from abc import ABC, abstractmethod
+from typing import List, Dict
+import torch
 
-# asisr/regularization/base.py  
-class SpectralRegularizer:
-    """Abstract base class for spectral regularization methods"""
+class SpectralRegularizedModel(torch.nn.Module, ABC):
+    """Base class for models supporting spectral regularization"""
     
-    def compute_loss(self, model: SpectralRegularizedModel) -> torch.Tensor:
-        """Compute regularization loss"""
-        raise NotImplementedError
+    @abstractmethod
+    def get_regularizable_weights(self) -> List[torch.Tensor]:
+        """Return weight matrices subject to spectral regularization"""
+        pass
+    
+    @abstractmethod
+    def forward_with_preactivations(self, x: torch.Tensor) -> tuple:
+        """Forward pass returning (output, preactivations) for criticality analysis"""
+        pass
+    
+    def spectral_loss(self, regularizer) -> torch.Tensor:
+        """Compute spectral regularization loss using provided regularizer"""
+        return regularizer.compute_loss(self.get_regularizable_weights())
 ```
 
-### 2. Core Regularization Components
+### **2. Regularization Interface**
 
 ```python
-# asisr/regularization/adaptive.py
-class AdaptiveSpectralRegularizer:
-    """
-    Adaptive spectral regularization with real-time criticality monitoring.
-    
-    Dynamically adjusts target sigma values based on criticality indicators:
-    - Dead neuron rate
-    - Perturbation sensitivity  
-    - Fractal dimension of decision boundaries
-    """
-    
-    def __init__(self, adaptation_rate=0.01, target_criticality=0.7):
-        self.adaptation_rate = adaptation_rate
-        self.target_criticality = target_criticality
-        self.layer_targets = {}  # Per-layer sigma targets
-    
-    def update_targets(self, model, criticality_metrics) -> float:
-        """Update sigma targets based on criticality assessment"""
-        
-    def compute_loss(self, model) -> torch.Tensor:
-        """Compute adaptive spectral regularization loss"""
+# asisr/regularization/base.py
+from abc import ABC, abstractmethod
+from typing import List, Dict, Optional
+import torch
 
-# asisr/regularization/multi_scale.py
-class MultiScaleSpectralRegularizer:
-    """
-    Hierarchical spectral regularization inspired by renormalization group theory.
-    Different layers have different optimal spectral properties.
-    """
+class SpectralRegularizer(ABC):
+    """Base class for spectral regularization methods"""
     
-    def __init__(self, depth_scaling_factor=0.9):
-        self.depth_scaling_factor = depth_scaling_factor
+    @abstractmethod
+    def compute_loss(self, weight_matrices: List[torch.Tensor]) -> torch.Tensor:
+        """Compute regularization loss for given weight matrices"""
+        pass
     
-    def compute_layer_targets(self, model) -> Dict[int, float]:
-        """Compute layer-specific sigma targets"""
+    @abstractmethod
+    def get_targets(self) -> Dict[int, float]:
+        """Return current target sigma values for each layer"""
+        pass
+    
+    def update_targets(self, criticality_metrics: Dict[str, float]) -> None:
+        """Update regularization targets based on criticality feedback (optional)"""
+        pass
 ```
 
-### 3. Criticality Metrics System
+### **3. Metrics Interface**
 
 ```python
 # asisr/metrics/criticality.py
+from typing import Dict, List
+import torch
+
 class CriticalityMonitor:
-    """
-    Comprehensive criticality assessment combining multiple indicators.
+    """Unified criticality assessment combining multiple indicators"""
     
-    Metrics:
-    - Dead neuron rate (low activation threshold)
-    - Perturbation sensitivity (input perturbation response)
-    - Fractal dimension (decision boundary complexity)
-    - Spectral properties (singular value distributions)
-    """
-    
-    def __init__(self, dead_threshold=1e-5, perturbation_eps=1e-3):
+    def __init__(self, dead_threshold: float = 1e-5, perturbation_eps: float = 1e-3):
         self.dead_threshold = dead_threshold
         self.perturbation_eps = perturbation_eps
     
-    def compute_criticality_score(self, model, data) -> Dict[str, float]:
-        """Compute comprehensive criticality assessment"""
+    def assess_criticality(self, 
+                          model: SpectralRegularizedModel, 
+                          data: torch.Tensor) -> Dict[str, float]:
+        """
+        Compute comprehensive criticality metrics:
+        - dead_neuron_rate: Fraction of neurons with low activation
+        - perturbation_sensitivity: Response to input perturbations  
+        - boundary_fractal_dim: Decision boundary complexity
+        - spectral_radius_avg: Average top singular value across layers
+        """
+        pass
     
-    def is_at_criticality(self, metrics: Dict[str, float]) -> bool:
-        """Determine if model is operating at edge of chaos"""
+    def criticality_score(self, metrics: Dict[str, float]) -> float:
+        """Combine individual metrics into unified criticality score [0,1]"""
+        pass
 ```
 
-### 4. Enhanced Model Architecture
+## Integration Points
+
+### **Model ↔ Regularization Integration**
+
+Models expose `get_regularizable_weights()` returning weight tensors. Regularizers operate on these tensors without needing model-specific knowledge.
 
 ```python
-# asisr/models/mlp.py  
-class SpectralMLP(SpectralRegularizedModel):
-    """
-    Enhanced MLP with spectral regularization support.
+# Training loop integration
+model = SpectralMLP(...)
+regularizer = AdaptiveSpectralRegularizer(...)
+
+for batch in dataloader:
+    # Standard forward pass
+    output = model(batch)
+    task_loss = criterion(output, targets)
     
-    Features:
-    - Spectral norm tracking for each layer
-    - Pre-activation recording for criticality analysis
-    - Configurable spectral regularization hooks
-    """
+    # Spectral regularization
+    spectral_loss = model.spectral_loss(regularizer)
+    total_loss = task_loss + spectral_loss
     
-    def __init__(self, input_dim=2, hidden_dims=[64, 64], output_dim=1):
-        super().__init__()
-        self.build_layers(input_dim, hidden_dims, output_dim)
-        self.spectral_hooks = []
-        
-    def forward_with_preactivations(self, x):
-        """Forward pass recording pre-activations for analysis"""
-        
-    def get_spectral_weights(self) -> List[torch.Tensor]:
-        """Return weight matrices for spectral analysis"""
+    # Criticality monitoring
+    if epoch % monitor_interval == 0:
+        metrics = criticality_monitor.assess_criticality(model, validation_data)
+        regularizer.update_targets(metrics)
 ```
 
-### 5. Experiment Orchestration
+### **Experiment ↔ Components Integration**
+
+Experiments compose models, regularizers, and metrics without tight coupling:
 
 ```python
-# asisr/training/experiment.py
-class ASISRExperiment:
-    """
-    Comprehensive experiment runner for ASISR research.
-    
-    Features:
-    - Multi-seed statistical analysis
-    - Real-time metric tracking
-    - Adaptive regularization scheduling
-    - Visualization generation
-    - Reproducibility guarantees
-    """
-    
-    def __init__(self, config: Dict):
-        self.config = config
-        self.results = []
-        self.setup_logging()
-        
-    def run(self, n_seeds=5) -> ExperimentResults:
-        """Run complete experiment with statistical analysis"""
-        
-    def compare_methods(self, methods: List[str]) -> ComparisonResults:
-        """Compare different regularization approaches"""
+# Experiment configuration
+config = {
+    'model': {'type': 'SpectralMLP', 'hidden_dims': [64, 64]},
+    'regularizer': {'type': 'AdaptiveSpectralRegularizer', 'adaptation_rate': 0.01},
+    'metrics': {'criticality_monitor': {'dead_threshold': 1e-5}}
+}
+
+# Dynamic instantiation
+experiment = ASISRExperiment(config)
+results = experiment.run(n_seeds=5)
 ```
 
-## Key Design Decisions
+### **Visualization ↔ Results Integration**
 
-### 1. Plugin Architecture for Regularization
-**Decision**: Regularization methods implement common interface  
-**Rationale**: Easy to add new spectral regularization variants, compare methods systematically  
-**Trade-off**: Slight complexity overhead vs. maximum flexibility for research
+Visualization functions accept standardized result objects:
 
-### 2. Metrics-Driven Adaptive System
-**Decision**: Criticality monitoring drives adaptive regularization  
-**Rationale**: Enables real-time optimization toward edge of chaos  
+```python
+# Results structure
+ExperimentResults = {
+    'metrics_history': Dict[str, List[float]],  # Training trajectories
+    'final_metrics': Dict[str, float],          # End-state assessment
+    'model_states': List[torch.nn.Module],      # Saved models per seed
+    'config': Dict                              # Experiment configuration
+}
+
+# Visualization usage
+visualizer.plot_training_dynamics(results)
+visualizer.plot_boundary_comparison(results_baseline, results_spectral)
+```
+
+## Technical Design Decisions
+
+### **1. Plugin vs. Inheritance Architecture**
+**Decision**: Plugin-based with abstract interfaces  
+**Rationale**: Enables independent development of new regularization methods, easy A/B testing, and clear separation of concerns  
+**Trade-off**: Slight complexity increase vs. maximum extensibility for research
+
+### **2. Configuration-Driven vs. Code-Driven Experiments**
+**Decision**: YAML configuration files with code orchestration  
+**Rationale**: Reproducible experiments, easy parameter sweeps, version control of experimental settings  
+**Trade-off**: Additional configuration layer vs. scientific rigor and reproducibility
+
+### **3. Real-time vs. Post-hoc Criticality Assessment**
+**Decision**: Real-time monitoring with optional adaptation  
+**Rationale**: Enables adaptive regularization and early stopping based on criticality indicators  
 **Trade-off**: Computational overhead vs. superior training dynamics
 
-### 3. Hierarchical Configuration System  
-**Decision**: YAML configs for experiments, Python classes for core logic  
-**Rationale**: Reproducible experiments, easy parameter sweeps, version control  
-**Trade-off**: Additional configuration layer vs. experimental rigor
+### **4. Centralized vs. Distributed Data Storage**
+**Decision**: Data files within package structure  
+**Rationale**: Ensures data and code travel together, simplifies import paths, reduces setup complexity  
+**Trade-off**: Package size increase vs. deployment simplicity
 
-### 4. Modular Visualization System
-**Decision**: Separate visualization package with specialized plotting functions  
-**Rationale**: Research requires rich visualizations, but training code stays clean  
-**Trade-off**: Code organization complexity vs. visualization quality
+### **5. Monolithic vs. Modular Visualization**
+**Decision**: Separate visualization modules per analysis type  
+**Rationale**: Research requires diverse plotting capabilities without bloating core training code  
+**Trade-off**: Module proliferation vs. specialized, high-quality visualizations
 
-### 5. Phase-Based Development Structure
-**Decision**: Experiment directories mirror project phases  
-**Rationale**: Matches natural research progression, enables incremental validation  
-**Trade-off**: Directory proliferation vs. clear development roadmap
+## Performance Considerations
 
-## Integration Strategy with Existing Code
+### **Spectral Analysis Overhead**
+- **Target**: <10% training time overhead for spectral regularization
+- **Strategy**: Efficient singular value estimation via power iteration
+- **Optimization**: Cache computations, vectorized operations, optional GPU acceleration
 
-### Phase 1: Minimal Disruption Migration
+### **Memory Management**
+- **Preactivation Storage**: Circular buffers for criticality analysis
+- **Model Checkpointing**: Configurable frequency based on experiment duration
+- **Gradient Accumulation**: Support for large effective batch sizes on limited memory
+
+### **Scalability Targets**
+- **Network Size**: Support up to transformer-scale models (hundreds of millions of parameters)
+- **Experiment Scale**: Efficient multi-seed runs (5-10 seeds standard)
+- **Data Scale**: Handle large boundary maps and high-resolution grids
+
+## Extension Points
+
+### **New Regularization Methods**
+Implement `SpectralRegularizer` interface:
 ```python
-# Current SAMPLE-CODE-v1.md code can be migrated incrementally:
-
-# 1. Extract existing MLP -> asisr/models/mlp.py (enhanced)
-# 2. Extract metrics functions -> asisr/metrics/criticality.py  
-# 3. Extract experiment runner -> asisr/training/experiment.py
-# 4. Integrate map_loader.py -> asisr/data/map_loader.py
-# 5. Create baseline experiment script using existing logic
+class MyRegularizer(SpectralRegularizer):
+    def compute_loss(self, weight_matrices): ...
+    def get_targets(self): ...
 ```
 
-### Phase 2: Enhanced Capabilities
+### **New Model Architectures**  
+Implement `SpectralRegularizedModel` interface:
 ```python
-# Add adaptive spectral regularization:
-# - Replace fixed target_sigma=1.0 with AdaptiveSpectralRegularizer
-# - Add real-time criticality monitoring
-# - Implement scale-invariant learning rate scheduling
+class MyModel(SpectralRegularizedModel):
+    def get_regularizable_weights(self): ...
+    def forward_with_preactivations(self, x): ...
 ```
 
-### Phase 3: Advanced Features  
+### **New Criticality Metrics**
+Extend `CriticalityMonitor` with additional assessment methods:
 ```python
-# Multi-scale and transformer extensions:
-# - Add MultiScaleSpectralRegularizer
-# - Implement transformer attention matrix regularization
-# - Add hierarchical fractal analysis
+criticality_monitor.add_metric('my_metric', my_metric_function)
 ```
 
-## Extension Points for Future Phases
-
-### 1. New Architectures
-- **Interface**: `SpectralRegularizedModel` base class
-- **Extensions**: Transformers, CNNs, Graph Neural Networks
-- **Requirement**: Implement `get_spectral_weights()` method
-
-### 2. Regularization Methods
-- **Interface**: `SpectralRegularizer` base class  
-- **Extensions**: Layer-wise targeting, temporal dynamics, RG-inspired scaling
-- **Requirement**: Implement `compute_loss()` method
-
-### 3. Criticality Metrics
-- **Interface**: Plugin system in `CriticalityMonitor`
-- **Extensions**: New fractal measures, temporal criticality, network topology metrics
-- **Requirement**: Return normalized criticality score [0, 1]
-
-### 4. Optimization Methods
-- **Interface**: PyTorch optimizer compatibility
-- **Extensions**: Scale-invariant schedulers, critical-aware optimizers
-- **Requirement**: Support spectral regularization loss terms
-
-### 5. Visualization Capabilities
-- **Interface**: Standardized plotting functions with consistent styling
-- **Extensions**: Interactive dashboards, animation sequences, comparative analysis
-- **Requirement**: Accept experiment results objects
-
-## Dependencies and Tools
-
-### Core Dependencies
+### **New Visualization Types**
+Add modules to `asisr/visualization/` following standard interface:
 ```python
-# requirements.txt (essential)
-torch>=1.10.0
-numpy>=1.20.0
-scipy>=1.7.0
-scikit-learn>=1.0.0
-matplotlib>=3.5.0
-pyyaml>=6.0
-tqdm>=4.60.0
+def plot_my_analysis(results: ExperimentResults, **kwargs) -> matplotlib.Figure:
+    ...
 ```
 
-### Visualization Dependencies  
+## Dependencies
+
+### **Core Requirements**
 ```python
-# Enhanced plotting and analysis
-seaborn>=0.11.0
-plotly>=5.0.0  # Interactive plots
-jupyter>=1.0.0  # Notebook support
-cairosvg>=2.5.0  # SVG map rendering
-pillow>=8.0.0  # Image processing
+torch>=1.10.0          # Neural network training
+numpy>=1.20.0          # Numerical computation
+scipy>=1.7.0           # Scientific computing (SVD, optimization)
+scikit-learn>=1.0.0    # ML utilities and datasets
+matplotlib>=3.5.0      # Basic plotting
+pyyaml>=6.0            # Configuration file parsing
 ```
 
-### Development Dependencies
+### **Visualization Extensions**
 ```python
-# Testing and code quality
-pytest>=6.0.0
-pytest-cov>=2.12.0
-black>=21.0.0  # Code formatting
-flake8>=3.9.0  # Linting
-mypy>=0.910  # Type checking
+seaborn>=0.11.0        # Statistical plotting
+plotly>=5.0.0          # Interactive visualizations
+cairosvg>=2.5.0        # SVG map rendering
+pillow>=8.0.0          # Image processing
 ```
 
-### Research Extensions
+### **Development Tools**
 ```python
-# Advanced analysis capabilities  
-tensorboard>=2.7.0  # Training visualization
-wandb>=0.12.0  # Experiment tracking (optional)
-networkx>=2.6.0  # Graph analysis (for network topology)
-numba>=0.54.0  # Performance optimization (optional)
+pytest>=6.0.0         # Testing framework
+pytest-cov>=2.12.0    # Coverage analysis
+black>=21.0.0          # Code formatting
+mypy>=0.910            # Type checking
 ```
 
-## Implementation Roadmap
+### **Optional Research Extensions**
+```python
+tensorboard>=2.7.0     # Training visualization
+wandb>=0.12.0          # Experiment tracking
+numba>=0.54.0          # Performance optimization
+```
 
-### Week 1-2: Foundation Migration
-1. Create package structure and base classes
-2. Migrate existing code to modular architecture
-3. Implement basic experiment orchestration
-4. Add comprehensive testing framework
+## Integration Strategy
 
-### Week 3-4: Adaptive Regularization  
-1. Implement `AdaptiveSpectralRegularizer`
-2. Add real-time criticality monitoring
-3. Create scale-invariant learning rate scheduling
-4. Validate on Belgium-Netherlands boundary mapping
+This architecture is designed to absorb the existing prototype code through systematic migration:
 
-### Week 5-6: Multi-Scale Architecture
-1. Implement `MultiScaleSpectralRegularizer` 
-2. Add hierarchical fractal analysis
-3. Create layer-wise spectral analysis tools
-4. Validate scaling relationships
-
-### Week 7-8: Documentation and Validation
-1. Complete API documentation
-2. Create tutorial notebooks
-3. Implement comprehensive benchmarks
-4. Prepare publication-ready results
-
-## Success Metrics
-
-### Code Quality
-- **Test Coverage**: >90% for core modules
-- **Documentation**: Complete API docs with examples
-- **Performance**: <10% overhead vs. baseline training
-- **Modularity**: Each component usable independently
-
-### Research Capability
-- **Reproducibility**: All experiments deterministic with seed control
-- **Extensibility**: New regularization methods addable in <100 lines
-- **Scalability**: Support for transformer-scale models
-- **Visualization**: Publication-quality figures generated automatically
-
-### Scientific Impact
-- **Validation**: ASISR outperforms fixed spectral regularization
-- **Generalization**: Framework works across multiple architectures
-- **Insights**: Clear relationship between criticality and performance
-- **Innovation**: Novel scale-invariant optimization methods discovered
+1. **Base Classes**: Implement abstract interfaces first
+2. **Core Components**: Migrate `prototypes/SAMPLE-CODE-v1.md` logic to modular structure  
+3. **Data Integration**: Move `prototypes/map_loader.py` to `asisr/data/`
+4. **Experiment Migration**: Convert existing experiment to new orchestration framework
+5. **Extension Development**: Add adaptive and multi-scale features using plugin architecture
 
 ---
 
-This architecture provides a solid foundation for the ASISR project while maintaining the flexibility needed for cutting-edge research. The modular design enables rapid experimentation while the structured approach ensures reproducible, publication-quality results.
+**Cross-References**:
+- Implementation roadmap and research phases: → [PROJECT_PLAN.md](./PROJECT_PLAN.md)
+- Development workflow and Claude Code usage: → [CLAUDE.md](./CLAUDE.md)
+- Legacy code and prototypes: → [prototypes/](./prototypes/)
+- Research context and papers: → [docs/](./docs/)

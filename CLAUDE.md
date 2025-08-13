@@ -1,179 +1,362 @@
-# ASISR Project - Claude Code Development Guide
+# ASISR Development Guide
 
-## Project Overview
+**Development Authority**: This document defines Claude Code optimization, workflow standards, and development best practices for the ASISR project throughout its entire lifecycle.
 
-This is the **Adaptive Scale-Invariant Spectral Regularization (ASISR)** project, focused on neural network boundary learning experiments using the Belgium-Netherlands border map as a complex real-world dataset. The project explores spectral regularization techniques to achieve optimal training dynamics at the "edge of chaos."
+## Current Focus *(Update as project progresses)*
 
-**Architecture Authority**: All structural decisions are documented in [ARCHITECTURE.md](./ARCHITECTURE.md) - this is the single source of truth for code organization, interfaces, and design patterns.
+**Active Phase**: Phase 1 - Boundary Mapping Proof-of-Concept  
+**Central Question**: *"Can spectral regularization at σ ≈ 1.0 enable networks to learn complex decision boundaries more efficiently?"*  
+**Next Milestone**: Implement SVG map loader and baseline boundary learning experiment  
+**Status**: Repository organized, architecture defined, research plan established
 
-## Environment Setup
-
-**Virtual Environment**: Always work within the activated virtual environment (`venv/`)
-
-**Dependencies**: 
-- Install via: `pip install -r requirements.txt`
-- Core packages: torch, numpy, scikit-learn, matplotlib, cairosvg, Pillow
-- All packages verified working in Python 3.13.3
-
-**Test Environment Health**: 
-```bash
-python -c "import numpy, torch, matplotlib, sklearn, cairosvg; from PIL import Image; print('All critical packages imported successfully')"
-```
-
-## Core Development Principles
-
-### 1. Architecture Compliance (CRITICAL)
-- **Follow ARCHITECTURE.md religiously** - never deviate without updating the architecture document first
-- Implement the plugin interfaces: `SpectralRegularizedModel` and `SpectralRegularizer` base classes
-- Maintain the modular package structure: `asisr/{models,regularization,metrics,data,training,visualization,utils}/`
-- All new components must be independently usable and testable
-
-### 2. Phase-Based Development (MANDATORY)
-- **Phase 1**: Boundary mapping proof-of-concept (current focus)
-- **Phase 2**: Adaptive ASISR implementation  
-- **Phase 3**: Multi-scale architecture
-- **NEVER skip phases or mix implementation across phases**
-- Each phase must validate completely before proceeding
-- Experiment organization mirrors `/experiments/phase{N}_*/` structure
-
-### 3. Metrics-Driven Development
-- All decisions guided by criticality indicators:
-  - Dead neuron rate (threshold: 1e-5)
-  - Perturbation sensitivity (eps: 1e-3) 
-  - Fractal dimension of decision boundaries
-  - Spectral properties (singular value distributions)
-- Implement comprehensive logging of all metrics
-- Statistical analysis requires minimum 5-seed runs
-
-### 4. Reproducibility First
-- **All experiments must be deterministic with seed control**
-- Use configuration files (YAML) for all experimental parameters
-- Never hardcode paths, values, or experimental settings
-- Implement proper random seed management across numpy, torch, random
-
-## Code Quality Standards
-
-### Mandatory Requirements
-- **Test Coverage**: >90% for all core modules in `asisr/`
-- **Type Hints**: All functions must have complete type annotations
-- **Docstrings**: All public interfaces require comprehensive documentation
-- **Performance**: <10% overhead vs baseline training
-- **Interfaces**: All new regularization/model classes implement base interfaces
-
-### Code Organization
-- Core library: `asisr/` package with proper `__init__.py` files
-- Experiments: Phase-specific directories under `experiments/`
-- Configuration: YAML files in `configs/` directory
-- Tests: Mirror package structure in `tests/`
-- Scripts: Utility scripts in `scripts/`
-
-### Integration with Existing Code
-Current files integration strategy:
-- `map_loader.py` → `asisr/data/map_loader.py`
-- `SAMPLE-CODE-v1.md` logic → `asisr/models/mlp.py` + `asisr/training/experiment.py`
-- Existing metrics functions → `asisr/metrics/criticality.py`
-
-## Sub-Agent Delegation Strategy
-
-### When to Use Sub-Agents
-
-**✅ Research Agents** - For complex analysis and exploration:
-```
-"Deploy research agent to analyze all spectral regularization literature and identify key mathematical relationships for implementation"
-```
-
-**✅ Implementation Agents** - For focused coding tasks:
-```
-"Launch implementation agent to create the AdaptiveSpectralRegularizer class following the interface specifications in ARCHITECTURE.md, exploring existing regularization patterns"
-```
-
-**✅ Analysis Agents** - For data analysis and visualization:
-```
-"Use analysis agent to examine Phase 1 boundary mapping results and generate publication-quality comparison plots between baseline and spectral-regularized approaches"
-```
-
-**✅ Architecture Agents** - For structural decisions:
-```
-"Task architecture agent to review current codebase and propose optimal integration strategy for transformer spectral regularization"
-```
-
-### Sub-Agent Guidelines
-- **Clear Scope**: Specify exactly which files/directories to examine
-- **Precise Instructions**: Define the expected deliverable format
-- **Context Boundaries**: Limit exploration to relevant project areas  
-- **Output Format**: Single MD file, specific code module, analysis report, etc.
-- **Handoff Protocol**: Sub-agent outputs become authoritative context
-
-### When NOT to Use Sub-Agents
-- ❌ Simple file edits or minor bug fixes
-- ❌ Tasks requiring real-time iteration or debugging
-- ❌ When maintaining conversation context is critical
-- ❌ Quick verification or testing tasks
-
-## Key File Locations
-
-**Architecture & Planning**:
-- `ARCHITECTURE.md` - System design authority
-- `PROJECT_PLAN.md` - Development roadmap
-- `requirements.txt` - Dependency specification
-
-**Core Implementation**:
-- `map_loader.py` - Belgium-Netherlands boundary data loader  
-- `example_usage.py` - Integration examples
-- `SAMPLE-CODE-v1.md` - Original experiment code (migration source)
-
-**Documentation**:
-- `MAP_LOADER_README.md` - Data loader documentation
-- `DL-TRANSCRIPT.md` - Research context
-- `START.md` - Project initiation guide
-
-## Current Phase 1 Priorities
-
-1. **Environment Validation** ✅ (completed)
-2. **Code Architecture Migration** (next priority)
-   - Extract MLP model to `asisr/models/mlp.py`
-   - Extract metrics to `asisr/metrics/criticality.py`  
-   - Extract experiment runner to `asisr/training/experiment.py`
-3. **Baseline Comparison Implementation**
-4. **Belgium-Netherlands Boundary Experiments**
-5. **Phase 1 Validation and Documentation**
-
-## Testing Strategy
-
-- **Unit Tests**: Each module in `asisr/` package
-- **Integration Tests**: End-to-end experiment workflows
-- **Validation Tests**: Scientific reproducibility verification
-- **Performance Tests**: Overhead measurement vs baseline
-
-Run tests: `pytest tests/ -v --cov=asisr --cov-report=html`
-
-## Experiment Workflow
-
-1. **Configuration**: Define experiment in `configs/{experiment}.yaml`
-2. **Implementation**: Use `ASISRExperiment` orchestration class
-3. **Execution**: Multi-seed statistical runs (minimum 5 seeds)
-4. **Analysis**: Automated metric collection and visualization
-5. **Documentation**: Results integration into project documentation
-
-## Common Commands
-
-```bash
-# Environment activation (if needed)
-source venv/bin/activate
-
-# Dependency installation
-pip install -r requirements.txt
-
-# Test imports
-python -c "import asisr; print('ASISR package ready')"
-
-# Run experiments (future)
-python scripts/run_experiments.py --config configs/boundary_mapping.yaml
-
-# Generate figures (future)
-python scripts/generate_figures.py --experiment results/phase1_baseline/
-```
+**Immediate Priorities**:
+1. Implement `asisr/data/map_loader.py` from prototype
+2. Create baseline MLP boundary learning experiment  
+3. Add spectral regularization and compare results
+4. Validate criticality metrics during training
 
 ---
 
-**Remember**: ARCHITECTURE.md is the single source of truth for all structural decisions. This guide focuses on development workflow, coding standards, and architectural compliance enforcement. Always validate changes against the architecture document and update it when making structural modifications.
+## Project Context & Authority Structure
+
+**Research Strategy**: [PROJECT_PLAN.md](./PROJECT_PLAN.md) - Complete research roadmap, phases, success criteria
+**Technical Authority**: [ARCHITECTURE.md](./ARCHITECTURE.md) - All structural decisions, interfaces, design patterns  
+**Legacy Code**: [prototypes/](./prototypes/) - Original implementations for reference/migration
+**Research Materials**: [docs/](./docs/) - Papers, transcripts, background context
+
+**Non-Negotiable Rule**: For any task beyond simple edits, READ the relevant authority document first. Architecture questions → ARCHITECTURE.md, Research questions → PROJECT_PLAN.md.
+
+## Environment & Current State
+
+**Repository Structure**:
+```
+ASISR/
+├── CLAUDE.md, ARCHITECTURE.md, PROJECT_PLAN.md    # Core documentation
+├── asisr/                                          # Main package (empty structure)
+├── prototypes/                                     # Legacy code to migrate
+├── docs/                                           # Research references  
+├── experiments/                                    # Future experiment scripts
+├── configs/                                        # Future YAML configurations
+└── requirements.txt                                # Dependencies
+```
+
+**Environment Status**: Python venv established, core dependencies installed  
+**Git Status**: Clean working directory, organized structure committed  
+**Testing**: No tests yet - implement alongside core functionality
+
+**Validation Commands**:
+```bash
+# Verify environment health
+python -c "import torch, numpy, matplotlib, sklearn; print('Core packages ready')"
+
+# Verify package importability  
+python -c "import asisr; print('ASISR package accessible')"
+
+# Check current git status
+git status --porcelain
+```
+
+## Development Workflow & Standards
+
+### **Phase-Based Development** *(MANDATORY)*
+
+**Phase Discipline**: Never mix implementation across phases. Complete current phase validation before proceeding.
+
+**Current Phase 1 Requirements**:
+- Migrate `prototypes/map_loader.py` → `asisr/data/map_loader.py`
+- Extract baseline MLP from `prototypes/SAMPLE-CODE-v1.md` → `asisr/models/mlp.py`
+- Implement experiment runner following ARCHITECTURE.md interfaces
+- Create Belgium-Netherlands boundary learning comparison
+
+**Validation Gate**: Phase 1 complete only when both baseline and spectral methods produce statistically significant results with proper visualization.
+
+### **Architecture Compliance** *(CRITICAL)*
+
+**Single Source of Truth**: ARCHITECTURE.md defines all structural decisions  
+**Plugin Architecture**: All new components must implement defined abstract interfaces
+**No Architectural Drift**: Never deviate from ARCHITECTURE.md without updating it first
+
+**Key Interfaces to Implement**:
+- `SpectralRegularizedModel` for all neural network architectures
+- `SpectralRegularizer` for all regularization methods  
+- `CriticalityMonitor` for all assessment metrics
+
+### **Code Quality Standards** *(NON-NEGOTIABLE)*
+
+**Testing Requirements**:
+- Unit tests for all modules in `asisr/` package
+- Integration tests for experiment workflows  
+- Target: >90% test coverage before phase completion
+
+**Documentation Requirements**:
+- Type hints for all functions
+- Docstrings for all public interfaces
+- Configuration examples for all experiments
+
+**Performance Requirements**:
+- <10% overhead vs baseline training
+- Efficient spectral analysis via power iteration
+- Memory management for large models/datasets
+
+### **Reproducibility Standards** *(SCIENTIFIC RIGOR)*
+
+**Experiment Design**:
+- Minimum 5 seeds for all statistical claims
+- YAML configuration files for all experiments
+- Complete dependency specification with version pinning
+
+**Data Management**:
+- Deterministic random seed control across numpy, torch, random
+- Dataset files stored within package (`asisr/data/`)
+- No hardcoded paths or parameters in code
+
+**Results Standards**:
+- Statistical significance testing (not just p-values)
+- Effect size reporting with confidence intervals
+- Publication-quality figures with error bars
+
+## Claude Code Optimization
+
+### **Sub-Agent Delegation Strategy**
+
+**✅ Effective Delegation Patterns**:
+
+**Research Agents** - For literature analysis and theoretical exploration:
+```
+"Deploy research agent to analyze spectral regularization literature, focusing on optimal sigma values and criticality indicators. Output comprehensive markdown summary."
+```
+
+**Implementation Agents** - For focused, well-scoped coding tasks:
+```
+"Launch implementation agent to create SpectralMLP class following ARCHITECTURE.md interface specifications. Examine prototypes/SAMPLE-CODE-v1.md for existing logic patterns."
+```
+
+**Analysis Agents** - For data analysis and visualization:
+```
+"Task analysis agent to examine Phase 1 experimental results and generate publication-quality comparison plots between baseline and spectral regularization approaches."
+```
+
+**❌ Dangerous Delegation Anti-Patterns**:
+- Vague scope: "implement the system" → leads to massive overreach
+- No file constraints: "explore the codebase" → creates unpredictable changes
+- Mixed concerns: "implement and test and document" → poor quality across all areas
+
+### **Scope Control Lessons** *(Critical Learning)*
+
+**The 60KB Overreach Incident**: Sub-agent tasked with "basic structure setup" implemented full functionality across all modules. This taught us:
+
+**Scope Boundaries**: 
+- Single responsibility per task
+- Explicit file/directory constraints
+- Clear deliverable format specification
+- Review-then-integrate workflow
+
+**Escalation Protocol**:
+- If task scope seems unclear → ask for clarification before proceeding
+- If implementation grows beyond stated scope → stop and report
+- If architectural decisions needed → reference ARCHITECTURE.md authority
+
+### **Task Categorization Framework**
+
+**Direct Implementation** (this context):
+- Simple file edits and bug fixes
+- Tasks requiring real-time iteration
+- Critical path items needing immediate oversight
+
+**Sub-Agent Delegation** (separate contexts):
+- Literature research and analysis
+- Focused module implementation (single responsibility)
+- Visualization and figure generation
+- Testing and validation workflows
+
+**Parallel Development** (separate contexts):
+- Environment setup and dependency management
+- Performance optimization and profiling
+- Documentation and tutorial creation
+- Advanced theoretical development
+
+## Common Development Patterns
+
+### **Migration from Prototypes**
+
+**Standard Migration Process**:
+1. Read prototype code for logic understanding
+2. Design interfaces per ARCHITECTURE.md patterns
+3. Implement with proper abstractions and testing
+4. Validate against original functionality
+5. Remove prototype dependency
+
+**Example**: `prototypes/map_loader.py` → `asisr/data/map_loader.py`
+- Extract core SVG loading logic
+- Add proper error handling and type hints
+- Implement standard data loading interface
+- Add unit tests for edge cases
+- Update imports throughout codebase
+
+### **Experiment Implementation Pattern**
+
+**Configuration-Driven Approach**:
+```yaml
+# configs/phase1_baseline.yaml
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+  
+data:
+  type: "BaarleMap"
+  resolution: 200
+  
+training:
+  epochs: 100
+  learning_rate: 1e-2
+  
+regularization:
+  type: null  # Baseline comparison
+```
+
+**Experiment Runner Integration**:
+```python
+# Standard experiment pattern
+config = load_config("configs/phase1_baseline.yaml")
+experiment = ASISRExperiment(config)
+results = experiment.run(n_seeds=5)
+visualize_results(results)
+```
+
+### **Testing Integration Patterns**
+
+**Unit Test Structure**: Mirror package structure in `tests/`
+```
+tests/
+├── test_models/
+│   └── test_mlp.py          # Test SpectralMLP implementation
+├── test_regularization/
+│   └── test_spectral.py     # Test regularizer interfaces
+└── test_integration/
+    └── test_experiment.py   # Test end-to-end workflows
+```
+
+**Test Execution**:
+```bash
+# Run all tests with coverage
+pytest tests/ -v --cov=asisr --cov-report=html
+
+# Run specific test categories
+pytest tests/test_models/ -v
+```
+
+## File Organization & Imports
+
+### **Current File Locations** *(Post-Reorganization)*
+
+**Core Documentation**:
+- `CLAUDE.md` - Development guide (this file)
+- `ARCHITECTURE.md` - Technical authority
+- `PROJECT_PLAN.md` - Research strategy
+
+**Implementation**:
+- `asisr/` - Main package (empty structure, ready for implementation)
+- `prototypes/` - Legacy code for migration
+- `requirements.txt` - Dependencies
+
+**Reference Materials**:
+- `docs/START.md` - Original project conception
+- `docs/2410.02536v3.txt` - Intelligence at Edge of Chaos paper
+- `docs/DL-TRANSCRIPT.md` - Welch Labs geometric insights
+- `asisr/data/Baarle-Nassau_-_Baarle-Hertog-en.svg` - Boundary map dataset
+
+### **Import Patterns**
+
+**Package Import Style**:
+```python
+# Core package imports
+from asisr.models import SpectralMLP
+from asisr.regularization import AdaptiveSpectralRegularizer
+from asisr.training import ASISRExperiment
+
+# Local imports within package
+from .base import SpectralRegularizedModel
+from ..metrics import CriticalityMonitor
+```
+
+**External Dependencies**:
+```python
+# Standard scientific stack
+import torch
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+
+# Configuration and utilities
+import yaml
+from pathlib import Path
+```
+
+## Debugging & Validation Workflows
+
+### **Development Debugging**
+
+**Common Issues & Solutions**:
+- Import errors → Check `__init__.py` files and package structure
+- SVG loading issues → Verify cairosvg/Pillow installation and file paths
+- Spectral analysis errors → Validate matrix shapes and numerical stability
+- Configuration errors → Check YAML syntax and required fields
+
+**Debugging Commands**:
+```bash
+# Package structure validation
+find asisr/ -name "*.py" -exec python -m py_compile {} \;
+
+# Import chain testing
+python -c "from asisr.data import map_loader; print('Data imports OK')"
+
+# Configuration validation  
+python -c "import yaml; print(yaml.safe_load(open('configs/phase1_baseline.yaml')))"
+```
+
+### **Experiment Validation**
+
+**Pre-Experiment Checklist**:
+- [ ] Configuration file validates against schema
+- [ ] All dependencies importable
+- [ ] Random seeds properly managed
+- [ ] Output directories exist and writable
+- [ ] GPU/CPU resources sufficient
+
+**Post-Experiment Validation**:
+- [ ] Results pass statistical significance tests
+- [ ] Visualizations generate without errors
+- [ ] Model checkpoints saved correctly
+- [ ] Configuration and results logged consistently
+
+## Performance & Monitoring
+
+### **Development Performance**
+
+**Bottleneck Identification**:
+- Spectral analysis overhead via profiling
+- Memory usage during large experiments
+- GPU utilization and training efficiency
+
+**Optimization Targets**:
+- Singular value estimation <1ms per layer
+- Memory growth linear with model size
+- Training overhead <10% vs baseline
+
+### **Research Progress Monitoring**
+
+**Key Indicators**:
+- Phase completion metrics from PROJECT_PLAN.md
+- Code coverage and test passing rates
+- Experimental reproducibility validation
+- Documentation completeness
+
+**Weekly Review Questions**:
+- Are we on track for current phase success criteria?
+- Do results support or refute core hypotheses?
+- Are architectural decisions scaling appropriately?
+- Is code quality maintaining research standards?
+
+---
+
+**Remember**: This guide is your primary entry point for all ASISR development. When in doubt, refer to ARCHITECTURE.md for technical decisions and PROJECT_PLAN.md for research direction. Maintain the discipline of incremental validation and never skip the testing requirements - the scientific integrity of this research depends on it.
