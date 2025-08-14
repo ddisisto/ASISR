@@ -1,4 +1,4 @@
-"""ASISR data loading and preprocessing."""
+"""SPECTRA data loading and preprocessing."""
 
 from .map_loader import BaarleMapLoader
 

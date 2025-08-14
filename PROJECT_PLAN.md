@@ -1,13 +1,13 @@
-# ASISR Research Plan
+# SPECTRA Research Plan
 
-**Research Authority**: This document defines the scientific goals, research strategy, and validation framework for the Adaptive Scale-Invariant Spectral Regularization project.
+**Research Authority**: This document defines the scientific goals, research strategy, and validation framework for the Spectral Performance Control Through Regularization Analysis project.
 
 ## Research Context & Motivation
 
 ### **Core Synthesis**
 This project bridges three fundamental insights about neural network learning:
 
-1. **ASISR Hypothesis**: Neural networks perform optimally when operating at the "edge of chaos" with spectral radius σ ≈ 1.0, balancing order and complexity
+1. **SPECTRA Hypothesis**: Neural networks perform optimally when operating at the "edge of chaos" with spectral radius σ ≈ 1.0, balancing order and complexity
 2. **Complexity-Intelligence Connection**: Models trained on complex data develop superior representations and transfer better to downstream tasks (Zhang et al., 2024 - Intelligence at Edge of Chaos)
 3. **Geometric Foundations**: Deep networks create exponentially complex decision boundaries through recursive folding operations, enabling efficient learning of intricate patterns (Welch Labs geometric analysis)
 
@@ -135,7 +135,7 @@ This project bridges three fundamental insights about neural network learning:
 ---
 
 ### **Phase 3: Multi-Dataset Generalization** *(Advanced Validation)*
-**Goal**: Extend ASISR to hierarchical spectral control across network layers
+**Goal**: Extend SPECTRA to hierarchical spectral control across network layers
 
 **Research Questions**:
 - Should different network layers operate at different spectral radii?
@@ -158,34 +158,34 @@ This project bridges three fundamental insights about neural network learning:
 - **Stretch**: Theoretical framework predicts optimal architectures for given boundary complexity
 
 **Deliverables**:
-- Multi-scale ASISR theoretical framework
+- Multi-scale SPECTRA theoretical framework
 - Scaling laws relating network depth to boundary complexity
 - Preliminary transformer attention regularization results
 
 ---
 
 ### **Phase 4: Validation & Extension** *(Broader Impact)*
-**Goal**: Validate ASISR framework beyond boundary learning and prepare for publication
+**Goal**: Validate SPECTRA framework beyond boundary learning and prepare for publication
 
 **Research Questions**:
-- Does ASISR generalize to standard ML benchmarks (MNIST, CIFAR, etc.)?
+- Does SPECTRA generalize to standard ML benchmarks (MNIST, CIFAR, etc.)?
 - Can spectral regularization improve transformer attention mechanisms?
-- How does ASISR compare to established regularization methods (dropout, batch norm, etc.)?
+- How does SPECTRA compare to established regularization methods (dropout, batch norm, etc.)?
 
 **Experimental Design**:
-- **Benchmark Validation**: Standard datasets with ASISR vs. conventional training
+- **Benchmark Validation**: Standard datasets with SPECTRA vs. conventional training
 - **Transformer Extension**: Attention matrix spectral regularization
-- **Comparative Analysis**: ASISR vs. dropout, weight decay, batch normalization
+- **Comparative Analysis**: SPECTRA vs. dropout, weight decay, batch normalization
 - **Computational Efficiency**: Overhead analysis and optimization
 
 **Success Criteria**:
-- **Minimum**: ASISR performs competitively on standard benchmarks
-- **Target**: ASISR shows consistent improvements across multiple domains
+- **Minimum**: SPECTRA performs competitively on standard benchmarks
+- **Target**: SPECTRA shows consistent improvements across multiple domains
 - **Stretch**: Transformer spectral regularization achieves state-of-the-art results
 
 **Deliverables**:
 - Comprehensive benchmarking results
-- Transformer ASISR implementation and evaluation
+- Transformer SPECTRA implementation and evaluation
 - Publication-ready manuscript with reproducible experiments
 
 ## Evaluation Framework
@@ -231,7 +231,7 @@ This project bridges three fundamental insights about neural network learning:
 
 **Target Research Impact**: **EVIDENCE-BASED RESEARCH** - Phase 1 characterized performance-variance trade-offs in spectral regularization. Target: Develop application-specific spectral control frameworks based on empirical understanding of these trade-offs.
 
-**Stretch Research Vision**: **REVISED** - Rather than establishing ASISR as universally beneficial, focus on characterizing when and why spectral constraints help vs. hurt performance, developing theoretical framework for optimal regularization targeting.
+**Stretch Research Vision**: **REVISED** - Rather than establishing SPECTRA as universally beneficial, focus on characterizing when and why spectral constraints help vs. hurt performance, developing theoretical framework for optimal regularization targeting.
 
 ## Risk Mitigation & Alternative Pathways
 

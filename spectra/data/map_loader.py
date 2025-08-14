@@ -39,7 +39,7 @@ class BaarleMapLoader:
     
     Provides high-quality rasterization of the complex Baarle-Nassau/Baarle-Hertog
     border for neural network boundary learning experiments. Supports configurable
-    resolution and coordinate bounds matching the ASISR experimental setup.
+    resolution and coordinate bounds matching the SPECTRA experimental setup.
     
     Color Encoding:
         Belgium: #ffe912 (yellow) → label 1
@@ -80,7 +80,7 @@ class BaarleMapLoader:
         self.belgium_rgb = np.array([255, 233, 18])
         self.netherlands_rgb = np.array([255, 255, 222])
         
-        # Standard coordinate bounds for ASISR experiments
+        # Standard coordinate bounds for SPECTRA experiments
         self.default_bounds = (-1.5, 2.5, -1.0, 1.5)
     
     def _parse_svg_info(self) -> None:

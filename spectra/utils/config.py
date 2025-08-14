@@ -1,5 +1,5 @@
 """
-Configuration management for ASISR experiments.
+Configuration management for SPECTRA experiments.
 
 Provides YAML-based configuration loading with validation and type checking
 for reproducible scientific experiments.
@@ -11,9 +11,9 @@ from typing import Dict, Any, Optional, List, Union
 import torch
 
 
-class ASISRConfig:
+class SPECTRAConfig:
     """
-    Configuration manager for ASISR experiments.
+    Configuration manager for SPECTRA experiments.
     
     Loads and validates YAML configuration files with standardized schemas
     for model, data, training, and experiment parameters.
@@ -143,13 +143,13 @@ class ASISRConfig:
     
     def __repr__(self) -> str:
         """String representation of configuration."""
-        return f"ASISRConfig(path={self.config_path}, model={self.model['type']}, " \
+        return f"SPECTRAConfig(path={self.config_path}, model={self.model['type']}, " \
                f"data={self.data['type']}, seeds={len(self.get_seeds())})"
 
 
-def load_config(config_path: Union[str, Path]) -> ASISRConfig:
+def load_config(config_path: Union[str, Path]) -> SPECTRAConfig:
     """
-    Convenience function to load ASISR configuration.
+    Convenience function to load SPECTRA configuration.
     
     Args:
         config_path: Path to YAML configuration file
@@ -157,7 +157,7 @@ def load_config(config_path: Union[str, Path]) -> ASISRConfig:
     Returns:
         Loaded and validated configuration object
     """
-    return ASISRConfig(config_path)
+    return SPECTRAConfig(config_path)
 
 
 def create_default_config() -> Dict[str, Any]:

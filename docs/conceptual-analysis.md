@@ -1,4 +1,4 @@
-## Deep Conceptual Analysis: ASISR Framework
+## Deep Conceptual Analysis: SPECTRA Framework
 
 ### **Core Intuition Examination**
 

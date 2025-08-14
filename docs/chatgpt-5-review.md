@@ -1,9 +1,9 @@
-Here are the biggest “watch-outs” I see for ASISR right now, plus quick mitigations so your agent collaborators can act immediately.
+Here are the biggest "watch-outs" I see for SPECTRA (formerly ASISR) right now, plus quick mitigations so your agent collaborators can act immediately.
 
 # Key concerns & pitfalls (with fast fixes)
 
-1. **Name collision with CV/ASISR literature**
-   “ASISR” is a well-known acronym for *arbitrary-scale image super-resolution* (active papers and repos in 2023–2025). This will confuse search, citations, and contributors. ([CVF Open Access][1], [arXiv][2])
+1. **Name collision with CV/ASISR literature** ✅ RESOLVED
+   "ASISR" is a well-known acronym for *arbitrary-scale image super-resolution* (active papers and repos in 2023–2025). This issue has been resolved by renaming to SPECTRA. ([CVF Open Access][1], [arXiv][2])
    **Fix:** Rename the project or expand the acronym prominently (e.g., *Adaptive Spectral Invariant Stability Regularization*), and add a one-line disclaimer at the top of the README to avoid conflation with super-resolution.
 
 2. **Thin commit surface / unclear momentum signals**
@@ -80,7 +80,7 @@ Here are the biggest “watch-outs” I see for ASISR right now, plus quick miti
     “Criticality” still risks being a moving target; without predeclared decision rules, you can rationalize any outcome.
     **Fix:**
 
-* Pre-register Phase-1 decision rules in PROJECT\_PLAN.md: e.g., “Accept ASISR control if: (a) equal or better accuracy vs baseline on ≥2 datasets, and (b) statistically significant improvement in boundary length\@fixed error or in Lipschitz tail index, with Holm–Bonferroni-corrected p<0.05.”
+* Pre-register Phase-1 decision rules in PROJECT\_PLAN.md: e.g., "Accept SPECTRA control if: (a) equal or better accuracy vs baseline on ≥2 datasets, and (b) statistically significant improvement in boundary length\@fixed error or in Lipschitz tail index, with Holm–Bonferroni-corrected p<0.05.”
 
 ---
 

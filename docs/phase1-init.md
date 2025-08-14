@@ -1,6 +1,6 @@
-# ASISR Phase 1 Implementation: Belgium-Netherlands Boundary Learning
+# SPECTRA Phase 1 Implementation: Belgium-Netherlands Boundary Learning
 
-You are working on the Adaptive Scale-Invariant Spectral Regularization (ASISR) project - a cutting-edge research initiative investigating whether neural networks learn complex decision boundaries more efficiently when operating at the "edge of chaos" (spectral radius σ ≈ 1.0).
+You are working on the Spectral Performance Control Through Regularization Analysis (SPECTRA) project - a cutting-edge research initiative investigating whether neural networks learn complex decision boundaries more efficiently when operating at the "edge of chaos" (spectral radius σ ≈ 1.0).
 
 **Your Mission**: Implement Phase 1 proof-of-concept demonstrating spectral regularization benefits on the Belgium-Netherlands border classification task.
 
@@ -51,7 +51,7 @@ You are working on the Adaptive Scale-Invariant Spectral Regularization (ASISR) 
 
 **Repository Structure**:
 ```
-ASISR/
+SPECTRA/
 ├── CLAUDE.md, ARCHITECTURE.md, PROJECT_PLAN.md    # Authority documents
 ├── asisr/                                          # Main package (empty, ready for implementation)
 ├── prototypes/                                     # Legacy code to migrate  

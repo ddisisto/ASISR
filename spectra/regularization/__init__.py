@@ -1,4 +1,4 @@
-"""ASISR spectral regularization methods."""
+"""SPECTRA spectral regularization methods."""
 
 from .base import SpectralRegularizer
 from .fixed import FixedSpectralRegularizer, create_edge_of_chaos_regularizer

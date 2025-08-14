@@ -1,1 +1,1 @@
-# Tests for ASISR package
+# Tests for SPECTRA package

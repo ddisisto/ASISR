@@ -1,6 +1,6 @@
-# ASISR Engineering Patterns
+# SPECTRA Engineering Patterns
 
-**Authority**: This document captures proven engineering patterns and quality standards validated during ASISR development. Reference this during implementation uncertainty.
+**Authority**: This document captures proven engineering patterns and quality standards validated during SPECTRA development. Reference this during implementation uncertainty.
 
 ## Proven Success Patterns *(Validated in Plan 1)*
 

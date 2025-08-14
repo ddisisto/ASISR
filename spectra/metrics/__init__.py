@@ -1,4 +1,4 @@
-"""ASISR criticality assessment and monitoring."""
+"""SPECTRA criticality assessment and monitoring."""
 
 from .criticality import CriticalityMonitor
 

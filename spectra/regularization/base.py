@@ -2,7 +2,7 @@
 Base classes for spectral regularization methods.
 
 This module implements the abstract interfaces for spectral regularizers,
-enabling plugin-based regularization strategies in the ASISR framework.
+enabling plugin-based regularization strategies in the SPECTRA framework.
 """
 
 from abc import ABC, abstractmethod

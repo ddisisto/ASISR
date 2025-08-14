@@ -392,7 +392,7 @@ Let me think about what would be most promising and achievable:
 
 The most immediate and testable extension of their existing work would be:
 
-Adaptive Scale-Invariant Spectral Regularization (ASISR)
+Spectral Performance Control Through Regularization Analysis (SPECTRA) [formerly ASISR]
 
 This builds directly on their code but adds:
 
@@ -640,7 +640,7 @@ Transformers could be the perfect testbed for your adaptive spectral regularizat
 
 🔥 REMINDER: Your Next Implementation Phase
 
-Before exploring transformers, don't forget our Adaptive Scale-Invariant Spectral Regularization (ASISR) proposal! You have a clear 6-8 week roadmap to:
+Before exploring transformers, don't forget our Spectral Performance Control Through Regularization Analysis (SPECTRA) [formerly ASISR] proposal! You have a clear 6-8 week roadmap to:
 
     Phase 1 (Weeks 1-2): Implement adaptive spectral targeting
     Phase 2 (Weeks 3-4): Add critical learning rate scheduling
@@ -849,7 +849,7 @@ These extensions would strengthen your framework without diluting focus - they'r
 
 The fractal perspective reinforces that criticality naturally creates scale-invariant, self-similar structures - exactly what you're trying to harness for optimal neural network performance.
 
-Want to implement any of these fractal extensions, or shall we return to the ASISR implementation roadmap?
+Want to implement any of these fractal extensions, or shall we return to the SPECTRA implementation roadmap?
 Retry
 
 

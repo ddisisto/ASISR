@@ -232,7 +232,7 @@ def test_training_integration(coords: torch.Tensor,
 
 def run_integration_test() -> bool:
     """Run complete integration test."""
-    print("ASISR Phase 1 Integration Test")
+    print("SPECTRA Phase 1 Integration Test")
     print("=" * 50)
     
     try:

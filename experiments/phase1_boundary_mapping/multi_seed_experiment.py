@@ -16,7 +16,7 @@ sys.path.insert(0, str(project_root))
 
 import numpy as np
 from asisr.utils.config import load_config
-from asisr.training.experiment import ASISRExperiment, compare_experiments
+from spectra.training.experiment import SPECTRAExperiment, compare_experiments
 from asisr.utils.seed import validate_reproducibility
 
 
@@ -56,7 +56,7 @@ def test_reproducibility():
         
         # Create simple reproducibility test function
         def single_experiment_final_accuracy():
-            experiment = ASISRExperiment(config)
+            experiment = SPECTRAExperiment(config)
             result = experiment.run_single_seed(seed=42)
             return result['final_accuracy']
         
@@ -97,7 +97,7 @@ def run_mini_multi_seed_experiment():
         print(f"Running experiment with {len(config.get_seeds())} seeds, {config.training['epochs']} epochs")
         
         # Run experiment
-        experiment = ASISRExperiment(config)
+        experiment = SPECTRAExperiment(config)
         results = experiment.run_multi_seed()
         
         # Validate results structure
@@ -153,7 +153,7 @@ def test_statistical_utilities():
 
 def validate_framework():
     """Complete validation of the multi-seed statistical framework."""
-    print("ASISR Multi-Seed Statistical Framework Validation")
+    print("SPECTRA Multi-Seed Statistical Framework Validation")
     print("=" * 60)
     
     try:

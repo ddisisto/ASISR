@@ -1,6 +1,6 @@
 # Phase 1 Plan 2-C: Baseline vs Spectral A/B Testing
 
-**Sub-phase Focus**: Execute controlled experiments comparing baseline and spectral regularization to validate core ASISR hypothesis.
+**Sub-phase Focus**: Execute controlled experiments comparing baseline and spectral regularization to validate core SPECTRA hypothesis.
 
 **Context Budget**: ~50KB (experiments + analysis)
 
@@ -168,7 +168,7 @@ git branch -d plan2c-comparison
 - [ ] Effect sizes quantified with confidence intervals
 - [ ] Training efficiency differences documented
 - [ ] Criticality indicators analyzed
-- [ ] Results support or refute core ASISR hypothesis
+- [ ] Results support or refute core SPECTRA hypothesis
 - [ ] No scope creep beyond comparative experiments
 
 **Context Budget Target**: Complete within single focused session (~50KB)

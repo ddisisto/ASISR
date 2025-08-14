@@ -73,7 +73,7 @@ experiment:
 ### **Step 2**: Multi-Seed Orchestration *(Priority 2)*
 ```python
 # asisr/training/experiment.py
-class ASISRExperiment:
+class SPECTRAExperiment:
     def run_multi_seed(self, config, n_seeds=5):
         """Run experiment across multiple seeds with statistical aggregation"""
         # Seed management

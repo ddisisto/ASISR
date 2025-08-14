@@ -1,4 +1,4 @@
-"""ASISR model architectures with spectral regularization support."""
+"""SPECTRA model architectures with spectral regularization support."""
 
 from .base import SpectralRegularizedModel
 from .mlp import SpectralMLP, MLPClassifier, create_boundary_mlp

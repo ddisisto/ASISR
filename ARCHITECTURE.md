@@ -1,11 +1,11 @@
-# ASISR Code Architecture
+# SPECTRA Code Architecture
 
-**Technical Authority**: This document defines all structural decisions, interfaces, and design patterns for the ASISR project.
+**Technical Authority**: This document defines all structural decisions, interfaces, and design patterns for the SPECTRA project.
 
 ## Package Structure
 
 ```
-ASISR/
+SPECTRA/
 ├── asisr/                           # Core library package
 │   ├── __init__.py                  # Package exports and version
 │   ├── models/                      # Neural network architectures
@@ -201,7 +201,7 @@ config = {
 }
 
 # Dynamic instantiation
-experiment = ASISRExperiment(config)
+experiment = SPECTRAExperiment(config)
 results = experiment.run(n_seeds=5)
 ```
 

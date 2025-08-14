@@ -125,7 +125,7 @@ Plan 1 delivered a rock-solid foundation with working plugin architecture. The t
 - **Strong statistical significance**: p < 0.01 with substantial effect sizes
 - **Mechanistic insights**: Clear understanding of why spectral regularization helps
 - **Generalization evidence**: Benefits extend beyond single boundary map
-- **Theoretical validation**: Results support ASISR hypothesis predictions
+- **Theoretical validation**: Results support SPECTRA hypothesis predictions
 
 ### **Risk Management & Scope Control**
 

@@ -2,7 +2,7 @@
 Fixed spectral regularization targeting specific sigma values.
 
 This module implements fixed spectral radius targeting, the foundation
-of the ASISR approach. Enforces spectral radius σ ≈ 1.0 to maintain
+of the SPECTRA approach. Enforces spectral radius σ ≈ 1.0 to maintain
 networks at the "edge of chaos".
 
 Extracted and refined from prototypes/SAMPLE-CODE-v1.md.
@@ -20,7 +20,7 @@ class FixedSpectralRegularizer(SpectralRegularizer):
     
     Enforces spectral radius constraints on weight matrices using
     L2 penalty on deviation from target values. Core implementation
-    of the ASISR hypothesis that σ ≈ 1.0 enables optimal learning.
+    of the SPECTRA hypothesis that σ ≈ 1.0 enables optimal learning.
     
     Loss Formula:
         L_spectral = λ * Σ_i (σ_i - σ_target)²
@@ -41,7 +41,7 @@ class FixedSpectralRegularizer(SpectralRegularizer):
             power_iterations: Number of power iterations for singular value estimation
             
         Note:
-            Default target_sigma=1.0 based on ASISR hypothesis.
+            Default target_sigma=1.0 based on SPECTRA hypothesis.
             Power iterations provide efficient spectral radius estimation.
         """
         self.target_sigma = target_sigma
@@ -215,7 +215,7 @@ def create_edge_of_chaos_regularizer(regularization_strength: float = 0.1) -> Fi
         FixedSpectralRegularizer configured for σ = 1.0 targeting
         
     Note:
-        Convenience factory for the core ASISR hypothesis.
+        Convenience factory for the core SPECTRA hypothesis.
         Uses σ = 1.0 as the edge-of-chaos target.
     """
     return FixedSpectralRegularizer(

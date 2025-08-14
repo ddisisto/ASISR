@@ -1,6 +1,6 @@
-# ASISR Development Guide
+# SPECTRA Development Guide
 
-**Development Authority**: This document defines Claude Code optimization, workflow standards, and development best practices for the ASISR project throughout its entire lifecycle.
+**Development Authority**: This document defines Claude Code optimization, workflow standards, and development best practices for the SPECTRA project throughout its entire lifecycle.
 
 ## Current Focus *(Update as project progresses)*
 
@@ -12,7 +12,7 @@
 **Immediate Priorities**:
 1. Design Phase 2A experiments (σ sweeps, application domains)
 2. Implement synthetic dataset validation pipeline
-3. Delegate ASISR→SPECTRA symbol updates
+3. Delegate SPECTRA symbol validation
 4. Update phase planning documents to remove efficiency assumptions
 
 ---
@@ -56,7 +56,7 @@ claude --prompt "run \`git log -1\` and follow most recent context handover doc 
 
 **Handover document template**:
 ```markdown
-# ASISR [Phase/Task] [Status]: [Brief Description]
+# SPECTRA [Phase/Task] [Status]: [Brief Description]
 
 **Current Status**: [What's been completed]
 **Next Immediate Tasks**: [Specific actionable items]
@@ -75,7 +75,7 @@ claude --prompt "run \`git log -1\` and follow most recent context handover doc 
 
 **Repository Structure**:
 ```
-ASISR/
+SPECTRA/
 ├── CLAUDE.md, ARCHITECTURE.md, PROJECT_PLAN.md    # Core documentation
 ├── asisr/                                          # Main package (empty structure)
 ├── prototypes/                                     # Legacy code to migrate
@@ -95,7 +95,7 @@ ASISR/
 python -c "import torch, numpy, matplotlib, sklearn; print('Core packages ready')"
 
 # Verify package importability  
-python -c "import asisr; print('ASISR package accessible')"
+python -c "import spectra; print('SPECTRA package accessible')"
 
 # Check current git status
 git status --porcelain
@@ -263,7 +263,7 @@ regularization:
 ```python
 # Standard experiment pattern
 config = load_config("configs/phase1_baseline.yaml")
-experiment = ASISRExperiment(config)
+experiment = SPECTRAExperiment(config)
 results = experiment.run(n_seeds=5)
 visualize_results(results)
 ```
@@ -317,7 +317,7 @@ pytest tests/test_models/ -v
 # Core package imports
 from asisr.models import SpectralMLP
 from asisr.regularization import AdaptiveSpectralRegularizer
-from asisr.training import ASISRExperiment
+from spectra.training import SPECTRAExperiment
 
 # Local imports within package
 from .base import SpectralRegularizedModel
@@ -404,4 +404,4 @@ python -c "import yaml; print(yaml.safe_load(open('configs/phase1_baseline.yaml'
 
 ---
 
-**Remember**: This guide is your primary entry point for all ASISR development. When in doubt, refer to ARCHITECTURE.md for technical decisions and PROJECT_PLAN.md for research direction. Maintain the discipline of incremental validation and never skip the testing requirements - the scientific integrity of this research depends on it.
+**Remember**: This guide is your primary entry point for all SPECTRA development. When in doubt, refer to ARCHITECTURE.md for technical decisions and PROJECT_PLAN.md for research direction. Maintain the discipline of incremental validation and never skip the testing requirements - the scientific integrity of this research depends on it.

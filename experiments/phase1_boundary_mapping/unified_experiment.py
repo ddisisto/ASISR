@@ -1,5 +1,5 @@
 """
-Unified experiment framework for ASISR Phase 1.
+Unified experiment framework for SPECTRA Phase 1.
 
 Consolidates integration testing, framework validation, and research experiments
 into a single, scalable system supporting multiple experiment modes.
@@ -17,8 +17,8 @@ sys.path.insert(0, str(project_root))
 
 import torch
 import numpy as np
-from asisr.utils.config import load_config, ASISRConfig
-from asisr.training.experiment import ASISRExperiment, compare_experiments, ExperimentResults
+from spectra.utils.config import load_config, SPECTRAConfig
+from spectra.training.experiment import SPECTRAExperiment, compare_experiments, ExperimentResults
 
 
 class ExperimentMode(Enum):
@@ -31,7 +31,7 @@ class ExperimentMode(Enum):
 
 class UnifiedExperimentRunner:
     """
-    Unified experiment orchestrator supporting all ASISR Phase 1 experiment types.
+    Unified experiment orchestrator supporting all SPECTRA Phase 1 experiment types.
     
     Eliminates redundancy between integration tests, framework validation,
     and research experiments by providing a single, configurable interface.
@@ -109,7 +109,7 @@ class UnifiedExperimentRunner:
         print(f"{'='*60}")
         
         # Run experiment
-        experiment = ASISRExperiment(config)
+        experiment = SPECTRAExperiment(config)
         results = experiment.run_multi_seed(seeds=mode_config['seeds'])
         
         # Restore original config values
@@ -136,7 +136,7 @@ class UnifiedExperimentRunner:
             print(f"Warning: Running comparison in {self.mode.value} mode")
         
         print(f"\n{'='*80}")
-        print("ASISR Phase 1 Core Hypothesis Testing")
+        print("SPECTRA Phase 1 Core Hypothesis Testing")
         print("Baseline vs Spectral Regularization A/B Comparison")
         print(f"{'='*80}")
         
@@ -219,7 +219,7 @@ class UnifiedExperimentRunner:
         self.mode = ExperimentMode.INTEGRATION
         
         try:
-            print("ASISR Unified Integration Test")
+            print("SPECTRA Unified Integration Test")
             print("=" * 50)
             
             # Test baseline configuration
@@ -277,7 +277,7 @@ class UnifiedExperimentRunner:
         self.mode = ExperimentMode.VALIDATION
         
         try:
-            print("ASISR Framework Validation")
+            print("SPECTRA Framework Validation")
             print("=" * 50)
             
             # Test statistical framework with baseline config
@@ -321,7 +321,7 @@ def main():
     """Main entry point supporting different experiment modes."""
     import argparse
     
-    parser = argparse.ArgumentParser(description="ASISR Unified Experiment Runner")
+    parser = argparse.ArgumentParser(description="SPECTRA Unified Experiment Runner")
     parser.add_argument('mode', choices=['integration', 'validation', 'research', 'comparison'],
                        help='Experiment mode to run')
     parser.add_argument('--baseline-config', default='configs/phase1_baseline.yaml',

@@ -2,7 +2,7 @@
 Base classes for spectral regularized models.
 
 This module implements the abstract interfaces defined in ARCHITECTURE.md,
-providing the plugin architecture foundation for the ASISR project.
+providing the plugin architecture foundation for the SPECTRA project.
 """
 
 from abc import ABC, abstractmethod
@@ -18,7 +18,7 @@ class SpectralRegularizedModel(nn.Module, ABC):
     This abstract interface enables plugin-based spectral regularization
     by exposing weight matrices and preactivations for analysis.
     
-    All ASISR models must implement this interface to work with the
+    All SPECTRA models must implement this interface to work with the
     regularization and criticality monitoring systems.
     """
     

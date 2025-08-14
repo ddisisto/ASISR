@@ -14,7 +14,7 @@ import torch.nn as nn
 import torch.optim as optim
 from scipy import stats
 
-from ..utils.config import ASISRConfig
+from ..utils.config import SPECTRAConfig
 from ..utils.seed import SeedManager, set_seed
 from ..data import BaarleMapLoader
 from ..models import SpectralMLP, create_boundary_mlp
@@ -25,7 +25,7 @@ from ..metrics import CriticalityMonitor
 class ExperimentResults:
     """Container for multi-seed experiment results with statistical analysis."""
     
-    def __init__(self, config: ASISRConfig):
+    def __init__(self, config: SPECTRAConfig):
         """
         Initialize results container.
         
@@ -114,15 +114,15 @@ class ExperimentResults:
         return summary
 
 
-class ASISRExperiment:
+class SPECTRAExperiment:
     """
-    Multi-seed experiment orchestrator for ASISR research.
+    Multi-seed experiment orchestrator for SPECTRA research.
     
     Manages complete experimental workflows including model training,
     evaluation, and statistical analysis across multiple random seeds.
     """
     
-    def __init__(self, config: ASISRConfig):
+    def __init__(self, config: SPECTRAConfig):
         """
         Initialize experiment with configuration.
         
