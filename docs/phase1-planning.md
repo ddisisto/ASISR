@@ -4,9 +4,9 @@
 
 ### **Core Implementation Steps**
 1. **Foundation**: Implement base classes (`SpectralRegularizedModel`, `SpectralRegularizer`, `CriticalityMonitor`) per ARCHITECTURE.md
-2. **Data Migration**: Adapt `prototypes/map_loader.py` → `asisr/data/map_loader.py` with interface compliance
-3. **Model Architecture**: Extract MLP from sample code → `asisr/models/mlp.py` implementing spectral interfaces
-4. **Regularization**: Create `asisr/regularization/fixed.py` for σ=1.0 targeting
+2. **Data Migration**: Adapt `prototypes/map_loader.py` → `spectra/data/map_loader.py` with interface compliance
+3. **Model Architecture**: Extract MLP from sample code → `spectra/models/mlp.py` implementing spectral interfaces
+4. **Regularization**: Create `spectra/regularization/fixed.py` for σ=1.0 targeting
 5. **Integration Test**: Basic Belgium-Netherlands boundary learning experiment
 
 ### **SSoT Validation Strategy**
@@ -55,8 +55,8 @@ Plan 1 delivered a rock-solid foundation with working plugin architecture. The t
 #### **Step 1: Complete Criticality Monitoring**
 **Goal**: Implement full boundary fractal dimension analysis
 **Files**: 
-- `asisr/metrics/criticality.py` - Complete `_compute_boundary_fractal_dim()` 
-- `asisr/visualization/boundaries.py` - Boundary extraction and visualization
+- `spectra/metrics/criticality.py` - Complete `_compute_boundary_fractal_dim()` 
+- `spectra/visualization/boundaries.py` - Boundary extraction and visualization
 **Implementation**: Extract box-counting algorithm from prototypes/SAMPLE-CODE-v1.md
 **Validation**: Fractal dimension computation matches expected complexity patterns
 
@@ -64,7 +64,7 @@ Plan 1 delivered a rock-solid foundation with working plugin architecture. The t
 **Goal**: Scientific rigor with statistical validation
 **Files**:
 - `experiments/phase1_boundary_mapping/multi_seed_experiment.py` - Statistical experiment runner
-- `asisr/training/experiment.py` - Formal experiment orchestration
+- `spectra/training/experiment.py` - Formal experiment orchestration
 - `configs/phase1_baseline.yaml`, `configs/phase1_spectral.yaml` - Configuration management
 **Implementation**: YAML-driven experiments with seed management and result aggregation
 **Validation**: Reproducible results across multiple runs with proper error bars
@@ -81,8 +81,8 @@ Plan 1 delivered a rock-solid foundation with working plugin architecture. The t
 #### **Step 4: Publication-Quality Visualization**
 **Goal**: Professional presentation of results
 **Files**:
-- `asisr/visualization/dynamics.py` - Training trajectory plots
-- `asisr/visualization/boundaries.py` - Decision boundary comparison
+- `spectra/visualization/dynamics.py` - Training trajectory plots
+- `spectra/visualization/boundaries.py` - Decision boundary comparison
 - `experiments/phase1_boundary_mapping/generate_figures.py` - Figure generation pipeline
 **Implementation**: matplotlib/seaborn publication standards with error bars
 **Validation**: Publication-ready figures demonstrating spectral regularization benefits
