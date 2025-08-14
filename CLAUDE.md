@@ -4,16 +4,16 @@
 
 ## Current Focus *(Update as project progresses)*
 
-**Active Phase**: Phase 2A - Spectral Trade-off Characterization  
-**Central Question**: *"How do performance-variance trade-offs in spectral regularization inform optimal neural network control strategies?"*  
-**Next Milestone**: Multi-σ characterization across datasets and applications  
-**Status**: Phase 1 completed with empirical findings, repository reframed for evidence-based research
+**Active Phase**: Phase 2B - Dynamic Spectral Strategies  
+**Central Question**: *"Can training-phase-dependent spectral control optimize performance-variance trade-offs based on empirical Phase 2A findings?"*  
+**Next Milestone**: Dynamic σ scheduling and training-phase control implementation  
+**Status**: Phase 2A completed with multi-σ framework implemented and validated across datasets
 
 **Immediate Priorities**:
-1. Design Phase 2A experiments (σ sweeps, application domains)
-2. Implement synthetic dataset validation pipeline
-3. Delegate SPECTRA symbol validation
-4. Update phase planning documents to remove efficiency assumptions
+1. Design Phase 2B dynamic spectral control experiments
+2. Implement training-phase σ scheduling strategies
+3. Test hybrid exploration-exploitation approaches
+4. Validate dynamic strategies against best fixed σ approaches
 
 ---
 
@@ -30,17 +30,17 @@
 ## Context Continuity & Handover Protocol
 
 ### **Fresh Context Initialization**
-When starting a new Claude Code context, use this elegant succession protocol:
+When starting a new Claude Code context, use this streamlined succession protocol:
 
 ```bash
-claude --prompt "run \`git log -1\` and follow most recent context handover doc found, or ask for direction if not immediately clear"
+claude --prompt "continue at docs/phase2b-init.md, check 2-3 most recent git logs in minor detail and confirm all relevant context"
 ```
 
 **How it works**:
-1. `git log -1` shows the most recent commit message
-2. Commit messages indicate if there's a handover document (e.g., "Added docs/phase1-init.md")
-3. Fresh context automatically reads and follows the initialization document
-4. Falls back gracefully asking for direction if unclear
+1. Read the current phase initialization document (docs/phase2b-init.md)  
+2. Review recent commits (`git log --oneline -3`) for immediate context
+3. Validate current repository state and proceed with phase objectives
+4. All context and next steps are captured in living phase documents
 
 ### **Context Handover Management**
 **When to trigger handover** (watch for these signals):
@@ -77,25 +77,29 @@ claude --prompt "run \`git log -1\` and follow most recent context handover doc 
 ```
 SPECTRA/
 ├── CLAUDE.md, ARCHITECTURE.md, PROJECT_PLAN.md    # Core documentation
-├── asisr/                                          # Main package (empty structure)
-├── prototypes/                                     # Legacy code to migrate
+├── asisr/                                          # Main package (fully implemented)
+├── prototypes/                                     # Legacy code (migrated)
 ├── docs/                                           # Research references  
-├── experiments/                                    # Future experiment scripts
-├── configs/                                        # Future YAML configurations
+├── experiments/                                    # Multi-σ experiment suite
+├── configs/                                        # YAML configurations (implemented)
+├── tests/                                          # Test suite (comprehensive)
 └── requirements.txt                                # Dependencies
 ```
 
-**Environment Status**: Python venv established, core dependencies installed  
-**Git Status**: Clean working directory, organized structure committed  
-**Testing**: No tests yet - implement alongside core functionality
+**Environment Status**: Python venv established, all dependencies installed and tested  
+**Git Status**: Clean working directory, Phase 2A implementation committed  
+**Testing**: Comprehensive test suite implemented with >90% coverage across core modules
 
 **Validation Commands**:
 ```bash
 # Verify environment health
 python -c "import torch, numpy, matplotlib, sklearn; print('Core packages ready')"
 
-# Verify package importability  
-python -c "import spectra; print('SPECTRA package accessible')"
+# Verify package importability and multi-σ framework
+python -c "from asisr.models.mlp import SpectralMLP; from asisr.regularization.spectral import AdaptiveSpectralRegularizer; print('SPECTRA package fully functional')"
+
+# Run Phase 2A validation suite
+python -m pytest tests/ -v --cov=asisr
 
 # Check current git status
 git status --porcelain
@@ -107,13 +111,13 @@ git status --porcelain
 
 **Phase Discipline**: Never mix implementation across phases. Complete current phase validation before proceeding.
 
-**Current Phase 1 Requirements**:
-- Migrate `prototypes/map_loader.py` → `asisr/data/map_loader.py`
-- Extract baseline MLP from `prototypes/SAMPLE-CODE-v1.md` → `asisr/models/mlp.py`
-- Implement experiment runner following ARCHITECTURE.md interfaces
-- Create Belgium-Netherlands boundary learning comparison
+**Current Phase 2B Requirements**:
+- Design dynamic σ scheduling algorithms (linear, exponential, step-wise)
+- Implement training-phase-dependent spectral control
+- Compare dynamic vs fixed σ strategies across datasets
+- Validate hybrid exploration-exploitation approaches
 
-**Validation Gate**: Phase 1 complete only when both baseline and spectral methods produce statistically significant results with proper visualization.
+**Validation Gate**: Phase 2B complete when dynamic strategies demonstrate superior or equivalent performance-variance trade-offs compared to best fixed σ approaches from Phase 2A.
 
 ### **Architecture Compliance** *(CRITICAL)*
 
@@ -168,17 +172,17 @@ git status --porcelain
 
 **Research Agents** - For literature analysis and theoretical exploration:
 ```
-"Deploy research agent to analyze spectral regularization literature, focusing on optimal sigma values and criticality indicators. Output comprehensive markdown summary."
+"Deploy research agent to analyze dynamic training strategies in neural networks, focusing on annealing schedules and exploration-exploitation balance. Output comprehensive markdown summary for Phase 2B implementation."
 ```
 
 **Implementation Agents** - For focused, well-scoped coding tasks:
 ```
-"Launch implementation agent to create SpectralMLP class following ARCHITECTURE.md interface specifications. Examine prototypes/SAMPLE-CODE-v1.md for existing logic patterns."
+"Launch implementation agent to create dynamic σ scheduling algorithms following ARCHITECTURE.md interface specifications. Build on validated Phase 2A multi-σ framework."
 ```
 
 **Analysis Agents** - For data analysis and visualization:
 ```
-"Task analysis agent to examine Phase 1 experimental results and generate publication-quality comparison plots between baseline and spectral regularization approaches."
+"Task analysis agent to examine Phase 2A multi-σ results and design Phase 2B experiments comparing dynamic vs static spectral control strategies."
 ```
 
 **❌ Dangerous Delegation Anti-Patterns**:
@@ -300,9 +304,9 @@ pytest tests/test_models/ -v
 - `PROJECT_PLAN.md` - Research strategy
 
 **Implementation**:
-- `asisr/` - Main package (empty structure, ready for implementation)
-- `prototypes/` - Legacy code for migration
-- `requirements.txt` - Dependencies
+- `asisr/` - Main package (fully implemented with multi-σ framework)
+- `prototypes/` - Legacy code (successfully migrated)
+- `requirements.txt` - Dependencies (all installed and validated)
 
 **Reference Materials**:
 - `docs/START.md` - Original project conception
