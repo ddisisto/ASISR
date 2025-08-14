@@ -21,10 +21,10 @@ import torch.optim as optim
 import numpy as np
 from typing import Tuple, Dict
 
-from asisr.data import BaarleMapLoader
-from asisr.models import SpectralMLP, create_boundary_mlp
-from asisr.regularization import FixedSpectralRegularizer, create_edge_of_chaos_regularizer
-from asisr.metrics import CriticalityMonitor
+from spectra.data import BaarleMapLoader
+from spectra.models import SpectralMLP, create_boundary_mlp
+from spectra.regularization import FixedSpectralRegularizer, create_edge_of_chaos_regularizer
+from spectra.metrics import CriticalityMonitor
 
 
 def test_data_loading() -> Tuple[torch.Tensor, torch.Tensor]:

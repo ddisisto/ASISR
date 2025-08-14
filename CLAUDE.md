@@ -89,7 +89,7 @@ claude --prompt "Named context: [meaningful_name]. Read CLAUDE.md, continue at d
 ```
 SPECTRA/
 ├── CLAUDE.md, ARCHITECTURE.md, PROJECT_PLAN.md    # Core documentation
-├── asisr/                                          # Main package (fully implemented)
+├── spectra/                                        # Main package (fully implemented)
 ├── prototypes/                                     # Legacy code (migrated)
 ├── docs/                                           # Research references  
 ├── experiments/                                    # Multi-σ experiment suite
@@ -108,10 +108,10 @@ SPECTRA/
 python -c "import torch, numpy, matplotlib, sklearn; print('Core packages ready')"
 
 # Verify package importability and multi-σ framework
-python -c "from asisr.models.mlp import SpectralMLP; from asisr.regularization.spectral import AdaptiveSpectralRegularizer; print('SPECTRA package fully functional')"
+python -c "from spectra.models.mlp import SpectralMLP; from spectra.regularization.fixed import FixedSpectralRegularizer; print('SPECTRA package fully functional')"
 
 # Run Phase 2A validation suite
-python -m pytest tests/ -v --cov=asisr
+python -m pytest tests/ -v --cov=spectra
 
 # Check current git status
 git status --porcelain
@@ -145,7 +145,7 @@ git status --porcelain
 ### **Code Quality Standards** *(NON-NEGOTIABLE)*
 
 **Testing Requirements**:
-- Unit tests for all modules in `asisr/` package
+- Unit tests for all modules in `spectra/` package
 - Integration tests for experiment workflows  
 - Target: >90% test coverage before phase completion
 
@@ -168,7 +168,7 @@ git status --porcelain
 
 **Data Management**:
 - Deterministic random seed control across numpy, torch, random
-- Dataset files stored within package (`asisr/data/`)
+- Dataset files stored within package (`spectra/data/`)
 - No hardcoded paths or parameters in code
 
 **Results Standards**:
@@ -247,7 +247,7 @@ git status --porcelain
 4. Validate against original functionality
 5. Remove prototype dependency
 
-**Example**: `prototypes/map_loader.py` → `asisr/data/map_loader.py`
+**Example**: `prototypes/map_loader.py` → `spectra/data/map_loader.py`
 - Extract core SVG loading logic
 - Add proper error handling and type hints
 - Implement standard data loading interface
@@ -300,7 +300,7 @@ tests/
 **Test Execution**:
 ```bash
 # Run all tests with coverage
-pytest tests/ -v --cov=asisr --cov-report=html
+pytest tests/ -v --cov=spectra --cov-report=html
 
 # Run specific test categories
 pytest tests/test_models/ -v
@@ -316,7 +316,7 @@ pytest tests/test_models/ -v
 - `PROJECT_PLAN.md` - Research strategy
 
 **Implementation**:
-- `asisr/` - Main package (fully implemented with multi-σ framework)
+- `spectra/` - Main package (fully implemented with multi-σ framework)
 - `prototypes/` - Legacy code (successfully migrated)
 - `requirements.txt` - Dependencies (all installed and validated)
 
@@ -324,15 +324,15 @@ pytest tests/test_models/ -v
 - `docs/START.md` - Original project conception
 - `docs/2410.02536v3.txt` - Intelligence at Edge of Chaos paper
 - `docs/DL-TRANSCRIPT.md` - Welch Labs geometric insights
-- `asisr/data/Baarle-Nassau_-_Baarle-Hertog-en.svg` - Boundary map dataset
+- `spectra/data/Baarle-Nassau_-_Baarle-Hertog-en.svg` - Boundary map dataset
 
 ### **Import Patterns**
 
 **Package Import Style**:
 ```python
 # Core package imports
-from asisr.models import SpectralMLP
-from asisr.regularization import AdaptiveSpectralRegularizer
+from spectra.models import SpectralMLP
+from spectra.regularization import FixedSpectralRegularizer
 from spectra.training import SPECTRAExperiment
 
 # Local imports within package
@@ -366,10 +366,10 @@ from pathlib import Path
 **Debugging Commands**:
 ```bash
 # Package structure validation
-find asisr/ -name "*.py" -exec python -m py_compile {} \;
+find spectra/ -name "*.py" -exec python -m py_compile {} \;
 
 # Import chain testing
-python -c "from asisr.data import map_loader; print('Data imports OK')"
+python -c "from spectra.data import map_loader; print('Data imports OK')"
 
 # Configuration validation  
 python -c "import yaml; print(yaml.safe_load(open('configs/phase1_baseline.yaml')))"
