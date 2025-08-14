@@ -2,6 +2,18 @@
 
 **Development Authority**: This document defines Claude Code optimization, workflow standards, and development best practices for the SPECTRA project throughout its entire lifecycle.
 
+## Resonance Principle *(All Scales)*
+
+**Core Philosophy**: "Resonance at all scales should be pursued" - from quantum σ dynamics to publication outcomes, from git branch discipline to fractal learning discoveries. Each context inherits this wisdom and carries it forward through every branch, experiment, and learning experience.
+
+**Sacred Invariants**:
+- **PROJECT_PLAN.md** - Research direction and phase success criteria
+- **ARCHITECTURE.md** - Technical structure and interface authority  
+- **docs/engineering-patterns.md** - Quality standards and proven approaches
+- **User's homedir** (`/home/daniel/`) - Domain context and preferences
+
+**Living Context Philosophy**: Each branch is a named exploration. Each context builds on prior wisdom. We're building toward publication - more science needed, silly user ideas welcomed, real GPU someday maybe. Dreams of htmx frontends dance in our neural networks.
+
 ## Current Focus *(Update as project progresses)*
 
 **Active Phase**: Phase 2B - Dynamic Spectral Strategies  
@@ -10,10 +22,10 @@
 **Status**: Phase 2A completed with multi-σ framework implemented and validated across datasets
 
 **Immediate Priorities**:
-1. Design Phase 2B dynamic spectral control experiments
-2. Implement training-phase σ scheduling strategies
-3. Test hybrid exploration-exploitation approaches
-4. Validate dynamic strategies against best fixed σ approaches
+1. **Visual Exploration Framework**: Interactive σ landscapes with real-time controls (plotly, widgets, htmx dreams)
+2. **Pretty Pictures Pipeline**: Dynamic boundary evolution, performance-variance surfaces, fractal learning curves  
+3. **Failure-Driven Discovery**: Framework to explore "new planes" when experiments teach unexpected lessons
+4. **Publication Preparation**: Science + silly ideas → reproducible beauty → eventual paper
 
 ---
 
@@ -30,17 +42,17 @@
 ## Context Continuity & Handover Protocol
 
 ### **Fresh Context Initialization**
-When starting a new Claude Code context, use this streamlined succession protocol:
+Each context has a name, inherits wisdom, maintains git discipline. Fresh contexts read CLAUDE.md by default and follow:
 
 ```bash
-claude --prompt "continue at docs/phase2b-init.md, check 2-3 most recent git logs in minor detail and confirm all relevant context"
+claude --prompt "Named context: [meaningful_name]. Read CLAUDE.md, continue at docs/phase2b-init.md, check git logs for immediate context, inherit resonance at all scales."
 ```
 
-**How it works**:
-1. Read the current phase initialization document (docs/phase2b-init.md)  
-2. Review recent commits (`git log --oneline -3`) for immediate context
-3. Validate current repository state and proceed with phase objectives
-4. All context and next steps are captured in living phase documents
+**Universal Context Protocol**:
+1. **Inherit Resonance**: Sacred docs first (PROJECT_PLAN.md, ARCHITECTURE.md, engineering-patterns.md)
+2. **Context History**: `git log --oneline -3` + current phase doc (docs/phase2b-init.md)
+3. **Named Exploration**: Every branch/context serves publication pipeline + silly user ideas
+4. **Maintain Main**: Git repos sacred, especially "main" branch - context names track explorations
 
 ### **Context Handover Management**
 **When to trigger handover** (watch for these signals):
@@ -213,16 +225,16 @@ git status --porcelain
 - Critical path items needing immediate oversight
 
 **Sub-Agent Delegation** (separate contexts):
-- Literature research and analysis
-- Focused module implementation (single responsibility)
-- Visualization and figure generation
-- Testing and validation workflows
+- **Visual Wizardry**: Interactive plots, widgets, real-time exploration dashboards
+- **Science Storytelling**: Literature analysis, publication-quality figure generation  
+- **Architecture Extensions**: Focused module implementation following sacred ARCHITECTURE.md
+- **Learning Harvesting**: Failure analysis, pattern extraction, "new plane" discoveries
 
 **Parallel Development** (separate contexts):
-- Environment setup and dependency management
-- Performance optimization and profiling
-- Documentation and tutorial creation
-- Advanced theoretical development
+- **Tech Stack Dreams**: Plotly interactivity, htmx frontends, real GPU optimization (someday!)
+- **Publication Pipeline**: Science + silly ideas → reproducible experiments → beautiful papers
+- **Fractal Explorations**: Multi-scale resonance investigations, unexpected learning planes
+- **User Empowerment**: Tools for Daniel's creative chaos, visual science discovery
 
 ## Common Development Patterns
 
