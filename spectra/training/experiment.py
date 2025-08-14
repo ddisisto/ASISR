@@ -318,6 +318,9 @@ class SPECTRAExperiment:
                 'spectral_loss': [], 
                 'total_loss': [],
                 'accuracy': [],
+                'criticality_score': [],
+                'spectral_radius_avg': [],
+                'boundary_fractal_dim': [],
                 'sigma_target': []  # Track σ evolution for dynamic regularizers
             }
             
@@ -328,6 +331,18 @@ class SPECTRAExperiment:
             start_time = time.time()
             
             for epoch in range(epochs):
+                # Progress reporting every 25 epochs (with accuracy)
+                progress_interval = 25
+                if epoch % progress_interval == 0 or epoch == epochs - 1:
+                    # Quick accuracy check for progress reporting
+                    model.eval()
+                    with torch.no_grad():
+                        test_output = model(coords)
+                        test_predictions = (torch.sigmoid(test_output) >= 0.5).long().squeeze(1)
+                        current_accuracy = (test_predictions == labels).float().mean().item()
+                    print(f"  Seed {seed} - Epoch {epoch}/{epochs} - Accuracy: {current_accuracy:.3f}")
+                    model.train()
+                
                 # Update dynamic regularizer if needed
                 if regularizer is not None and isinstance(regularizer, DynamicSpectralRegularizer):
                     regularizer.update_epoch(epoch)
@@ -370,12 +385,31 @@ class SPECTRAExperiment:
                         targets = regularizer.get_targets()
                         sigma_target = list(targets.values())[0] if targets else None
                     
-                    # Store trajectory data
+                    # Compute lightweight criticality metrics for trajectory
+                    model.eval()
+                    with torch.no_grad():
+                        predictions = (torch.sigmoid(output) >= 0.5).long().squeeze(1)
+                        accuracy = (predictions == labels).float().mean().item()
+                        
+                        # Quick criticality assessment (smaller sample for efficiency)
+                        sample_size = min(200, len(coords))
+                        sample_coords = coords[:sample_size]
+                        criticality_metrics = self.criticality_monitor.assess_criticality(
+                            model, sample_coords
+                        )
+                        criticality_score = self.criticality_monitor.criticality_score(
+                            criticality_metrics
+                        )
+                    
+                    # Store trajectory data (every epoch)
                     trajectory_metrics['epoch'].append(epoch)
                     trajectory_metrics['train_loss'].append(task_loss.item())
                     trajectory_metrics['spectral_loss'].append(spectral_loss.item())
                     trajectory_metrics['total_loss'].append(total_loss.item())
                     trajectory_metrics['accuracy'].append(accuracy)
+                    trajectory_metrics['criticality_score'].append(criticality_score)
+                    trajectory_metrics['spectral_radius_avg'].append(criticality_metrics['spectral_radius_avg'])
+                    trajectory_metrics['boundary_fractal_dim'].append(criticality_metrics['boundary_fractal_dim'])
                     trajectory_metrics['sigma_target'].append(sigma_target)
                 
                 # Evaluation metrics
