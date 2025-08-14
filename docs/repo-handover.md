@@ -32,6 +32,9 @@ Complete this status check by end of current cycle. Generate a report summarizin
 see also other conceptual, foundational, redundancies, assumptions, potentials. things should have a single source of truth, and we integrate management of "repo" between contexts. handover. small, targetted, or bombs into main if daniel is too high.
 
 
+CRITICAL: @README.md review and update, likely well outdated. user interface can graduate through this file as main output target for some time perhaps. a branch, a background task, whatever works.
+
+
 meta-meta-meta-meta: check the repo status. we should be on main, this is phase handover @docs/.....
 
 tasks usually including:
