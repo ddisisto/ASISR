@@ -5,8 +5,8 @@ Tests for criticality assessment and monitoring.
 import pytest
 import torch
 import numpy as np
-from asisr.metrics.criticality import CriticalityMonitor
-from asisr.models.base import SpectralRegularizedModel
+from spectra.metrics.criticality import CriticalityMonitor
+from spectra.models.base import SpectralRegularizedModel
 
 
 class MockModel(SpectralRegularizedModel):
