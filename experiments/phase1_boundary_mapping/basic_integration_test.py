@@ -1,13 +1,11 @@
 """
-Basic integration test for ASISR Phase 1 components.
+DEPRECATED: Use unified_experiment.py instead.
 
-This script validates that all core components work together:
-- Map data loading with proper tensor shapes
-- Model creation with spectral interfaces
-- Spectral regularization computation
-- Basic training loop integration
+This file is maintained for reference but experiments should use:
+    python experiments/phase1_boundary_mapping/unified_experiment.py integration
 
-Serves as both integration test and minimal working example.
+The unified framework consolidates integration testing, framework validation,
+and research experiments into a single, scalable system.
 """
 
 import sys
@@ -263,5 +261,28 @@ def run_integration_test() -> bool:
 
 
 if __name__ == "__main__":
+    print("=" * 60)
+    print("DEPRECATED: basic_integration_test.py")
+    print("=" * 60)
+    print("This integration test has been replaced by the unified experiment framework.")
+    print()
+    print("Please use instead:")
+    print("  python experiments/phase1_boundary_mapping/unified_experiment.py integration")
+    print()
+    print("The unified framework provides:")
+    print("- Integration testing (5 epochs)")
+    print("- Framework validation (20 epochs)")  
+    print("- Research experiments (100 epochs)")
+    print("- Baseline vs Spectral A/B comparisons")
+    print()
+    print("Running legacy integration test for compatibility...")
+    print()
+    
     success = run_integration_test()
+    
+    print()
+    print("=" * 60)
+    print("RECOMMENDATION: Migrate to unified_experiment.py")
+    print("=" * 60)
+    
     sys.exit(0 if success else 1)

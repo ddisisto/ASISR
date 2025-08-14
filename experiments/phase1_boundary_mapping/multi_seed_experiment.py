@@ -1,8 +1,10 @@
 """
-Multi-seed statistical validation for ASISR Phase 1.
+DEPRECATED: Use unified_experiment.py instead.
 
-Validates the statistical framework with reproducible experiments
-and demonstrates proper error bar computation and significance testing.
+This file is maintained for reference but experiments should use:
+    python experiments/phase1_boundary_mapping/unified_experiment.py validation
+
+The unified framework consolidates all experiment types into a single system.
 """
 
 import sys
@@ -187,5 +189,22 @@ def validate_framework():
 
 
 if __name__ == "__main__":
+    print("=" * 60)
+    print("DEPRECATED: multi_seed_experiment.py")
+    print("=" * 60)
+    print("This validation script has been replaced by the unified experiment framework.")
+    print()
+    print("Please use instead:")
+    print("  python experiments/phase1_boundary_mapping/unified_experiment.py validation")
+    print()
+    print("Running legacy validation for compatibility...")
+    print()
+    
     success = validate_framework()
+    
+    print()
+    print("=" * 60)
+    print("RECOMMENDATION: Migrate to unified_experiment.py")
+    print("=" * 60)
+    
     sys.exit(0 if success else 1)
