@@ -11,7 +11,7 @@ You are working on the Spectral Performance Control Through Regularization Analy
 - Ready for immediate implementation
 
 **Current Focus**: Phase 1 - Boundary Mapping Proof-of-Concept
-**Central Question**: *"Can spectral regularization at σ ≈ 1.0 enable networks to learn complex decision boundaries more efficiently than conventional training?"*
+**Central Question**: *"What effects does spectral regularization at σ ≈ 1.0 have on neural network learning dynamics?"*
 
 **Immediate Tasks**:
 1. Migrate `prototypes/map_loader.py` → `asisr/data/map_loader.py` following ARCHITECTURE.md interfaces
@@ -29,7 +29,7 @@ You are working on the Spectral Performance Control Through Regularization Analy
 **Success Criteria**:
 - Networks successfully learn Belgium-Netherlands border classification  
 - Clear visual demonstration that spectral regularization changes boundary learning
-- Quantitative improvement in training efficiency (epochs to convergence)
+- Quantitative characterization of spectral regularization effects
 - Statistical validation across multiple seeds
 
 **Key Resources**:

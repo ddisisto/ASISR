@@ -42,7 +42,7 @@ This establishes the plugin architecture foundation with validated components re
 ### **Strategic Context** *(Building on Plan 1 Success)*
 Plan 1 delivered a rock-solid foundation with working plugin architecture. The transition from design to working system is complete. Plan 2 focuses on scientific rigor and experimental validation to complete Phase 1 objectives.
 
-**Core Research Question**: *"Can spectral regularization at σ ≈ 1.0 enable networks to learn complex decision boundaries more efficiently than conventional training?"*
+**Core Research Question**: *"What effects does spectral regularization at σ ≈ 1.0 have on neural network learning dynamics?"*
 
 ### **Implementation Priorities**
 1. **Complete Criticality Implementation**: Full boundary fractal dimension analysis from prototypes/SAMPLE-CODE-v1.md
@@ -116,7 +116,7 @@ Plan 1 delivered a rock-solid foundation with working plugin architecture. The t
 - Statistical validation framework operational
 
 #### **Target Success (Strong Phase 1)**
-- **Quantitative improvement**: 10-20% training efficiency gain with spectral regularization
+- **Quantitative characterization**: Statistical measurement of spectral regularization effects
 - **Boundary quality**: Measurable improvement in decision boundary learning
 - **Criticality correlation**: Evidence linking spectral radius to boundary complexity
 - **Publication-ready results**: Professional figures and statistical analysis

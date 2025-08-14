@@ -8,7 +8,7 @@
 
 ## Objective
 
-Answer the core Phase 1 research question: *"Can spectral regularization at σ ≈ 1.0 enable networks to learn complex decision boundaries more efficiently than conventional training?"*
+Answer the core Phase 1 research question: *"What effects does spectral regularization at σ ≈ 1.0 have on neural network learning dynamics?"*
 
 Execute rigorous A/B testing with statistical validation to demonstrate spectral regularization benefits.
 
@@ -118,7 +118,7 @@ def analyze_criticality_dynamics(results):
 
 ### **Hypothesis Testing**
 - **Null hypothesis**: No difference in training efficiency
-- **Alternative hypothesis**: Spectral regularization improves efficiency
+- **Alternative hypothesis**: Spectral regularization affects performance-variance trade-offs
 - **Test statistic**: Difference in epochs to convergence
 - **Significance threshold**: p < 0.05
 
