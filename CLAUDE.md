@@ -26,6 +26,50 @@
 
 **Non-Negotiable Rule**: For any task beyond simple edits, READ the relevant authority document first. Architecture questions → ARCHITECTURE.md, Research questions → PROJECT_PLAN.md.
 
+## Context Continuity & Handover Protocol
+
+### **Fresh Context Initialization**
+When starting a new Claude Code context, use this elegant succession protocol:
+
+```bash
+claude --prompt "run \`git log -1\` and follow most recent context handover doc found, or ask for direction if not immediately clear"
+```
+
+**How it works**:
+1. `git log -1` shows the most recent commit message
+2. Commit messages indicate if there's a handover document (e.g., "Added docs/phase1-init.md")
+3. Fresh context automatically reads and follows the initialization document
+4. Falls back gracefully asking for direction if unclear
+
+### **Context Handover Management**
+**When to trigger handover** (watch for these signals):
+- Context approaching token limits (screen messages about compression)
+- Complex multi-step work requiring fresh context space
+- Natural phase transitions or milestone completions
+- Automatic context compression becoming unpredictable
+
+**Handover process**:
+1. **Create handover doc**: Update or create new `docs/phaseX-init.md` with current status and next steps
+2. **Commit with clear message**: Reference the handover document in commit message
+3. **Initiate fresh context**: Use the succession protocol above
+
+**Handover document template**:
+```markdown
+# ASISR [Phase/Task] [Status]: [Brief Description]
+
+**Current Status**: [What's been completed]
+**Next Immediate Tasks**: [Specific actionable items]
+**Key Resources**: [Which docs to read first]
+**Success Criteria**: [How to know when complete]
+**Repository Structure**: [Current state]
+```
+
+### **Context Compression Mitigation**
+- **Commit frequently**: Preserve work in git before context compression
+- **Update handover docs proactively**: Don't wait until context limit
+- **Use specific sub-agents**: Delegate complex analysis to fresh contexts
+- **Maintain CLAUDE.md authority**: This file should always orient new contexts
+
 ## Environment & Current State
 
 **Repository Structure**:
