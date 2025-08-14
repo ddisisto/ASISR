@@ -185,7 +185,11 @@ class SPECTRAExperiment:
         if reg_config['type'] == 'fixed_spectral':
             strength = reg_config.get('strength', 0.1)
             target_sigma = reg_config.get('target_sigma', 1.0)
-            return create_edge_of_chaos_regularizer(regularization_strength=strength)
+            return FixedSpectralRegularizer(
+                target_sigma=target_sigma,
+                regularization_strength=strength,
+                power_iterations=10
+            )
         else:
             raise ValueError(f"Unsupported regularization type: {reg_config['type']}")
     
