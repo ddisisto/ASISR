@@ -4,16 +4,16 @@
 
 ## Current Focus *(Update as project progresses)*
 
-**Active Phase**: Phase 1 - Boundary Mapping Proof-of-Concept  
-**Central Question**: *"Can spectral regularization at σ ≈ 1.0 enable networks to learn complex decision boundaries more efficiently?"*  
-**Next Milestone**: Implement SVG map loader and baseline boundary learning experiment  
-**Status**: Repository organized, architecture defined, research plan established
+**Active Phase**: Phase 2A - Spectral Trade-off Characterization  
+**Central Question**: *"How do performance-variance trade-offs in spectral regularization inform optimal neural network control strategies?"*  
+**Next Milestone**: Multi-σ characterization across datasets and applications  
+**Status**: Phase 1 completed with empirical findings, repository reframed for evidence-based research
 
 **Immediate Priorities**:
-1. Implement `asisr/data/map_loader.py` from prototype
-2. Create baseline MLP boundary learning experiment  
-3. Add spectral regularization and compare results
-4. Validate criticality metrics during training
+1. Design Phase 2A experiments (σ sweeps, application domains)
+2. Implement synthetic dataset validation pipeline
+3. Delegate ASISR→SPECTRA symbol updates
+4. Update phase planning documents to remove efficiency assumptions
 
 ---
 
