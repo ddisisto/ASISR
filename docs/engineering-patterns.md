@@ -21,6 +21,7 @@
 - **Integration gates**: End-to-end validation before claiming success
 - **Shape validation**: Extensive logging of tensor dimensions and device placement
 - **Scope discipline**: Use `NotImplementedError("Feature X planned for Phase Y")` religiously
+- **Honest test reporting**: Clearly distinguish tested vs deferred functionality in validation output
 
 ## Context Management Patterns *(Emerging)*
 
@@ -101,6 +102,12 @@
 - ❌ **P-value hunting**: Statistical significance without effect sizes
 - ❌ **Cherry-picking**: Selective result reporting
 - ❌ **Baseline skipping**: Claims without proper control comparisons
+
+### **Testing Anti-Patterns** *(Critical)*
+- ❌ **Mock data validation**: Synthetic test data that masks real integration issues
+- ❌ **False positive reporting**: Tests that appear to pass but don't validate actual functionality
+- ❌ **Premature success claims**: Marking features as "working" before end-to-end validation
+- ❌ **Interface-only testing**: Testing that functions can be imported without testing they work correctly
 
 ## Pattern Evolution
 

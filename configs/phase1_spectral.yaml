@@ -1,0 +1,32 @@
+# ASISR Phase 1 Spectral Regularization Configuration
+# ==================================================  
+# Spectral regularization experiment targeting edge-of-chaos σ ≈ 1.0
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+  activation: "relu"
+
+data:
+  type: "BaarleMap"
+  resolution: 200
+  bounds: [-1.5, 2.5, -1.0, 1.5]
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  batch_size: 1000  # Use all data points for boundary learning
+  optimizer: "adam"
+
+regularization:
+  type: "fixed_spectral"
+  strength: 0.1
+  target_sigma: 1.0
+
+experiment:
+  seeds: [42, 123, 456, 789, 1011]
+  metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim"]
+  save_checkpoints: false
+  log_interval: 10
+
+device: "cpu"  # Force CPU for compatibility

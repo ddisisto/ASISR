@@ -4,6 +4,7 @@
 
 # Core scientific computing
 numpy>=1.20.0
+scipy>=1.7.0              # Scientific computing and statistical tests
 
 # Machine learning frameworks
 torch>=1.9.0              # PyTorch for neural networks
@@ -15,6 +16,12 @@ Pillow>=8.0.0             # Image processing and manipulation
 
 # Visualization
 matplotlib>=3.3.0         # Plotting and visualization
+
+# Configuration management
+pyyaml>=6.0               # YAML configuration parsing
+
+# Testing framework  
+pytest>=6.0.0             # Unit testing
 
 # Installation:
 # pip install -r requirements.txt
