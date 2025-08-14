@@ -1,0 +1,36 @@
+# Phase 2B: Step σ Schedule Dynamic Strategy  
+# Discrete phase transitions: exploration → exploitation
+
+experiment:
+  name: "phase2b_step_schedule" 
+  description: "Step-wise σ transitions for phase-based training"
+  log_interval: 10
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "step_schedule"
+  # Discrete schedule: epochs 0-33 high σ, 34-66 mid σ, 67+ low σ
+  sigma_schedule:
+    - [0, 2.5]    # Exploration phase
+    - [34, 1.7]   # Transition phase
+    - [67, 1.0]   # Convergence phase
+  strength: 0.1
+
+experiment_config:
+  seeds: [42, 123, 456, 789, 999]
+  device: "cpu"

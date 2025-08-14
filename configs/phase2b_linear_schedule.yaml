@@ -1,0 +1,33 @@
+# Phase 2B: Linear σ Schedule Dynamic Strategy
+# High σ early (exploration) → low σ late (convergence)
+
+experiment:
+  name: "phase2b_linear_schedule"
+  description: "Linear σ scheduling from high exploration to low convergence"
+  log_interval: 10
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+
+data:
+  type: "TwoMoons"  # Start with validated synthetic dataset
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null  # Use full dataset
+
+regularization:
+  type: "linear_schedule"
+  initial_sigma: 2.5    # High σ for exploration 
+  final_sigma: 1.0      # Target σ for convergence
+  strength: 0.1
+
+experiment_config:
+  seeds: [42, 123, 456, 789, 999]  # 5 seeds for statistical validity
+  device: "cpu"

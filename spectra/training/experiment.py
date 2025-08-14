@@ -18,7 +18,12 @@ from ..utils.config import SPECTRAConfig
 from ..utils.seed import SeedManager, set_seed
 from ..data import BaarleMapLoader, create_synthetic_loader
 from ..models import SpectralMLP, create_boundary_mlp
-from ..regularization import FixedSpectralRegularizer, create_edge_of_chaos_regularizer
+from ..regularization import (
+    FixedSpectralRegularizer, 
+    create_edge_of_chaos_regularizer,
+    create_dynamic_regularizer,
+    DynamicSpectralRegularizer
+)
 from ..metrics import CriticalityMonitor
 
 
@@ -175,7 +180,7 @@ class SPECTRAExperiment:
             
         return model.to(self.device)
     
-    def _create_regularizer(self) -> Optional[FixedSpectralRegularizer]:
+    def _create_regularizer(self) -> Optional[Union[FixedSpectralRegularizer, DynamicSpectralRegularizer]]:
         """Create regularizer based on configuration."""
         reg_config = self.config.regularization
         
@@ -190,6 +195,37 @@ class SPECTRAExperiment:
                 regularization_strength=strength,
                 power_iterations=10
             )
+        elif reg_config['type'] in ['linear_schedule', 'exponential_schedule', 'step_schedule', 'adaptive_schedule']:
+            # Dynamic scheduling parameters
+            initial_sigma = reg_config.get('initial_sigma', 2.5)
+            final_sigma = reg_config.get('final_sigma', 1.0)
+            total_epochs = self.config.training['epochs']
+            strength = reg_config.get('strength', 0.1)
+            
+            # Schedule-specific parameters
+            schedule_kwargs = {
+                'initial_sigma': initial_sigma,
+                'final_sigma': final_sigma,
+                'total_epochs': total_epochs,
+                'regularization_strength': strength
+            }
+            
+            if reg_config['type'] == 'exponential_schedule':
+                schedule_kwargs['decay_rate'] = reg_config.get('decay_rate', 5.0)
+            elif reg_config['type'] == 'step_schedule':
+                sigma_schedule = reg_config.get('sigma_schedule', [(0, initial_sigma), (total_epochs//2, final_sigma)])
+                schedule_kwargs = {
+                    'sigma_schedule': sigma_schedule,
+                    'total_epochs': total_epochs,
+                    'regularization_strength': strength
+                }
+            elif reg_config['type'] == 'adaptive_schedule':
+                schedule_kwargs['adaptation_rate'] = reg_config.get('adaptation_rate', 0.1)
+                schedule_kwargs['warmup_epochs'] = reg_config.get('warmup_epochs', 10)
+            
+            # Extract schedule type
+            schedule_type = reg_config['type'].replace('_schedule', '')
+            return create_dynamic_regularizer(schedule_type, **schedule_kwargs)
         else:
             raise ValueError(f"Unsupported regularization type: {reg_config['type']}")
     
@@ -252,6 +288,10 @@ class SPECTRAExperiment:
             start_time = time.time()
             
             for epoch in range(epochs):
+                # Update dynamic regularizer if needed
+                if regularizer is not None and isinstance(regularizer, DynamicSpectralRegularizer):
+                    regularizer.update_epoch(epoch)
+                
                 model.train()
                 
                 # Forward pass
@@ -270,6 +310,11 @@ class SPECTRAExperiment:
                 optimizer.zero_grad()
                 total_loss.backward()
                 optimizer.step()
+                
+                # Update adaptive regularizer with training metrics if needed
+                if (regularizer is not None and 
+                    hasattr(regularizer, 'update_training_metrics')):
+                    regularizer.update_training_metrics(total_loss.item())
                 
                 # Evaluation metrics
                 if epoch % log_interval == 0 or epoch == epochs - 1:

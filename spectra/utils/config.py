@@ -108,7 +108,10 @@ class SPECTRAConfig:
     
     def get_device(self) -> torch.device:
         """Get computation device based on availability and config."""
-        device_config = self.config.get('device', 'auto')
+        # Check experiment_config first, then fallback to top level
+        device_config = self.config.get('experiment_config', {}).get('device')
+        if device_config is None:
+            device_config = self.config.get('device', 'auto')
         
         if device_config == 'auto':
             return torch.device('cuda' if torch.cuda.is_available() else 'cpu')
