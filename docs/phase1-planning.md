@@ -162,3 +162,26 @@ Plan 1 delivered a rock-solid foundation with working plugin architecture. The t
 - **User feedback loops**: Regular check-ins on direction and priorities
 
 This plan builds systematically on Plan 1's foundation to deliver scientifically rigorous Phase 1 completion with publication-quality results.
+
+---
+
+## Plan 2 Implementation: Micro-Phases for Context Management
+
+**Context Budget Crisis Resolution**: Plan 2 as originally written (~130 lines) exceeds single context capacity. Split into focused sub-phases with clear handover points.
+
+### **Phase Execution Order**
+1. **Plan 2-A**: [Criticality Implementation](./phase1-plan2a-criticality.md) (~30KB)
+2. **Plan 2-B**: [Multi-Seed Framework](./phase1-plan2b-multiseed.md) (~40KB)  
+3. **Plan 2-C**: [Baseline vs Spectral Comparison](./phase1-plan2c-comparison.md) (~50KB)
+4. **Plan 2-D**: [Publication Visualization](./phase1-plan2d-visualization.md) (~40KB)
+
+### **Engineering Patterns Authority**
+Universal patterns extracted to: [docs/engineering-patterns.md](./engineering-patterns.md)
+
+### **Handover Protocol**
+- Each sub-phase gets dedicated context
+- Branch workflow: create → implement → test → merge → delete
+- Update planning docs before context handover
+- Reference patterns document for engineering guidance
+
+**Phase 1 completion**: All sub-phases complete with publication-ready results.

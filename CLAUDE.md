@@ -20,7 +20,8 @@
 ## Project Context & Authority Structure
 
 **Research Strategy**: [PROJECT_PLAN.md](./PROJECT_PLAN.md) - Complete research roadmap, phases, success criteria
-**Technical Authority**: [ARCHITECTURE.md](./ARCHITECTURE.md) - All structural decisions, interfaces, design patterns  
+**Technical Authority**: [ARCHITECTURE.md](./ARCHITECTURE.md) - All structural decisions, interfaces, design patterns
+**Engineering Patterns**: [docs/engineering-patterns.md](./docs/engineering-patterns.md) - Proven development patterns and quality standards
 **Legacy Code**: [prototypes/](./prototypes/) - Original implementations for reference/migration
 **Research Materials**: [docs/](./docs/) - Papers, transcripts, background context
 
