@@ -51,7 +51,7 @@ class ExperimentResults:
         if not self.results_per_seed:
             return
             
-        # Extract metrics across seeds
+        # Extract metrics across seeds (interval-based)
         all_metrics = {}
         for seed, result in self.results_per_seed.items():
             for metric_name, values in result['metrics_history'].items():
@@ -59,17 +59,47 @@ class ExperimentResults:
                     all_metrics[metric_name] = []
                 all_metrics[metric_name].append(values)
         
-        # Compute statistics for each metric
+        # Extract trajectory metrics across seeds (every epoch)
+        all_trajectory_metrics = {}
+        for seed, result in self.results_per_seed.items():
+            if 'trajectory_metrics' in result:
+                for metric_name, values in result['trajectory_metrics'].items():
+                    if metric_name not in all_trajectory_metrics:
+                        all_trajectory_metrics[metric_name] = []
+                    all_trajectory_metrics[metric_name].append(values)
+        
+        # Compute statistics for each metric (interval-based)
         self.aggregated_results = {}
         for metric_name, seed_values in all_metrics.items():
+            if not seed_values:
+                continue
             # Convert to numpy array for easier computation
-            values_array = np.array(seed_values)  # Shape: (n_seeds, n_epochs)
+            values_array = np.array(seed_values)  # Shape: (n_seeds, n_logged_epochs)
             
             self.aggregated_results[metric_name] = {
                 'mean': np.mean(values_array, axis=0),
                 'std': np.std(values_array, axis=0, ddof=1),
                 'min': np.min(values_array, axis=0),
                 'max': np.max(values_array, axis=0),
+                'final_mean': np.mean(values_array[:, -1]),
+                'final_std': np.std(values_array[:, -1], ddof=1),
+                'final_values': values_array[:, -1]
+            }
+        
+        # Compute statistics for trajectory metrics (every epoch - for visualization)
+        for metric_name, seed_values in all_trajectory_metrics.items():
+            if not seed_values:
+                continue
+            # Convert to numpy array for easier computation
+            values_array = np.array(seed_values)  # Shape: (n_seeds, n_epochs)
+            
+            # Add trajectory-specific statistics with _trajectory suffix
+            trajectory_key = metric_name
+            self.aggregated_results[trajectory_key] = {
+                'trajectory_mean': np.mean(values_array, axis=0),
+                'trajectory_std': np.std(values_array, axis=0, ddof=1),
+                'trajectory_min': np.min(values_array, axis=0),
+                'trajectory_max': np.max(values_array, axis=0),
                 'final_mean': np.mean(values_array[:, -1]),
                 'final_std': np.std(values_array[:, -1], ddof=1),
                 'final_values': values_array[:, -1]
@@ -267,7 +297,7 @@ class SPECTRAExperiment:
             batch_size = training_config.get('batch_size', len(coords))
             log_interval = self.config.experiment.get('log_interval', 10)
             
-            # Metrics tracking
+            # Metrics tracking - separate detailed vs summary logging
             metrics_history = {
                 'epoch': [],
                 'train_loss': [],
@@ -281,6 +311,19 @@ class SPECTRAExperiment:
                 'criticality_score': []
             }
             
+            # Full trajectory tracking (every epoch for visualization)
+            trajectory_metrics = {
+                'epoch': [],
+                'train_loss': [],
+                'spectral_loss': [], 
+                'total_loss': [],
+                'accuracy': [],
+                'criticality_score': [],
+                'spectral_radius_avg': [],
+                'boundary_fractal_dim': [],
+                'sigma_target': []  # Track σ evolution for dynamic regularizers
+            }
+            
             # Convert labels for BCE loss
             labels_float = labels.float().unsqueeze(1)
             
@@ -288,6 +331,18 @@ class SPECTRAExperiment:
             start_time = time.time()
             
             for epoch in range(epochs):
+                # Progress reporting every 25 epochs (with accuracy)
+                progress_interval = 25
+                if epoch % progress_interval == 0 or epoch == epochs - 1:
+                    # Quick accuracy check for progress reporting
+                    model.eval()
+                    with torch.no_grad():
+                        test_output = model(coords)
+                        test_predictions = (torch.sigmoid(test_output) >= 0.5).long().squeeze(1)
+                        current_accuracy = (test_predictions == labels).float().mean().item()
+                    print(f"  Seed {seed} - Epoch {epoch}/{epochs} - Accuracy: {current_accuracy:.3f}")
+                    model.train()
+                
                 # Update dynamic regularizer if needed
                 if regularizer is not None and isinstance(regularizer, DynamicSpectralRegularizer):
                     regularizer.update_epoch(epoch)
@@ -315,6 +370,47 @@ class SPECTRAExperiment:
                 if (regularizer is not None and 
                     hasattr(regularizer, 'update_training_metrics')):
                     regularizer.update_training_metrics(total_loss.item())
+                
+                # Trajectory logging (every epoch for visualization)
+                with torch.no_grad():
+                    # Fast accuracy computation for trajectory
+                    predictions = (torch.sigmoid(output) >= 0.5).long().squeeze(1)
+                    accuracy = (predictions == labels).float().mean().item()
+                    
+                    # Track σ target for dynamic regularizers
+                    sigma_target = None
+                    if regularizer is not None and hasattr(regularizer, 'current_sigma'):
+                        sigma_target = regularizer.current_sigma
+                    elif regularizer is not None and hasattr(regularizer, 'get_targets'):
+                        targets = regularizer.get_targets()
+                        sigma_target = list(targets.values())[0] if targets else None
+                    
+                    # Compute lightweight criticality metrics for trajectory
+                    model.eval()
+                    with torch.no_grad():
+                        predictions = (torch.sigmoid(output) >= 0.5).long().squeeze(1)
+                        accuracy = (predictions == labels).float().mean().item()
+                        
+                        # Quick criticality assessment (smaller sample for efficiency)
+                        sample_size = min(200, len(coords))
+                        sample_coords = coords[:sample_size]
+                        criticality_metrics = self.criticality_monitor.assess_criticality(
+                            model, sample_coords
+                        )
+                        criticality_score = self.criticality_monitor.criticality_score(
+                            criticality_metrics
+                        )
+                    
+                    # Store trajectory data (every epoch)
+                    trajectory_metrics['epoch'].append(epoch)
+                    trajectory_metrics['train_loss'].append(task_loss.item())
+                    trajectory_metrics['spectral_loss'].append(spectral_loss.item())
+                    trajectory_metrics['total_loss'].append(total_loss.item())
+                    trajectory_metrics['accuracy'].append(accuracy)
+                    trajectory_metrics['criticality_score'].append(criticality_score)
+                    trajectory_metrics['spectral_radius_avg'].append(criticality_metrics['spectral_radius_avg'])
+                    trajectory_metrics['boundary_fractal_dim'].append(criticality_metrics['boundary_fractal_dim'])
+                    trajectory_metrics['sigma_target'].append(sigma_target)
                 
                 # Evaluation metrics
                 if epoch % log_interval == 0 or epoch == epochs - 1:
@@ -359,6 +455,7 @@ class SPECTRAExperiment:
             return {
                 'seed': seed,
                 'metrics_history': metrics_history,
+                'trajectory_metrics': trajectory_metrics,  # Added for visualization
                 'final_accuracy': accuracy,
                 'final_criticality_score': criticality_score,
                 'training_time': training_time,
