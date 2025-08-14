@@ -14,9 +14,9 @@ You are working on the Spectral Performance Control Through Regularization Analy
 **Central Question**: *"What effects does spectral regularization at σ ≈ 1.0 have on neural network learning dynamics?"*
 
 **Immediate Tasks**:
-1. Migrate `prototypes/map_loader.py` → `asisr/data/map_loader.py` following ARCHITECTURE.md interfaces
-2. Extract baseline MLP from `prototypes/SAMPLE-CODE-v1.md` → `asisr/models/mlp.py` with spectral hooks
-3. Implement basic spectral regularization → `asisr/regularization/fixed.py` 
+1. Migrate `prototypes/map_loader.py` → `spectra/data/map_loader.py` following ARCHITECTURE.md interfaces
+2. Extract baseline MLP from `prototypes/SAMPLE-CODE-v1.md` → `spectra/models/mlp.py` with spectral hooks
+3. Implement basic spectral regularization → `spectra/regularization/fixed.py` 
 4. Create experiment comparing baseline vs. spectral on Belgium-Netherlands border learning
 5. Generate publication-quality visualizations showing training dynamics and decision boundaries
 
@@ -37,7 +37,7 @@ You are working on the Spectral Performance Control Through Regularization Analy
 - Research context: `PROJECT_PLAN.md` - READ THIS for scientific goals  
 - Development workflow: `CLAUDE.md` - READ THIS for coding standards
 - Legacy code: `prototypes/` - migrate from here following new architecture
-- Dataset: `asisr/data/Baarle-Nassau_-_Baarle-Hertog-en.svg` - complex boundary map
+- Dataset: `spectra/data/Baarle-Nassau_-_Baarle-Hertog-en.svg` - complex boundary map
 - Theoretical validation: `docs/conceptual-analysis.md` - external expert review
 
 **Development Principles**:
@@ -53,7 +53,7 @@ You are working on the Spectral Performance Control Through Regularization Analy
 ```
 SPECTRA/
 ├── CLAUDE.md, ARCHITECTURE.md, PROJECT_PLAN.md    # Authority documents
-├── asisr/                                          # Main package (empty, ready for implementation)
+├── spectra/                                        # Main package (empty, ready for implementation)
 ├── prototypes/                                     # Legacy code to migrate  
 ├── docs/                                           # Research references
 └── requirements.txt                                # Dependencies

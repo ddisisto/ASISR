@@ -13,14 +13,14 @@ Build the statistical validation framework required for scientific claims about 
 ## Implementation Scope
 
 ### **Primary Targets**
-- `asisr/training/experiment.py` - Formal multi-seed experiment runner
+- `spectra/training/experiment.py` - Formal multi-seed experiment runner
 - `configs/phase1_baseline.yaml` - Baseline experiment configuration  
 - `configs/phase1_spectral.yaml` - Spectral regularization configuration
 - `experiments/phase1_boundary_mapping/multi_seed_experiment.py` - Statistical validation script
 
 ### **Secondary Targets**
-- `asisr/utils/seed.py` - Deterministic seed management
-- `asisr/utils/config.py` - YAML configuration loading and validation
+- `spectra/utils/seed.py` - Deterministic seed management
+- `spectra/utils/config.py` - YAML configuration loading and validation
 - Statistical analysis utilities for aggregating multi-seed results
 
 ### **Strict Scope Boundaries**
@@ -72,7 +72,7 @@ experiment:
 
 ### **Step 2**: Multi-Seed Orchestration *(Priority 2)*
 ```python
-# asisr/training/experiment.py
+# spectra/training/experiment.py
 class SPECTRAExperiment:
     def run_multi_seed(self, config, n_seeds=5):
         """Run experiment across multiple seeds with statistical aggregation"""

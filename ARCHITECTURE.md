@@ -46,7 +46,7 @@ SPECTRA/
 │       └── config.py                # Configuration loading
 ├── experiments/                     # Phase-specific experiment implementations
 │   ├── phase1_boundary_mapping/     # Belgium-Netherlands proof-of-concept
-│   ├── phase2_adaptive_asisr/       # Full adaptive system
+│   ├── phase2_adaptive_spectra/     # Full adaptive system
 │   ├── phase3_multi_scale/          # Hierarchical architectures
 │   └── notebooks/                   # Analysis and exploration
 ├── tests/                           # Unit and integration tests
@@ -57,7 +57,7 @@ SPECTRA/
 ├── configs/                         # YAML experiment configurations
 │   ├── phase1_baseline.yaml
 │   ├── phase1_spectral.yaml
-│   └── adaptive_asisr.yaml
+│   └── adaptive_spectra.yaml
 ├── scripts/                         # Utility and automation scripts
 │   ├── run_experiments.py
 │   ├── generate_figures.py
@@ -82,7 +82,7 @@ SPECTRA/
 ### **1. Model Interface**
 
 ```python
-# asisr/models/base.py
+# spectra/models/base.py
 from abc import ABC, abstractmethod
 from typing import List, Dict
 import torch
@@ -108,7 +108,7 @@ class SpectralRegularizedModel(torch.nn.Module, ABC):
 ### **2. Regularization Interface**
 
 ```python
-# asisr/regularization/base.py
+# spectra/regularization/base.py
 from abc import ABC, abstractmethod
 from typing import List, Dict, Optional
 import torch
@@ -134,7 +134,7 @@ class SpectralRegularizer(ABC):
 ### **3. Metrics Interface**
 
 ```python
-# asisr/metrics/criticality.py
+# spectra/metrics/criticality.py
 from typing import Dict, List
 import torch
 
@@ -292,7 +292,7 @@ criticality_monitor.add_metric('my_metric', my_metric_function)
 ```
 
 ### **New Visualization Types**
-Add modules to `asisr/visualization/` following standard interface:
+Add modules to `spectra/visualization/` following standard interface:
 ```python
 def plot_my_analysis(results: ExperimentResults, **kwargs) -> matplotlib.Figure:
     ...
@@ -339,7 +339,7 @@ This architecture is designed to absorb the existing prototype code through syst
 
 1. **Base Classes**: Implement abstract interfaces first
 2. **Core Components**: Migrate `prototypes/SAMPLE-CODE-v1.md` logic to modular structure  
-3. **Data Integration**: Move `prototypes/map_loader.py` to `asisr/data/`
+3. **Data Integration**: Move `prototypes/map_loader.py` to `spectra/data/`
 4. **Experiment Migration**: Convert existing experiment to new orchestration framework
 5. **Extension Development**: Add adaptive and multi-scale features using plugin architecture
 

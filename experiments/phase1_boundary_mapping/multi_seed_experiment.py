@@ -15,9 +15,9 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 import numpy as np
-from asisr.utils.config import load_config
+from spectra.utils.config import load_config
 from spectra.training.experiment import SPECTRAExperiment, compare_experiments
-from asisr.utils.seed import validate_reproducibility
+from spectra.utils.seed import validate_reproducibility
 
 
 def test_config_loading():
@@ -128,7 +128,7 @@ def test_statistical_utilities():
     
     try:
         # Test statistical utility functions that don't require experiment data
-        from asisr.training.experiment import _interpret_effect_size
+        from spectra.training.experiment import _interpret_effect_size
         
         # Test effect size interpretation function
         assert _interpret_effect_size(0.1) == "negligible"

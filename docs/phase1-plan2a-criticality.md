@@ -13,12 +13,12 @@ Complete the criticality monitoring system by implementing boundary fractal dime
 ## Implementation Scope
 
 ### **Primary Target**
-- `asisr/metrics/criticality.py` - Complete `_compute_boundary_fractal_dim()` method
+- `spectra/metrics/criticality.py` - Complete `_compute_boundary_fractal_dim()` method
 - Extract box-counting algorithm from prototype code
 - Integrate with existing criticality framework
 
 ### **Secondary Targets** 
-- `asisr/visualization/boundaries.py` - Basic boundary extraction for fractal analysis
+- `spectra/visualization/boundaries.py` - Basic boundary extraction for fractal analysis
 - Test validation of fractal dimension computation
 - Integration test updates to use full criticality assessment
 

@@ -13,8 +13,8 @@ Generate publication-quality visualizations that clearly demonstrate the benefit
 ## Implementation Scope
 
 ### **Primary Targets**
-- `asisr/visualization/boundaries.py` - Decision boundary comparison plots
-- `asisr/visualization/dynamics.py` - Training trajectory visualization
+- `spectra/visualization/boundaries.py` - Decision boundary comparison plots
+- `spectra/visualization/dynamics.py` - Training trajectory visualization
 - `experiments/phase1_boundary_mapping/generate_figures.py` - Figure generation pipeline
 - Professional figure styling and layout
 
@@ -53,7 +53,7 @@ Generate publication-quality visualizations that clearly demonstrate the benefit
 
 ### **Step 1**: Decision Boundary Visualization *(Priority 1)*
 ```python
-# asisr/visualization/boundaries.py
+# spectra/visualization/boundaries.py
 def plot_boundary_comparison(baseline_model, spectral_model, map_data):
     """Side-by-side boundary comparison with Belgium-Netherlands map"""
     # Load actual boundary map as background
@@ -64,7 +64,7 @@ def plot_boundary_comparison(baseline_model, spectral_model, map_data):
 
 ### **Step 2**: Training Dynamics Plots *(Priority 2)*
 ```python
-# asisr/visualization/dynamics.py  
+# spectra/visualization/dynamics.py  
 def plot_training_comparison(baseline_results, spectral_results):
     """Training trajectory comparison with statistical validation"""
     # Loss convergence curves with error bars
