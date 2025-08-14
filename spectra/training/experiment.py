@@ -16,7 +16,7 @@ from scipy import stats
 
 from ..utils.config import SPECTRAConfig
 from ..utils.seed import SeedManager, set_seed
-from ..data import BaarleMapLoader
+from ..data import BaarleMapLoader, create_synthetic_loader
 from ..models import SpectralMLP, create_boundary_mlp
 from ..regularization import FixedSpectralRegularizer, create_edge_of_chaos_regularizer
 from ..metrics import CriticalityMonitor
@@ -140,8 +140,9 @@ class SPECTRAExperiment:
     def _setup_data(self) -> Tuple[torch.Tensor, torch.Tensor]:
         """Setup data loading based on configuration."""
         data_config = self.config.data
+        data_type = data_config['type']
         
-        if data_config['type'] == 'BaarleMap':
+        if data_type == 'BaarleMap':
             if self.data_loader is None:
                 self.data_loader = BaarleMapLoader()
             
@@ -149,8 +150,18 @@ class SPECTRAExperiment:
             coords, labels = self.data_loader.get_torch_tensors(resolution=resolution)
             
             return coords.to(self.device), labels.to(self.device)
+            
+        elif data_type in ['TwoMoons', 'Circles', 'Checkerboard']:
+            # Synthetic dataset loading
+            loader_kwargs = {k: v for k, v in data_config.items() if k != 'type'}
+            synthetic_loader = create_synthetic_loader(data_type, **loader_kwargs)
+            coords, labels = synthetic_loader.load_data()
+            
+            return coords.to(self.device), labels.to(self.device)
+            
         else:
-            raise ValueError(f"Unsupported data type: {data_config['type']}")
+            raise ValueError(f"Unsupported data type: {data_type}. "
+                           f"Supported: BaarleMap, TwoMoons, Circles, Checkerboard")
     
     def _create_model(self) -> SpectralMLP:
         """Create model based on configuration."""

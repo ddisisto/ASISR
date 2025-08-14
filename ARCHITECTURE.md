@@ -6,7 +6,7 @@
 
 ```
 SPECTRA/
-├── asisr/                           # Core library package
+├── spectra/                         # Core library package
 │   ├── __init__.py                  # Package exports and version
 │   ├── models/                      # Neural network architectures
 │   │   ├── __init__.py

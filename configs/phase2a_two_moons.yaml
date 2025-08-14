@@ -1,0 +1,44 @@
+# SPECTRA Phase 2A Two Moons Multi-σ Configuration  
+# ================================================
+# Two-moons dataset for synthetic validation of σ trade-offs
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+  activation: "relu"
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.15
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  batch_size: 250  # Quarter of samples per batch
+  optimizer: "adam"
+
+regularization:
+  type: "fixed_spectral"
+  strength: 0.1
+  target_sigma: 1.0  # Will be overridden by multi-sigma sweep
+
+# Multi-sigma sweep configuration
+multi_sigma:
+  enabled: true
+  sigma_values: [1.0, 1.5, 2.0, 2.5, 3.0]
+  include_baseline: true
+
+experiment:
+  seeds: [42, 123, 456, 789, 1011]
+  metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]
+  save_checkpoints: false
+  log_interval: 10
+
+analysis:
+  generate_trade_off_curves: true
+  compute_effect_sizes: true
+  statistical_significance_threshold: 0.05
+  
+device: "cpu"
