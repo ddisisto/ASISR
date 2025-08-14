@@ -66,4 +66,10 @@ tasks usually including:
     - ideas are fractal and evolutionary, perhaps emergent.
 
 ---
-Welcome aboard! get oriented with the project and all relevant context. Seeking devs, project managers, researchers, engineers, contributors. Have a good hard think and let me know what comes next, in phase and branch terms. chose your own adventure. all context is living context once you take repo stewardship. balance 
+Welcome aboard! get oriented with the project and all relevant context. Seeking devs, project managers, researchers, engineers, contributors. Have a good hard think and let me know what comes next, in phase and branch terms. chose your own adventure. all context is living context once you take repo stewardship. balance.
+
+constitution and mission re-statement cycle due soon. then moar science. give me an updated README.md and good coordination.
+
+---
+
+experimental focus remains making pretty pictures, then scaling and finding more fucking resonant dev cycle frequencies. go! CYOA
