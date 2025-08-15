@@ -19,6 +19,12 @@ from .regularization import (
 from .training import SPECTRAExperiment
 from .metrics import CriticalityMonitor
 from .utils import SPECTRAConfig, load_config, set_seed
+from .optimization import (
+    CriticalityAwareLRScheduler,
+    PowerLawScheduler,
+    compute_criticality_distance,
+    track_spectral_evolution
+)
 
 __all__ = [
     'SpectralMLP',
@@ -31,5 +37,9 @@ __all__ = [
     'CriticalityMonitor',
     'SPECTRAConfig',
     'load_config',
-    'set_seed'
+    'set_seed',
+    'CriticalityAwareLRScheduler',
+    'PowerLawScheduler',
+    'compute_criticality_distance',
+    'track_spectral_evolution'
 ]
