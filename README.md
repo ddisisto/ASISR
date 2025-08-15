@@ -26,31 +26,35 @@
 
 ## Quick Start
 
-### Phase 1: Baseline Spectral Control
+### Unified CLI Interface
 ```bash
 # Setup environment
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
-# Run unified experiment (comparison mode)
-cd experiments/phase1_boundary_mapping
-python unified_experiment.py --mode comparison --seeds 5 --epochs 100
+# List available experiments
+python run_experiment.py list
 
-# Results saved to: results/comparison_[timestamp]/
+# Run Phase 2B comprehensive comparison
+python run_experiment.py phase2b \
+  --static configs/phase2b_static_comparison.yaml \
+  --dynamic configs/phase2b_linear_schedule.yaml \
+           configs/phase2b_exponential_schedule.yaml \
+           configs/phase2b_step_schedule.yaml \
+  --names Linear Exponential Step \
+  --plots
+
+# Run single experiment
+python run_experiment.py single configs/phase2b_linear_schedule.yaml
+
+# Results saved to standardized paths: plots/phase*/
 ```
 
-### Phase 2B: Dynamic Spectral Strategies
+### Legacy Phase-Specific Commands
 ```bash
-# Run breakthrough dynamic scheduling experiments
-cd experiments/phase2b_dynamic_spectral
-python phase2b_experiment.py --config ../../configs/phase2b_linear_schedule.yaml
-
-# Compare all dynamic strategies
-for config in linear exponential step static; do
-  python phase2b_experiment.py --config ../../configs/phase2b_${config}_schedule.yaml
-done
-
-# Results and visualizations saved to: plots/phase2b/
+# Phase 1: Boundary mapping (legacy interface)
+cd experiments/phase1_boundary_mapping
+python unified_experiment.py --mode comparison --seeds 5 --epochs 100
 ```
 
 **Expected Output**: 
@@ -79,26 +83,35 @@ SPECTRA/
 │   ├── regularization/               # Spectral control methods
 │   │   ├── fixed.py                  # Static spectral regularization (Phase 1)
 │   │   └── dynamic.py                # Dynamic scheduling algorithms (Phase 2B)
+│   ├── experiments/                  # Modular experiment framework
+│   │   ├── base.py                   # Abstract interfaces and result containers
+│   │   └── phase2b.py                # Phase 2B dynamic vs static experiments
 │   ├── metrics/                      # Criticality assessment
-│   └── training/                     # Multi-seed experiment framework
-├── experiments/                      # Phase-specific research
+│   ├── training/                     # Multi-seed experiment framework with trajectory collection
+│   └── visualization/                # Analysis and plotting tools
+│       └── schedules.py              # σ scheduling visualization suite
+├── experiments/                      # Phase-specific research (legacy)
 │   ├── phase1_boundary_mapping/      # Belgium-Netherlands validation
 │   ├── phase2a_multi_sigma/          # Multi-σ framework validation
 │   └── phase2b_dynamic_spectral/     # Dynamic scheduling breakthrough
+├── plots/                            # Standardized output structure
+│   ├── phase1/                       # Phase 1 results
+│   ├── phase2b/                      # Phase 2B dynamic scheduling results
+│   └── phase2c/                      # Phase 2C visualization results
 ├── configs/                          # YAML experiment configurations
-│   ├── phase1_*.yaml                 # Static spectral experiments
-│   ├── phase2a_*.yaml                # Multi-σ experiments  
-│   └── phase2b_*.yaml                # Dynamic scheduling experiments
+├── run_experiment.py                 # Unified CLI for all experiments
 └── docs/                             # Research documentation and papers
 ```
 
 ## Key Components
 
-- **Unified Experiment Framework**: Single system supporting integration testing through full research experiments
+- **Modular Experiment Framework**: Clean separation between core training, experiment orchestration, and visualization
+- **Unified CLI Interface**: `run_experiment.py` provides consistent access to all experimental phases
+- **Complete Trajectory Collection**: Every-epoch criticality metrics enable detailed training dynamics analysis
 - **Dynamic Spectral Control**: Training-phase-dependent σ scheduling with linear, exponential, and step strategies
 - **Statistical Validation**: Multi-seed orchestration with proper significance testing and effect size reporting
-- **Spectral Control**: Precise spectral radius targeting via power iteration
-- **Real Data**: Belgium-Netherlands boundary (Baarle-Nassau/Baarle-Hertog enclaves) + synthetic datasets
+- **Standardized Outputs**: All results saved to `plots/phase*/` with consistent naming and structure
+- **Publication-Quality Visualization**: Professional plots ready for scientific papers
 
 ## Scientific Contributions
 
