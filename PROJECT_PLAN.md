@@ -49,7 +49,27 @@ Recent research validates our direction:
 
 ---
 
-### **Phase 3: Scale-Invariant Optimization Principles** *(Primary Focus)*
+### **Phase 2C: Cross-Dataset Validation** *(Current Focus)*
+**Duration**: 1-2 weeks  
+**Goal**: Validate Phase 2B linear scheduling breakthrough generalizes across boundary complexities
+
+#### **Critical Research Gap**
+Phase 2B achieved statistically significant +1.1% improvement on TwoMoons dataset, but validation was limited to single synthetic dataset. Cross-dataset validation required before Phase 3 investment.
+
+#### **Experimental Design**
+**Dataset Validation Protocol**:
+- **Belgium-Netherlands**: Complex real-world boundary (highest complexity test)
+- **Circles**: Concentric circular boundaries (intermediate complexity)  
+- **TwoMoons**: Control baseline (simple complexity)
+
+**Success Criteria**:
+- ✅ **Universal**: Linear schedule improves all datasets → confident Phase 3 progression
+- ⚠️ **Mixed**: Some datasets work → boundary-specific optimization approach  
+- ❌ **TwoMoons-only**: No generalization → major research direction reassessment
+
+---
+
+### **Phase 3: Scale-Invariant Optimization Principles** *(Pending Validation)*
 **Duration**: 6 weeks  
 **Goal**: Discover and validate universal optimization principles emerging from criticality physics
 

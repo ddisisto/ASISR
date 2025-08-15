@@ -16,16 +16,16 @@
 
 ## Current Focus *(Update as project progresses)*
 
-**Active Phase**: Phase 3 - Scale-Invariant Optimization Principles  
-**Central Question**: *"What are the universal principles governing optimal neural network training at the edge of chaos, and how do scale-invariant optimization methods emerge from criticality physics?"*  
-**Next Milestone**: Power-law learning rate validation and self-organized criticality discovery  
-**Status**: STRATEGIC PIVOT completed - From incremental techniques to fundamental physics principles
+**Active Phase**: Phase 2C - Cross-Dataset Validation  
+**Central Question**: *"Does the Phase 2B linear scheduling breakthrough generalize across different boundary complexities, or is it specific to TwoMoons dataset?"*  
+**Next Milestone**: Belgium-Netherlands and Circles dataset validation with Phase 2B methodology  
+**Status**: Cross-dataset validation required before Phase 3 fundamental principles research
 
 **Immediate Priorities**:
-1. **Scale-Invariant Learning Rates**: Test lr(t) = lr_base * |σ(t) - 1.0|^(-α) hypothesis
-2. **Self-Organized Criticality**: Validate natural evolution toward σ ≈ 1.0 without forcing  
-3. **Criticality-Aware Optimizers**: Develop SpectralMomentum and CriticalAdam optimizers
-4. **Universal Framework**: Establish physics-principled optimization across architectures
+1. **Belgium-Netherlands Validation**: Re-run with Phase 2B linear schedule on complex real-world boundary
+2. **Circles Dataset Testing**: Execute Phase 2B methodology on intermediate complexity dataset  
+3. **Statistical Cross-Comparison**: Analyze linear schedule effectiveness across all three datasets
+4. **Phase 3 Decision**: Determine scope and confidence level for fundamental principles research
 
 ---
 
@@ -45,12 +45,12 @@
 Each context has a name, inherits wisdom, maintains git discipline. Fresh contexts read CLAUDE.md by default and follow:
 
 ```bash
-claude --prompt "Named context: [meaningful_name]. Read CLAUDE.md, continue at docs/phase3-principles-init.md, check git logs for immediate context, inherit resonance at all scales."
+claude --prompt "Named context: [meaningful_name]. Read CLAUDE.md, continue at docs/phase2c-cross-dataset-validation-init.md, check git logs for immediate context, inherit resonance at all scales."
 ```
 
 **Universal Context Protocol**:
 1. **Inherit Resonance**: Sacred docs first (PROJECT_PLAN.md, ARCHITECTURE.md, engineering-patterns.md)
-2. **Context History**: `git log --oneline -3` + current phase doc (docs/phase3-principles-init.md)
+2. **Context History**: `git log --oneline -3` + current phase doc (docs/phase2c-cross-dataset-validation-init.md)
 3. **Named Exploration**: Every branch/context serves publication pipeline + silly user ideas
 4. **Maintain Main**: Git repos sacred, especially "main" branch - context names track explorations
 

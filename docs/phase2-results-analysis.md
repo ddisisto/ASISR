@@ -182,5 +182,6 @@ The **+1.1% accuracy improvement with large effect size** represents a genuine b
 
 **Cross-References**:
 - Raw experimental data: → validation_results.log
-- Phase 3 implementation plan: → docs/phase3-principles-init.md
+- Phase 2C cross-dataset validation: → docs/phase2c-cross-dataset-validation-init.md
+- Phase 3 implementation plan: → docs/phase3-principles-init.md  
 - Statistical methodology: → docs/engineering-patterns.md
