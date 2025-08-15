@@ -16,7 +16,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from spectra.utils.config import load_config
 from spectra.training.experiment import SPECTRAExperiment
-from experiments.phase2b_dynamic_spectral.phase2b_experiment import Phase2BExperimentRunner
+from spectra.experiments import Phase2BComparisonExperiment
 
 
 class SPECTRAExperimentRunner:
@@ -68,19 +68,25 @@ class SPECTRAExperimentRunner:
             strategy_names: Names for dynamic strategies  
             plots: Generate comparison plots
         """
-        runner = Phase2BExperimentRunner()
-        results = runner.run_dynamic_vs_static_comparison(
+        experiment = Phase2BComparisonExperiment(output_base=self.output_base)
+        result = experiment.run(
             static_config=static_config,
             dynamic_configs=dynamic_configs,
-            strategy_names=strategy_names
+            strategy_names=strategy_names,
+            generate_plots=plots
         )
         
-        if plots:
-            # Ensure output directory exists
-            output_dir = self.output_base / "phase2b"
-            output_dir.mkdir(exist_ok=True)
-            runner.generate_comparison_plots(results, str(output_dir))
-            print(f"\nPlots saved to: {output_dir}")
+        # Print statistical summary
+        print(f"\n{'='*60}")
+        print("Statistical Analysis Summary:")
+        for strategy_name, stats in result.statistical_tests.items():
+            improvement = stats['accuracy_improvement']
+            p_val = stats['p_value']
+            effect = stats['effect_size']
+            significance = "*" if stats['significant'] else ""
+            print(f"{strategy_name}: {improvement:+.1%} accuracy improvement")
+            print(f"  p-value: {p_val:.4f}{significance}, Effect: {effect}")
+        print(f"{'='*60}")
     
     def run_phase1_boundary(self, config_path: str, comparison_mode: bool = False) -> None:
         """

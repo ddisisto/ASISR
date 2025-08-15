@@ -17,6 +17,7 @@ SPECTRA/
 │   │   ├── __init__.py
 │   │   ├── base.py                  # Abstract regularizer interface
 │   │   ├── fixed.py                 # Fixed sigma targeting (σ = 1.0)
+│   │   ├── dynamic.py               # Dynamic scheduling (Linear/Exponential/Step)
 │   │   ├── adaptive.py              # Adaptive targeting with criticality feedback
 │   │   └── multi_scale.py           # Hierarchical layer-wise regularization
 │   ├── metrics/                     # Criticality assessment and analysis
@@ -29,15 +30,21 @@ SPECTRA/
 │   │   ├── map_loader.py            # Belgium-Netherlands boundary data
 │   │   ├── synthetic.py             # Two-moons and other test datasets
 │   │   └── Baarle-Nassau_-_Baarle-Hertog-en.svg  # Boundary map data
-│   ├── training/                    # Experiment orchestration
+│   ├── training/                    # Core training orchestration
 │   │   ├── __init__.py
-│   │   ├── experiment.py            # Multi-seed experiment runner
+│   │   ├── experiment.py            # Multi-seed experiment runner with trajectory collection
 │   │   ├── hooks.py                 # Real-time monitoring during training
 │   │   └── optimization.py          # Scale-invariant schedulers
+│   ├── experiments/                 # Standardized experiment modules
+│   │   ├── __init__.py
+│   │   ├── base.py                  # Abstract experiment interfaces and result containers
+│   │   ├── phase1.py                # Phase 1 boundary mapping experiments
+│   │   └── phase2b.py               # Phase 2B dynamic vs static comparisons
 │   ├── visualization/               # Analysis and plotting tools
 │   │   ├── __init__.py
 │   │   ├── boundaries.py            # Decision boundary visualization
 │   │   ├── dynamics.py              # Training trajectory analysis
+│   │   ├── schedules.py             # σ scheduling visualization suite
 │   │   └── criticality.py           # Criticality indicator plots
 │   └── utils/                       # Common utilities
 │       ├── __init__.py
@@ -58,8 +65,14 @@ SPECTRA/
 │   ├── phase1_baseline.yaml
 │   ├── phase1_spectral.yaml
 │   └── adaptive_spectra.yaml
+├── plots/                           # Standardized output structure
+│   ├── phase1/                      # Phase 1 boundary mapping results
+│   ├── phase2a/                     # Phase 2A multi-σ results  
+│   ├── phase2b/                     # Phase 2B dynamic scheduling results
+│   ├── phase2c/                     # Phase 2C interactive visualization results
+│   └── experiments/                 # Cross-phase comparative analyses
+├── run_experiment.py                # Unified CLI for all experiments
 ├── scripts/                         # Utility and automation scripts
-│   ├── run_experiments.py
 │   ├── generate_figures.py
 │   └── validate_setup.py
 ├── prototypes/                      # Legacy and experimental code
