@@ -1,0 +1,38 @@
+# SPECTRA Phase 2C: Belgium-Netherlands Linear Schedule Configuration
+# ==============================================================
+# Linear σ schedule on Belgium-Netherlands boundary for cross-dataset validation
+
+experiment:
+  name: "phase2c_belgium_linear"
+  description: "Belgium-Netherlands boundary learning with Phase 2B linear σ schedule"
+  log_interval: 10
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+  activation: "relu"
+
+data:
+  type: "BaarleMap"
+  resolution: 200
+  bounds: [-1.5, 2.5, -1.0, 1.5]
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  batch_size: 1000  # Use all data points for boundary learning
+  optimizer: "adam"
+
+# Phase 2B validated linear schedule parameters
+regularization:
+  type: "linear_schedule"
+  initial_sigma: 2.5    # High σ for exploration (validated Phase 2B parameters)
+  final_sigma: 1.0      # Target σ for convergence
+  strength: 0.1
+
+experiment_config:
+  seeds: [42, 123, 456, 789, 1011]  # Identical to Phase 2B for valid comparison
+  device: "cpu"  # Force CPU for compatibility
+
+# Phase 2C validation metrics
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]

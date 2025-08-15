@@ -1,0 +1,33 @@
+# SPECTRA Phase 2C: Belgium-Netherlands Baseline Configuration
+# ===========================================================
+# Baseline experiment for cross-dataset validation (no regularization)
+
+experiment:
+  name: "phase2c_belgium_baseline"
+  description: "Belgium-Netherlands boundary learning without spectral regularization (Phase 2C baseline)"
+  log_interval: 10
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+  activation: "relu"
+
+data:
+  type: "BaarleMap"
+  resolution: 200
+  bounds: [-1.5, 2.5, -1.0, 1.5]
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  batch_size: 1000  # Use all data points for boundary learning
+  optimizer: "adam"
+
+regularization: null  # No regularization for baseline comparison
+
+experiment_config:
+  seeds: [42, 123, 456, 789, 1011]  # Identical to Phase 2B seeds
+  device: "cpu"  # Force CPU for compatibility
+
+# Phase 2C validation metrics
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]
