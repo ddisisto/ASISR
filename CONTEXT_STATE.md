@@ -42,10 +42,9 @@
 ## **Experiment Outputs Inventory**
 
 ### **Phase 1** (Belgium-Netherlands boundary learning)
-**Location**: `experiments/phase1_boundary_mapping/`
-- `unified_experiment.py` - Complete statistical comparison framework
-- `basic_integration_test.py` - Integration testing
-- `multi_seed_experiment.py` - Multi-seed orchestration
+**Access**: `python run_experiment.py phase1 <config> [--comparison]`
+- **Location**: `experiments/phase1_boundary_mapping/unified_experiment.py`
+- **Functionality**: Complete statistical comparison framework accessible via CLI
 - **Outputs**: Statistical validation of spectral control effects
 
 ### **Phase 2A** (Multi-σ characterization) 

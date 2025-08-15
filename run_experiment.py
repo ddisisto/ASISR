@@ -96,9 +96,65 @@ class SPECTRAExperimentRunner:
             config_path: Path to configuration file
             comparison_mode: Run baseline vs spectral comparison
         """
-        # TODO: Implement Phase 1 standardized runner
-        print("Phase 1 boundary mapping runner not yet implemented")
-        print(f"Please run from experiments/phase1_boundary_mapping/ for now")
+        print("🔬 Running Phase 1 boundary mapping experiment...")
+        
+        try:
+            # Import the unified experiment runner
+            import sys
+            from pathlib import Path
+            phase1_path = Path(__file__).parent / "experiments" / "phase1_boundary_mapping"
+            sys.path.insert(0, str(phase1_path))
+            
+            from unified_experiment import UnifiedExperimentRunner, ExperimentMode
+            
+            if comparison_mode:
+                print("Running baseline vs spectral comparison...")
+                mode = ExperimentMode.COMPARISON
+                runner = UnifiedExperimentRunner(mode)
+                
+                # Use default config paths for comparison
+                baseline_config = "configs/phase1_baseline.yaml"
+                spectral_config = "configs/phase1_spectral.yaml"
+                
+                results = runner.run_baseline_vs_spectral_comparison(
+                    baseline_config, spectral_config
+                )
+                print("✅ Phase 1 comparison experiment completed")
+            else:
+                print(f"Running single experiment with config: {config_path}")
+                mode = ExperimentMode.RESEARCH
+                runner = UnifiedExperimentRunner(mode)
+                
+                results = runner.run_single_experiment(config_path)
+                print("✅ Phase 1 experiment completed")
+                
+        except ImportError as e:
+            print(f"❌ Failed to import Phase 1 experiment modules: {e}")
+            print("Please ensure experiments/phase1_boundary_mapping/ is available")
+        except Exception as e:
+            print(f"❌ Phase 1 experiment failed: {e}")
+            raise
+    
+    def run_visualization(self, output_dir: str = "plots/phase2c") -> None:
+        """
+        Generate Phase 2C visualization gallery.
+        
+        Args:
+            output_dir: Directory to save visualization plots
+        """
+        print(f"📈 Generating SPECTRA visualization gallery...")
+        print(f"Output directory: {output_dir}")
+        
+        try:
+            from spectra.visualization.schedules import save_schedule_gallery
+            save_schedule_gallery(output_dir)
+            print(f"✅ Visualization gallery saved to {output_dir}/")
+        except ImportError as e:
+            print(f"❌ Failed to import visualization module: {e}")
+            return
+        except Exception as e:
+            print(f"❌ Failed to generate visualizations: {e}")
+            return
     
     def list_available_configs(self) -> None:
         """List all available configuration files."""
@@ -138,6 +194,9 @@ Examples:
     --names Linear Exponential \\
     --plots
 
+  # Generate Phase 2C visualizations
+  python run_experiment.py visualize --output-dir plots/phase2c
+
   # List available configs
   python run_experiment.py list
         """
@@ -162,6 +221,10 @@ Examples:
     phase1_parser.add_argument('config', help='Configuration file path')
     phase1_parser.add_argument('--comparison', action='store_true', help='Run comparison mode')
     
+    # Visualization
+    visualize_parser = subparsers.add_parser('visualize', help='Generate Phase 2C visualization gallery')
+    visualize_parser.add_argument('--output-dir', default='plots/phase2c', help='Output directory for plots (default: plots/phase2c)')
+    
     # List configs
     subparsers.add_parser('list', help='List available configuration files')
     
@@ -181,6 +244,8 @@ Examples:
         )
     elif args.command == 'phase1':
         runner.run_phase1_boundary(args.config, args.comparison)
+    elif args.command == 'visualize':
+        runner.run_visualization(args.output_dir)
     elif args.command == 'list':
         runner.list_available_configs()
 

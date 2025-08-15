@@ -26,7 +26,7 @@
 
 ## Quick Start
 
-### Unified CLI Interface
+### Complete CLI Interface
 ```bash
 # Setup environment
 python -m venv venv && source venv/bin/activate
@@ -35,7 +35,10 @@ pip install -r requirements.txt
 # List available experiments
 python run_experiment.py list
 
-# Run Phase 2B comprehensive comparison
+# Run Phase 1: Boundary mapping experiments
+python run_experiment.py phase1 configs/phase1_baseline.yaml --comparison
+
+# Run Phase 2B: Dynamic vs static spectral control comparison
 python run_experiment.py phase2b \
   --static configs/phase2b_static_comparison.yaml \
   --dynamic configs/phase2b_linear_schedule.yaml \
@@ -44,22 +47,19 @@ python run_experiment.py phase2b \
   --names Linear Exponential Step \
   --plots
 
-# Run single experiment
+# Run single experiment (any phase)
 python run_experiment.py single configs/phase2b_linear_schedule.yaml
 
-# Results saved to standardized paths: plots/phase*/
-```
+# Generate Phase 2C visualizations
+python run_experiment.py visualize --output-dir plots/phase2c
 
-### Legacy Phase-Specific Commands
-```bash
-# Phase 1: Boundary mapping (legacy interface)
-cd experiments/phase1_boundary_mapping
-python unified_experiment.py --mode comparison --seeds 5 --epochs 100
+# Results saved to standardized paths: plots/phase*/
 ```
 
 **Expected Output**: 
 - **Phase 1**: Statistical comparison showing spectral regularization's variance reduction with performance cost
 - **Phase 2B**: Demonstration that dynamic σ scheduling achieves superior performance-variance trade-offs
+- **Phase 2C**: Interactive visualization gallery showing σ schedule dynamics and parameter sensitivity
 
 ## Research Status
 

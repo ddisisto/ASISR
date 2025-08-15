@@ -52,4 +52,4 @@ logs/
 
 # Temporary files
 .tmp/
-temp/
+temp/plots/phase2c_validation/
