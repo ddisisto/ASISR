@@ -50,10 +50,10 @@ SPECTRA/
 │       ├── seed.py                  # Reproducibility management
 │       ├── device.py                # GPU/CPU handling
 │       └── config.py                # Configuration loading
-├── experiments/                     # Phase-specific experiment implementations  
+├── experiments/                     # Legacy experiment implementations (Phases 1-2B)
 │   ├── phase1_boundary_mapping/     # Belgium-Netherlands proof-of-concept (✅ Complete)
-│   ├── phase2b_dynamic_spectral/    # Dynamic vs static comparison (✅ Complete) 
-│   ├── phase3_optimization/         # Scale-invariant optimization principles (🔄 Current)
+│   ├── phase2a_multi_sigma/         # Multi-σ characterization (✅ Complete)
+│   ├── phase2b_dynamic_spectral/    # Dynamic vs static comparison (✅ Complete - BREAKTHROUGH)
 │   └── notebooks/                   # Analysis and exploration
 ├── tests/                           # Unit and integration tests
 │   ├── test_models/
@@ -85,7 +85,11 @@ SPECTRA/
 
 **Plugin Architecture**: Core components implement abstract interfaces, enabling easy extension of regularization methods, models, and metrics without modifying existing code.
 
-**Phase Isolation**: Experiment directories mirror research phases, allowing independent development and validation of each stage.
+**Hybrid Experiment Organization**: 
+- **Legacy** (`experiments/`): Phases 1-2B use standalone implementations with sys.path imports (preserved for reproducibility of breakthrough results)
+- **Package** (`spectra/experiments/`): Phase 3+ use clean package APIs with proper imports (new standard)
+
+**Phase Isolation**: Each experiment phase is self-contained and cannot break previous validated results.
 
 **Data Co-location**: Dataset files stored within the package ensure they move with the code and are easily accessible for import.
 
@@ -251,6 +255,22 @@ for epoch in range(epochs):
     if epoch % monitor_interval == 0:
         metrics = criticality_monitor.assess_criticality(model, validation_data)
         regularizer.update_targets(metrics)
+```
+
+### **Experiment Organization Strategy**
+
+**Phase 1-2B (Legacy)**: Standalone experiment implementations in `experiments/`
+```python
+# Legacy import pattern (preserved for reproducibility)
+sys.path.insert(0, str(Path("experiments/phase2b_dynamic_spectral")))
+from phase2b_experiment import Phase2BExperiment
+```
+
+**Phase 3+ (Package-based)**: Clean package experiments in `spectra/experiments/`
+```python
+# New package-based pattern
+from spectra.experiments import Phase3OptimizationExperiment
+from spectra.optimization import PowerLawScheduler, CriticalAdam
 ```
 
 ### **Experiment ↔ Components Integration**
