@@ -1,0 +1,35 @@
+# SPECTRA Phase 2C: Circles Baseline Configuration
+# ================================================
+# Concentric circles baseline for cross-dataset validation (no regularization)
+
+experiment:
+  name: "phase2c_circles_baseline"
+  description: "Concentric circles boundary learning without spectral regularization (Phase 2C baseline)"
+  log_interval: 10
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+  activation: "relu"
+
+data:
+  type: "Circles"
+  n_samples: 1000
+  noise: 0.1
+  factor: 0.3  # Size ratio between inner and outer circle
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  batch_size: 250
+  optimizer: "adam"
+
+regularization: null  # No regularization for baseline comparison
+
+experiment_config:
+  seeds: [42, 123, 456, 789, 1011]  # Identical to Phase 2B seeds
+  device: "cpu"  # Force CPU for compatibility
+
+# Phase 2C validation metrics
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]
