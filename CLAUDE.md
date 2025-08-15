@@ -16,16 +16,16 @@
 
 ## Current Focus *(Update as project progresses)*
 
-**Active Phase**: Phase 2C - Visual Exploration Framework  
-**Central Question**: *"How can interactive visualization reveal the mechanisms behind dynamic spectral control and enable parameter exploration?"*  
-**Next Milestone**: σ trajectory visualization and interactive parameter controls  
-**Status**: Phase 2B BREAKTHROUGH completed - Dynamic σ scheduling validated (+1.1% accuracy, p=0.0344*)
+**Active Phase**: Phase 3 - Scale-Invariant Optimization Principles  
+**Central Question**: *"What are the universal principles governing optimal neural network training at the edge of chaos, and how do scale-invariant optimization methods emerge from criticality physics?"*  
+**Next Milestone**: Power-law learning rate validation and self-organized criticality discovery  
+**Status**: STRATEGIC PIVOT completed - From incremental techniques to fundamental physics principles
 
 **Immediate Priorities**:
-1. **Visual Exploration Framework**: Interactive σ landscapes with real-time controls (plotly, widgets, htmx dreams)
-2. **Pretty Pictures Pipeline**: Dynamic boundary evolution, performance-variance surfaces, fractal learning curves  
-3. **Failure-Driven Discovery**: Framework to explore "new planes" when experiments teach unexpected lessons
-4. **Publication Preparation**: Science + silly ideas → reproducible beauty → eventual paper
+1. **Scale-Invariant Learning Rates**: Test lr(t) = lr_base * |σ(t) - 1.0|^(-α) hypothesis
+2. **Self-Organized Criticality**: Validate natural evolution toward σ ≈ 1.0 without forcing  
+3. **Criticality-Aware Optimizers**: Develop SpectralMomentum and CriticalAdam optimizers
+4. **Universal Framework**: Establish physics-principled optimization across architectures
 
 ---
 
@@ -45,12 +45,12 @@
 Each context has a name, inherits wisdom, maintains git discipline. Fresh contexts read CLAUDE.md by default and follow:
 
 ```bash
-claude --prompt "Named context: [meaningful_name]. Read CLAUDE.md, continue at docs/phase2b-init.md, check git logs for immediate context, inherit resonance at all scales."
+claude --prompt "Named context: [meaningful_name]. Read CLAUDE.md, continue at docs/phase3-principles-init.md, check git logs for immediate context, inherit resonance at all scales."
 ```
 
 **Universal Context Protocol**:
 1. **Inherit Resonance**: Sacred docs first (PROJECT_PLAN.md, ARCHITECTURE.md, engineering-patterns.md)
-2. **Context History**: `git log --oneline -3` + current phase doc (docs/phase2b-init.md)
+2. **Context History**: `git log --oneline -3` + current phase doc (docs/phase3-principles-init.md)
 3. **Named Exploration**: Every branch/context serves publication pipeline + silly user ideas
 4. **Maintain Main**: Git repos sacred, especially "main" branch - context names track explorations
 
@@ -123,13 +123,13 @@ git status --porcelain
 
 **Phase Discipline**: Never mix implementation across phases. Complete current phase validation before proceeding.
 
-**Current Phase 2B Requirements**:
-- Design dynamic σ scheduling algorithms (linear, exponential, step-wise)
-- Implement training-phase-dependent spectral control
-- Compare dynamic vs fixed σ strategies across datasets
-- Validate hybrid exploration-exploitation approaches
+**Current Phase 3 Requirements**:
+- Implement scale-invariant learning rate scheduling: lr(t) = lr_base * |σ(t) - 1.0|^(-α)
+- Validate power-law scaling hypothesis across multiple α values
+- Study self-organized criticality: natural evolution toward σ ≈ 1.0
+- Develop criticality-aware optimizers (SpectralMomentum, CriticalAdam)
 
-**Validation Gate**: Phase 2B complete when dynamic strategies demonstrate superior or equivalent performance-variance trade-offs compared to best fixed σ approaches from Phase 2A.
+**Validation Gate**: Phase 3 complete when scale-invariant optimization methods demonstrate 5-10% improvement over standard training through physics-principled approaches.
 
 ### **Architecture Compliance** *(CRITICAL)*
 
@@ -141,6 +141,8 @@ git status --porcelain
 - `SpectralRegularizedModel` for all neural network architectures
 - `SpectralRegularizer` for all regularization methods  
 - `CriticalityMonitor` for all assessment metrics
+- `CriticalityAwareLRScheduler` for scale-invariant optimization (NEW)
+- `SpectralMomentum`/`CriticalAdam` for physics-aware optimizers (NEW)
 
 ### **Code Quality Standards** *(NON-NEGOTIABLE)*
 

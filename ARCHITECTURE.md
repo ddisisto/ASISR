@@ -20,6 +20,11 @@ SPECTRA/
 │   │   ├── dynamic.py               # Dynamic scheduling (Linear/Exponential/Step)
 │   │   ├── adaptive.py              # Adaptive targeting with criticality feedback
 │   │   └── multi_scale.py           # Hierarchical layer-wise regularization
+│   ├── optimization/                # Scale-invariant optimization methods (NEW)
+│   │   ├── __init__.py
+│   │   ├── schedulers.py            # Criticality-aware learning rate scheduling
+│   │   ├── optimizers.py            # Spectral-aware optimizers (SpectralMomentum, CriticalAdam)
+│   │   └── utils.py                 # Criticality distance computation and tracking
 │   ├── metrics/                     # Criticality assessment and analysis
 │   │   ├── __init__.py
 │   │   ├── criticality.py           # Dead neurons, sensitivity, fractal dimension
@@ -33,13 +38,7 @@ SPECTRA/
 │   ├── training/                    # Core training orchestration
 │   │   ├── __init__.py
 │   │   ├── experiment.py            # Multi-seed experiment runner with trajectory collection
-│   │   ├── hooks.py                 # Real-time monitoring during training
-│   │   └── optimization.py          # Scale-invariant schedulers
-│   ├── experiments/                 # Standardized experiment modules
-│   │   ├── __init__.py
-│   │   ├── base.py                  # Abstract experiment interfaces and result containers
-│   │   ├── phase1.py                # Phase 1 boundary mapping experiments
-│   │   └── phase2b.py               # Phase 2B dynamic vs static comparisons
+│   │   └── hooks.py                 # Real-time monitoring during training
 │   ├── visualization/               # Analysis and plotting tools
 │   │   ├── __init__.py
 │   │   ├── boundaries.py            # Decision boundary visualization
@@ -51,10 +50,10 @@ SPECTRA/
 │       ├── seed.py                  # Reproducibility management
 │       ├── device.py                # GPU/CPU handling
 │       └── config.py                # Configuration loading
-├── experiments/                     # Phase-specific experiment implementations
-│   ├── phase1_boundary_mapping/     # Belgium-Netherlands proof-of-concept
-│   ├── phase2_adaptive_spectra/     # Full adaptive system
-│   ├── phase3_multi_scale/          # Hierarchical architectures
+├── experiments/                     # Phase-specific experiment implementations  
+│   ├── phase1_boundary_mapping/     # Belgium-Netherlands proof-of-concept (✅ Complete)
+│   ├── phase2b_dynamic_spectral/    # Dynamic vs static comparison (✅ Complete) 
+│   ├── phase3_optimization/         # Scale-invariant optimization principles (🔄 Current)
 │   └── notebooks/                   # Analysis and exploration
 ├── tests/                           # Unit and integration tests
 │   ├── test_models/
@@ -62,14 +61,16 @@ SPECTRA/
 │   ├── test_metrics/
 │   └── test_integration/
 ├── configs/                         # YAML experiment configurations
-│   ├── phase1_baseline.yaml
-│   ├── phase1_spectral.yaml
-│   └── adaptive_spectra.yaml
+│   ├── phase1_baseline.yaml         # Baseline boundary mapping
+│   ├── phase1_spectral.yaml         # Fixed spectral regularization
+│   ├── phase2b_linear_schedule.yaml # Linear σ scheduling (✅ Validated)
+│   ├── phase2b_exponential_schedule.yaml # Exponential σ scheduling (✅ Validated)
+│   ├── phase2b_step_schedule.yaml   # Step-wise σ scheduling (✅ Validated)
+│   └── phase3_critical_optimization.yaml # Scale-invariant optimization (🔄 Development)
 ├── plots/                           # Standardized output structure
-│   ├── phase1/                      # Phase 1 boundary mapping results
-│   ├── phase2a/                     # Phase 2A multi-σ results  
-│   ├── phase2b/                     # Phase 2B dynamic scheduling results
-│   ├── phase2c/                     # Phase 2C interactive visualization results
+│   ├── phase1/                      # Phase 1 boundary mapping results (✅ Complete)
+│   ├── phase2b/                     # Phase 2B dynamic scheduling results (✅ Complete)
+│   ├── phase3/                      # Phase 3 optimization principles results (🔄 Current)
 │   └── experiments/                 # Cross-phase comparative analyses
 ├── run_experiment.py                # Unified CLI for all experiments
 ├── scripts/                         # Utility and automation scripts
@@ -175,6 +176,44 @@ class CriticalityMonitor:
         pass
 ```
 
+### **4. Optimization Interface (NEW)**
+
+```python
+# spectra/optimization/schedulers.py
+from torch.optim.lr_scheduler import _LRScheduler
+from typing import Dict, Any
+
+class CriticalityAwareLRScheduler(_LRScheduler):
+    """Learning rate scheduler based on distance from criticality"""
+    
+    def __init__(self, 
+                 optimizer: torch.optim.Optimizer,
+                 model: SpectralRegularizedModel,
+                 scaling_function: str = 'power_law',
+                 alpha: float = 0.5,
+                 target_sigma: float = 1.0):
+        """
+        Scale learning rate with criticality distance:
+        lr = base_lr * |σ(t) - target_sigma|^(-alpha)
+        
+        Core hypothesis for scale-invariant optimization.
+        """
+        pass
+    
+    def get_lr(self) -> List[float]:
+        """Compute current learning rates based on spectral properties"""
+        pass
+
+# spectra/optimization/optimizers.py  
+class SpectralMomentum(torch.optim.Optimizer):
+    """Momentum optimizer with criticality-aware updates"""
+    pass
+
+class CriticalAdam(torch.optim.Optimizer):
+    """Adam optimizer with spectral property feedback"""
+    pass
+```
+
 ## Integration Points
 
 ### **Model ↔ Regularization Integration**
@@ -182,20 +221,33 @@ class CriticalityMonitor:
 Models expose `get_regularizable_weights()` returning weight tensors. Regularizers operate on these tensors without needing model-specific knowledge.
 
 ```python
-# Training loop integration
+# Training loop integration with scale-invariant optimization
 model = SpectralMLP(...)
 regularizer = AdaptiveSpectralRegularizer(...)
+optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
 
-for batch in dataloader:
-    # Standard forward pass
-    output = model(batch)
-    task_loss = criterion(output, targets)
+# NEW: Criticality-aware learning rate scheduling
+critical_scheduler = PowerLawScheduler(optimizer, model, alpha=0.5)
+
+for epoch in range(epochs):
+    for batch in dataloader:
+        # Standard forward pass
+        output = model(batch)
+        task_loss = criterion(output, targets)
+        
+        # Spectral regularization
+        spectral_loss = model.spectral_loss(regularizer)
+        total_loss = task_loss + spectral_loss
+        
+        # Optimization step
+        optimizer.zero_grad()
+        total_loss.backward()
+        optimizer.step()
     
-    # Spectral regularization
-    spectral_loss = model.spectral_loss(regularizer)
-    total_loss = task_loss + spectral_loss
+    # NEW: Scale-invariant learning rate adjustment
+    critical_scheduler.step()
     
-    # Criticality monitoring
+    # Criticality monitoring and adaptation
     if epoch % monitor_interval == 0:
         metrics = criticality_monitor.assess_criticality(model, validation_data)
         regularizer.update_targets(metrics)
@@ -210,6 +262,8 @@ Experiments compose models, regularizers, and metrics without tight coupling:
 config = {
     'model': {'type': 'SpectralMLP', 'hidden_dims': [64, 64]},
     'regularizer': {'type': 'AdaptiveSpectralRegularizer', 'adaptation_rate': 0.01},
+    'optimizer': {'type': 'SGD', 'lr': 1e-3, 'momentum': 0.9},
+    'scheduler': {'type': 'power_law', 'alpha': 0.5, 'target_sigma': 1.0},
     'metrics': {'criticality_monitor': {'dead_threshold': 1e-5}}
 }
 
