@@ -1,0 +1,37 @@
+# Phase 2D-2A: 32x32 Small Architecture Linear Schedule
+# Small network: ~1,664 parameters total
+# Speed: ~5-10 seconds per seed
+
+experiment:
+  name: "phase2d2_32x32_linear_10seeds"
+  description: "Small architecture [32,32] linear schedule for architecture sensitivity analysis"
+  log_interval: 10
+  # 10 seeds for rapid trend detection
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"  # Force CPU for compatibility
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [32, 32]  # Small architecture
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 50  # Reduced for speed in micro-architecture testing
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "linear_schedule"
+  initial_sigma: 2.5    # High σ for exploration
+  final_sigma: 1.0      # Target σ for convergence
+  strength: 0.1
+
+# Phase 2D-2A validation metrics
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]

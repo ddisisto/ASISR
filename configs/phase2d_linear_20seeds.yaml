@@ -1,0 +1,38 @@
+# Phase 2D-1: 20-Seed Linear Schedule Replication  
+# Exact reproduction of phase2b_linear_schedule.yaml with expanded seeds
+# Critical validation: Was Phase 2B +1.0% improvement genuine or Type I error?
+
+experiment:
+  name: "phase2d_linear_20seeds"
+  description: "20-seed high-powered replication of Phase 2B linear schedule for breakthrough validation"
+  log_interval: 10
+  # 20 seeds for high statistical power (4x original Phase 2B)
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066, 
+          7077, 8088, 9099, 1010, 1111, 1212, 1313, 1414, 1515, 1616]
+
+device: "cpu"  # Force CPU for compatibility
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [64, 64]
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "linear_schedule"
+  initial_sigma: 2.5    # High σ for exploration 
+  final_sigma: 1.0      # Target σ for convergence
+  strength: 0.1
+
+# Phase 2D-1 validation metrics  
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]

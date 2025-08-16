@@ -1,0 +1,36 @@
+# Phase 2D-2A: 8x8 Micro-Architecture Static Baseline
+# Ultra-micro network: ~120 parameters total
+# Speed: ~2-3 seconds per seed for rapid iteration
+
+experiment:
+  name: "phase2d2_8x8_static_10seeds"
+  description: "Micro-architecture [8,8] static baseline for architecture sensitivity analysis"
+  log_interval: 10
+  # 10 seeds for rapid trend detection
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"  # Force CPU for compatibility
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [8, 8]  # Ultra-micro architecture
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 50  # Reduced for speed in micro-architecture testing
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "fixed_spectral"
+  target_sigma: 1.0     # Optimal σ from Phase 2A findings
+  strength: 0.1
+
+# Phase 2D-2A validation metrics
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]

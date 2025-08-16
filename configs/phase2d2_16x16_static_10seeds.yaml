@@ -1,0 +1,36 @@
+# Phase 2D-2A: 16x16 Micro-Architecture Static Baseline
+# Micro network: ~464 parameters total
+# Speed: ~3-5 seconds per seed
+
+experiment:
+  name: "phase2d2_16x16_static_10seeds"
+  description: "Micro-architecture [16,16] static baseline for architecture sensitivity analysis"
+  log_interval: 10
+  # 10 seeds for rapid trend detection
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"  # Force CPU for compatibility
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [16, 16]  # Micro architecture
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 50  # Reduced for speed in micro-architecture testing
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "fixed_spectral"
+  target_sigma: 1.0     # Optimal σ from Phase 2A findings
+  strength: 0.1
+
+# Phase 2D-2A validation metrics
+metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]
