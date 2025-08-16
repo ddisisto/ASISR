@@ -1,53 +1,75 @@
 # SPECTRA Documentation Directory
 
-## Current Active Documents
+**Last Updated**: August 16, 2025  
+**Status**: Post-housekeeping organization
+
+---
+
+## 📋 **Current Active Documents**
 
 ### **Core Research Context**
 - `START.md` - Original project conception and motivation
 - `conceptual-analysis.md` - Deep theoretical framework analysis  
 - `PRIOR-RESEARCH-PROPOSAL.md` - Historical research proposal context
+- `research-status-summary.md` - **CURRENT HONEST ASSESSMENT** of research status
 
-### **Phase Completion Documentation**
-- `phase1-init.md` - Phase 1 boundary mapping (✅ **COMPLETE**)
-- `phase2a-init.md` - Phase 2A multi-σ characterization (✅ **COMPLETE**)
-- `phase2b-init.md` - Phase 2B dynamic scheduling setup (✅ **COMPLETE**)
-- `phase2b-completion-handover.md` - Phase 2B breakthrough results (✅ **COMPLETE**)
+### **Technical Documentation**
+- `engineering-patterns.md` - Development patterns and quality standards
+- `architecture-debt-analysis.md` - Technical debt and architectural concerns
+- `cuda-setup-guide.md` - Complete CUDA setup and usage guide
+- `cuda-troubleshooting-quickref.md` - Quick CUDA troubleshooting reference
 
-### **Current Phase Development**  
-- `phase2c-cross-dataset-validation-init.md` - Phase 2C cross-dataset validation (🔄 **ACTIVE**)
-- `phase3-principles-init.md` - Phase 3 scale-invariant optimization (⏳ **PENDING**)
+### **Phase Analysis & Corrections**
+- `phase3-critical-findings.md` - Discovery of experimental control errors
+- `phase3-corrected-analysis.md` - Root cause analysis of interpretation errors  
+- `phase2-results-analysis.md` - Historical phase 2 results analysis
+- `phase2c-decision-summary.md` - Phase 2C decision documentation
 
-### **Engineering Standards**
-- `engineering-patterns.md` - Code quality and development patterns
-
-### **Reference Materials**
-- `2410.02536v3.txt` - Intelligence at Edge of Chaos paper
-- `DL-TRANSCRIPT.md` - Welch Labs geometric deep learning insights
-- `chatgpt-5-review.md` - External review and analysis
-- `repo-handover.md` - Repository structure and handover notes
-
-## Archive Directory
-
-### **docs/archive/**
-Contains obsolete planning documents from the incremental phase approach that was replaced by the fundamental principles pivot:
-
-- `phase1-plan2a-criticality.md` - Superseded by actual Phase 2A completion
-- `phase1-plan2b-multiseed.md` - Superseded by actual Phase 2B completion  
-- `phase1-plan2c-comparison.md` - Superseded by actual comparison framework
-- `phase1-plan2d-visualization.md` - Superseded by strategic pivot
-- `phase1-planning.md` - Original incremental planning approach
-- `phase2c-implementation-handover.md` - Visualization phase (cancelled due to pivot)
-- `phase2c-visual-init.md` - Interactive visualization (cancelled due to pivot)
-
-**Note**: These are preserved for historical context but are no longer part of the active research direction.
-
-## Documentation Philosophy
-
-**Authority Documents**: PROJECT_PLAN.md, ARCHITECTURE.md, CLAUDE.md define current direction  
-**Phase Documents**: Capture completed work and current active development  
-**Archive Strategy**: Preserve history while maintaining clean active workspace  
-**Research Context**: Papers and transcripts inform theoretical foundation
+### **Current Planning Documents**
+- `phase3-adaptive-optimization-plan.md` - Technical implementation plan
+- `phase3b-validation-requirements.md` - Validation framework requirements
+- `housekeeping-assessment.md` - Repository organization assessment
 
 ---
 
-**Current Research Focus**: Phase 3 - Universal principles of scale-invariant optimization at the edge of chaos
+## 🗂️ **Archive Organization**
+
+### **Completed Handovers** (`archive/completed-handovers/`)
+- Historical handover documents for completed phases and tasks
+- CUDA fix handover (successfully completed)
+- Phase 2 completion handovers
+
+### **Incorrect Claims** (`archive/incorrect-claims/`)
+- Documents containing scientifically incorrect claims
+- False breakthrough summaries based on experimental control errors
+- **⚠️ WARNING**: These documents are preserved for historical reference but contain invalid conclusions
+
+---
+
+## 🎯 **Document Status Legend**
+
+- ✅ **CURRENT & ACCURATE** - Up-to-date with corrected research assessment
+- 📋 **HISTORICAL VALUE** - Older documents with historical context
+- ⚠️ **ARCHIVED** - Moved to archive (completed or incorrect)
+
+---
+
+## 🔍 **Quick Research Status**
+
+**Current Reality**: Spectral regularization framework is functional with measurable but small effects (~0.2-1%). Initial claims of larger breakthroughs were based on experimental control errors.
+
+**What Works**: Implementation, metrics, statistical methodology  
+**What Doesn't**: Universal benefits, large effect sizes, predictive capacity theory
+
+**For Complete Assessment**: See `research-status-summary.md`
+
+---
+
+## 📖 **References & External Content**
+- `2410.02536v3.txt` - Intelligence at Edge of Chaos paper
+- `DL-TRANSCRIPT.md` - Welch Labs geometric deep learning insights
+- `chatgpt-5-review.md` - External review and context
+
+---
+
+**Note**: This documentation reflects the honest, corrected assessment of SPECTRA research as of Phase 3 completion.
