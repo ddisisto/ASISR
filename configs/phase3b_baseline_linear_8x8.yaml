@@ -1,0 +1,40 @@
+# Phase 3B: Proper Phase 2D Linear Baseline for 8x8 Architecture
+# Match Phase 3A experimental conditions exactly for fair comparison
+
+experiment:
+  name: "phase3b_baseline_linear_8x8"
+  description: "Phase 2D linear schedule baseline with 15 seeds for proper statistical comparison"
+  phase: "phase3b"
+  output_base: "phase3b"
+  log_interval: 10
+  # Exact same seeds as Phase 3A for controlled comparison
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066, 
+          7077, 8088, 9099, 1010, 1111]
+
+device: "auto"
+
+model:
+  type: "SpectralMLP"  
+  hidden_dims: [8, 8]    # Exact same 8x8 architecture as Phase 3A
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000        # Exact same dataset parameters
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100            # Exact same training regime
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "linear_schedule"  # Phase 2D linear schedule (NOT capacity_adaptive)
+  initial_sigma: 2.5      # Same σ parameters as Phase 3A for fair comparison
+  final_sigma: 1.0
+  strength: 0.1
+
+# Note: This is the controlled baseline to compare against Phase 3A adaptive
+# All parameters identical except regularization type: linear vs capacity_adaptive
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg"]

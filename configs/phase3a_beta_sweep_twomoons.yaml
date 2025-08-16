@@ -11,7 +11,7 @@ experiment:
   # 10 seeds for robust statistical validation
   seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
 
-device: "cpu"  # Force CPU for compatibility
+device: "auto"  # Force CPU for compatibility
 
 # Phase 3A experimental matrix: Test across multiple architectures
 architectures:

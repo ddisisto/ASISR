@@ -9,7 +9,7 @@ experiment:
   log_interval: 25
   seeds: [42, 123, 456]  # 3 seeds for quick testing
 
-device: "cpu"
+device: "auto"
 
 model:
   type: "SpectralMLP"

@@ -30,4 +30,4 @@ regularization:
 
 experiment_config:
   seeds: [42, 123, 456, 789, 999]  # 5 seeds for statistical validity
-  device: "cpu"
+  device: "auto"

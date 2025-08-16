@@ -29,4 +29,4 @@ experiment:
   save_checkpoints: false
   log_interval: 10
 
-device: "cpu"  # Force CPU for compatibility
+device: "auto"  # Force CPU for compatibility

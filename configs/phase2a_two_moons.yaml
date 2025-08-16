@@ -41,4 +41,4 @@ analysis:
   compute_effect_sizes: true
   statistical_significance_threshold: 0.05
   
-device: "cpu"
+device: "auto"

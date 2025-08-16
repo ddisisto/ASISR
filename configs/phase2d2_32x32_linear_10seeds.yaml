@@ -9,7 +9,7 @@ experiment:
   # 10 seeds for rapid trend detection
   seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
 
-device: "cpu"  # Force CPU for compatibility
+device: "auto"  # Force CPU for compatibility
 
 model:
   type: "SpectralMLP"

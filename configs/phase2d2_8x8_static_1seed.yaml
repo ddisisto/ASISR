@@ -8,7 +8,7 @@ experiment:
   log_interval: 10
   seeds: [42]
 
-device: "cpu"
+device: "auto"
 
 model:
   type: "SpectralMLP"

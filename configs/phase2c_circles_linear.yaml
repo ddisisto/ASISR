@@ -34,7 +34,7 @@ regularization:
 
 experiment_config:
   seeds: [42, 123, 456, 789, 1011]  # Identical to Phase 2B for valid comparison
-  device: "cpu"  # Force CPU for compatibility
+  device: "auto"  # Force CPU for compatibility
 
 # Phase 2C validation metrics
 metrics: ["accuracy", "loss", "criticality_score", "boundary_fractal_dim", "spectral_radius_avg"]

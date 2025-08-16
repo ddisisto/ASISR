@@ -1,0 +1,39 @@
+# Phase 3B: No Regularization Baseline for 8x8 Architecture
+# Establish absolute performance reference without any spectral regularization
+
+experiment:
+  name: "phase3b_no_regularization_8x8"
+  description: "No regularization baseline to establish absolute performance reference"
+  phase: "phase3b"
+  output_base: "phase3b"
+  log_interval: 10
+  # Same seeds for controlled comparison
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066, 
+          7077, 8088, 9099, 1010, 1111]
+
+device: "auto"
+
+model:
+  type: "SpectralMLP"  
+  hidden_dims: [8, 8]    # Same 8x8 architecture
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000        # Same dataset parameters
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100            # Same training regime
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "linear_schedule"  # Use linear schedule but with strength=0 (no effect)
+  initial_sigma: 2.5
+  final_sigma: 1.0
+  strength: 0.0           # ZERO STRENGTH = NO REGULARIZATION
+
+# This establishes the true baseline to measure regularization effects against
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg"]
