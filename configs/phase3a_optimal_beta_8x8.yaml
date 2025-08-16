@@ -1,0 +1,48 @@
+# Phase 3A: Optimal β Validation for 8x8 Architecture
+# Focus on eliminating negative effects for under-parameterized networks
+# Critical test: Can capacity-adaptive scheduling fix the -1.1% decrease?
+
+experiment:
+  name: "phase3a_optimal_beta_8x8"
+  description: "Validate optimal β for 8x8 under-parameterized networks to eliminate negative effects"
+  log_interval: 10
+  # 15 seeds for high-confidence validation of the critical 8x8 case
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066, 
+          7077, 8088, 9099, 1010, 1111]
+
+device: "cpu"
+
+model:
+  type: "SpectralMLP"  
+  hidden_dims: [8, 8]    # Under-parameterized: ~120 params, capacity_ratio ≈ 0.26
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100  # Full epochs for definitive validation
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "capacity_adaptive"
+  beta: -0.2                # Predicted optimal from theoretical analysis
+  sigma_base: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+# Baseline comparison configuration
+baseline:
+  type: "linear_schedule"   # Phase 2D baseline that shows -1.1% for 8x8
+  initial_sigma: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg", "capacity_ratio"]
+
+# Critical success criterion:
+# Phase 3A success = 8x8 capacity-adaptive ≥ baseline (eliminate negative effect)

@@ -1,0 +1,82 @@
+# Phase 3C: Universal Validation Across All Datasets and Architectures
+# Comprehensive test of capacity-adaptive scheduling framework
+# Final validation: Universal +1-2% improvement across all conditions
+
+experiment:
+  name: "phase3c_universal_validation" 
+  description: "Comprehensive validation of capacity-adaptive scheduling across all datasets and architectures"
+  log_interval: 10
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"
+
+# Universal test matrix: All dataset-architecture combinations
+datasets:
+  - name: "TwoMoons"
+    type: "TwoMoons"
+    n_samples: 1000
+    noise: 0.1
+    random_state: 42
+    optimal_architecture: "16x16"
+    
+  - name: "Circles"
+    type: "Circles" 
+    n_samples: 1000
+    noise: 0.1
+    factor: 0.3
+    random_state: 42
+    optimal_architecture: "32x32"
+    
+  - name: "Belgium"
+    type: "BelgiumNetherlands"
+    resolution: 200
+    boundary_width: 3
+    optimal_architecture: "64x64"
+
+architectures:
+  - name: "8x8"
+    hidden_dims: [8, 8]
+    capacity_category: "under_parameterized"
+    
+  - name: "16x16"
+    hidden_dims: [16, 16] 
+    capacity_category: "optimal_twomoons"
+    
+  - name: "32x32"
+    hidden_dims: [32, 32]
+    capacity_category: "optimal_circles"
+    
+  - name: "64x64"
+    hidden_dims: [64, 64]
+    capacity_category: "optimal_belgium"
+
+model:
+  type: "SpectralMLP"
+  # hidden_dims set by architecture matrix
+
+training:
+  epochs: 100
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "capacity_adaptive"
+  beta: -0.2              # Optimal β from Phase 3A validation
+  sigma_base: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+baseline:
+  type: "linear_schedule"   # Standard Phase 2B linear scheduling
+  initial_sigma: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg", "capacity_ratio", "boundary_fractal_dim"]
+
+# Phase 3C Universal Success Criteria:
+# 1. MINIMUM: All configurations ≥ 0% (eliminate negative effects)
+# 2. TARGET: Universal +1-2% improvement across all dataset-architecture pairs
+# 3. THEORY: Validate capacity-complexity matching predictions
+# 4. STRETCH: Demonstrate predictive power for optimal architecture selection

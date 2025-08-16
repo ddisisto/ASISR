@@ -1,0 +1,58 @@
+# Phase 3A: β Parameter Sweep for Capacity-Adaptive Scheduling
+# Core Phase 3 validation: Find optimal β for capacity-dependent σ scheduling
+# Tests hypothesis that β < 0 enables universal improvements across architectures
+
+experiment:
+  name: "phase3a_beta_sweep_twomoons" 
+  description: "β parameter optimization for capacity-adaptive spectral scheduling on TwoMoons"
+  log_interval: 10
+  # 10 seeds for robust statistical validation
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"  # Force CPU for compatibility
+
+# Phase 3A experimental matrix: Test across multiple architectures
+architectures:
+  - name: "8x8"
+    hidden_dims: [8, 8]    # ~120 params, capacity_ratio ≈ 0.26 (under-parameterized)
+  - name: "16x16" 
+    hidden_dims: [16, 16]  # ~464 params, capacity_ratio ≈ 1.0 (optimal)
+  - name: "32x32"
+    hidden_dims: [32, 32]  # ~1664 params, capacity_ratio ≈ 3.6 (over-parameterized)
+  - name: "64x64"
+    hidden_dims: [64, 64]  # ~5888 params, capacity_ratio ≈ 12.7 (highly over-parameterized)
+
+# β parameter sweep: Test capacity scaling hypotheses
+beta_values: [-0.5, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2]
+
+model:
+  type: "SpectralMLP"
+  # hidden_dims will be set by architecture sweep
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 50  # Shorter epochs for rapid iteration during development
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "capacity_adaptive"
+  sigma_base: 2.5           # Phase 2B validated base value
+  final_sigma: 1.0          # Target criticality
+  strength: 0.1
+  # beta: will be set by parameter sweep
+  # capacity_ratio: will be calculated automatically based on model and dataset
+
+# Phase 3A success metrics
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg", "capacity_ratio"]
+
+# Phase 3A success criteria:
+# - 8x8 networks: Eliminate negative effects (≥0% improvement vs baseline)
+# - All architectures: Find β that enables positive improvements
+# - Statistical validation: p < 0.05 for improvements

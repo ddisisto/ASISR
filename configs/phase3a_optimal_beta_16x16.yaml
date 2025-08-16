@@ -1,0 +1,45 @@
+# Phase 3A: Optimal β Validation for 16x16 Architecture  
+# Validate capacity-adaptive scheduling maintains benefits for optimal-capacity networks
+# Test: Can we maintain or improve the +2.0% effect from Phase 2D?
+
+experiment:
+  name: "phase3a_optimal_beta_16x16"
+  description: "Validate capacity-adaptive scheduling maintains benefits for optimal-capacity 16x16 networks"
+  log_interval: 10
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [16, 16]  # Optimal capacity: ~464 params, capacity_ratio ≈ 1.0
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "capacity_adaptive"
+  beta: -0.2
+  sigma_base: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+baseline:
+  type: "linear_schedule"   # Phase 2D linear schedule that shows +2.0% for 16x16
+  initial_sigma: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg", "capacity_ratio"]
+
+# Success criterion: 
+# Capacity-adaptive ≥ +2.0% (maintain Phase 2D benefits for optimal architectures)

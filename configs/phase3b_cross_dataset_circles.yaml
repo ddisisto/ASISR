@@ -1,0 +1,57 @@
+# Phase 3B: Cross-Dataset Generalization - Circles
+# Test capacity-adaptive scheduling on medium-complexity dataset  
+# Validation: Can we resolve the -0.2% negative effect from Phase 2C?
+
+experiment:
+  name: "phase3b_cross_dataset_circles"
+  description: "Capacity-adaptive scheduling validation on Circles medium-complexity dataset"
+  log_interval: 10
+  seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
+
+device: "cpu"
+
+# Test architectures around predicted optimal for medium complexity
+architectures:
+  - name: "16x16"
+    hidden_dims: [16, 16]  # ~464 params, may be under-capacity for Circles
+  - name: "32x32"
+    hidden_dims: [32, 32]  # ~1664 params, predicted optimal for Circles
+  - name: "64x64"
+    hidden_dims: [64, 64]  # ~5888 params, may be over-capacity for Circles
+
+model:
+  type: "SpectralMLP"
+  # hidden_dims set by architecture sweep
+
+data:
+  type: "Circles"           # Medium complexity from sklearn
+  n_samples: 1000
+  noise: 0.1
+  factor: 0.3
+  random_state: 42
+
+training:
+  epochs: 100
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+regularization:
+  type: "capacity_adaptive"
+  beta: -0.2              # Use optimal β from Phase 3A
+  sigma_base: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+baseline:
+  type: "linear_schedule"   # Phase 2C baseline showing -0.2% for Circles
+  initial_sigma: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+metrics: ["accuracy", "loss", "criticality_score", "spectral_radius_avg", "capacity_ratio"]
+
+# Phase 3B success criteria:
+# - Eliminate negative effects: Circles capacity-adaptive ≥ 0% vs baseline  
+# - Validate capacity-complexity matching for medium complexity
+# - Test 32x32 as predicted optimal architecture for Circles
