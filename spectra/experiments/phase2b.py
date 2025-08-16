@@ -81,9 +81,10 @@ class Phase2BComparisonExperiment(BaseExperiment):
         # Generate plots
         if generate_plots:
             plot_paths = self.generate_plots(comparison_result)
-            print(f"\\nPlots saved to: {comparison_result.output_dir}")
-            for path in plot_paths:
-                print(f"  - {path.name}")
+            if plot_paths:
+                print(f"\\nPlots saved to: {plot_paths[0].parent}")
+                for path in plot_paths:
+                    print(f"  - {path.name}")
         
         return comparison_result
     
@@ -167,15 +168,17 @@ class Phase2BComparisonExperiment(BaseExperiment):
         Returns:
             List of generated plot file paths
         """
-        output_dir = result.output_dir
         plot_paths = []
         
         # Generate experiment-specific filename suffix
         if result.comparison_results:
-            # Use the first comparison strategy name for filename
+            # Use the first comparison strategy name for filename and directory
             experiment_suffix = result.comparison_results[0].experiment_name
+            # Use the comparison experiment's output directory, not the root
+            output_dir = result.comparison_results[0].output_dir
         else:
             experiment_suffix = "baseline"
+            output_dir = result.baseline_result.output_dir
         
         # Set plotting style
         plt.style.use('seaborn-v0_8')

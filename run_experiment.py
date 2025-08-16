@@ -27,6 +27,63 @@ class SPECTRAExperimentRunner:
         self.output_base = Path("plots")
         self.output_base.mkdir(exist_ok=True)
     
+    def _check_existing_results(self, strategy_names: List[str]) -> None:
+        """
+        Check for existing experiment results and prevent overwrites.
+        
+        Args:
+            strategy_names: List of experiment strategy names to check
+            
+        Raises:
+            SystemExit: If existing results found and overwrite not allowed
+        """
+        phase2b_dir = self.output_base / "phase2b"
+        existing_experiments = []
+        
+        if not phase2b_dir.exists():
+            return  # No existing results
+        
+        # Check for existing experiment directories
+        for strategy_name in strategy_names:
+            experiment_dir = phase2b_dir / strategy_name
+            if experiment_dir.exists() and any(experiment_dir.iterdir()):
+                existing_experiments.append(strategy_name)
+        
+        # Check for existing plot files in root phase2b directory
+        existing_plots = []
+        for strategy_name in strategy_names:
+            comparison_plot = phase2b_dir / f"phase2b_comparison_{strategy_name}.png"
+            dynamics_plot = phase2b_dir / f"phase2b_dynamics_{strategy_name}.png"
+            if comparison_plot.exists() or dynamics_plot.exists():
+                existing_plots.append(strategy_name)
+        
+        if existing_experiments or existing_plots:
+            print("❌ ERROR: Existing experiment results found!")
+            print()
+            if existing_experiments:
+                print("📁 Experiment directories with existing data:")
+                for exp in existing_experiments:
+                    exp_dir = phase2b_dir / exp
+                    file_count = len(list(exp_dir.iterdir()))
+                    print(f"  - {exp_dir} ({file_count} files)")
+            
+            if existing_plots:
+                print("🖼️  Existing plot files:")
+                for exp in existing_plots:
+                    comparison_plot = phase2b_dir / f"phase2b_comparison_{exp}.png"
+                    dynamics_plot = phase2b_dir / f"phase2b_dynamics_{exp}.png"
+                    if comparison_plot.exists():
+                        print(f"  - {comparison_plot}")
+                    if dynamics_plot.exists():
+                        print(f"  - {dynamics_plot}")
+            
+            print()
+            print("🛡️  To protect your existing results, this experiment has been cancelled.")
+            print("💡 To overwrite existing results, run with --overwrite flag:")
+            print(f"   python run_experiment.py phase2b [args] --overwrite")
+            print()
+            sys.exit(1)
+    
     def run_single_experiment(self, config_path: str, output_dir: Optional[str] = None) -> None:
         """
         Run a single experiment from config file.
@@ -58,7 +115,8 @@ class SPECTRAExperimentRunner:
                               static_config: str,
                               dynamic_configs: List[str],
                               strategy_names: List[str],
-                              plots: bool = True) -> None:
+                              plots: bool = True,
+                              overwrite: bool = False) -> None:
         """
         Run Phase 2B dynamic vs static comparison.
         
@@ -67,7 +125,12 @@ class SPECTRAExperimentRunner:
             dynamic_configs: List of dynamic strategy configurations
             strategy_names: Names for dynamic strategies  
             plots: Generate comparison plots
+            overwrite: Allow overwriting existing results
         """
+        # Check for existing results and prevent overwrites unless explicitly allowed
+        if not overwrite:
+            self._check_existing_results(strategy_names)
+        
         experiment = Phase2BComparisonExperiment(output_base=self.output_base)
         result = experiment.run(
             static_config=static_config,
@@ -215,6 +278,7 @@ Examples:
     phase2b_parser.add_argument('--dynamic', nargs='+', required=True, help='Dynamic strategy configs')
     phase2b_parser.add_argument('--names', nargs='+', required=True, help='Strategy names')
     phase2b_parser.add_argument('--plots', action='store_true', help='Generate plots')
+    phase2b_parser.add_argument('--overwrite', action='store_true', help='Allow overwriting existing experiment results')
     
     # Phase 1 boundary
     phase1_parser = subparsers.add_parser('phase1', help='Run Phase 1 boundary mapping')
@@ -240,7 +304,7 @@ Examples:
         runner.run_single_experiment(args.config, args.output_dir)
     elif args.command == 'phase2b':
         runner.run_phase2b_comparison(
-            args.static, args.dynamic, args.names, args.plots
+            args.static, args.dynamic, args.names, args.plots, args.overwrite
         )
     elif args.command == 'phase1':
         runner.run_phase1_boundary(args.config, args.comparison)
