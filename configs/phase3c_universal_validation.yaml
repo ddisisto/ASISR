@@ -54,6 +54,13 @@ model:
   type: "SpectralMLP"
   # hidden_dims set by architecture matrix
 
+# Default data config (will be overridden by dataset matrix in experiment runner)
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
 training:
   epochs: 100
   learning_rate: 0.01
