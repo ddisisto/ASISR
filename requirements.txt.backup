@@ -7,7 +7,7 @@ numpy>=1.20.0
 scipy>=1.7.0              # Scientific computing and statistical tests
 
 # Machine learning frameworks
-torch==2.7.1               # PyTorch with CUDA 11.8 support for GTX 1070 (sm_61)
+torch>=1.9.0              # PyTorch for neural networks
 scikit-learn>=1.0.0        # Traditional ML algorithms and datasets
 
 # Image processing and SVG handling
