@@ -1,0 +1,38 @@
+# Phase 3A: Quick β Parameter Test
+# Fast validation of different β values to confirm β=-0.2 is optimal
+
+experiment:
+  name: "phase3a_beta_test_quick"
+  description: "Quick β parameter test on 8x8 to confirm optimal scaling"
+  phase: "phase3a"
+  output_base: "phase3a"
+  log_interval: 25
+  seeds: [42, 123, 456]  # 3 seeds for quick testing
+
+device: "cpu"
+
+model:
+  type: "SpectralMLP"
+  hidden_dims: [8, 8]  # 8x8 under-parameterized
+
+data:
+  type: "TwoMoons"
+  n_samples: 1000
+  noise: 0.1
+  random_state: 42
+
+training:
+  epochs: 50  # Shorter for quick test
+  learning_rate: 0.01
+  optimizer: "adam"
+  batch_size: null
+
+# Test different β values - we'll modify this in the script
+regularization:
+  type: "capacity_adaptive"
+  beta: -0.2  # Will be varied
+  sigma_base: 2.5
+  final_sigma: 1.0
+  strength: 0.1
+
+metrics: ["accuracy", "loss", "criticality_score", "capacity_ratio"]
