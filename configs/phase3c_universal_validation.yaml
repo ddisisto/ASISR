@@ -28,7 +28,7 @@ datasets:
     optimal_architecture: "32x32"
     
   - name: "Belgium"
-    type: "BelgiumNetherlands"
+    type: "BaarleMap"
     resolution: 200
     boundary_width: 3
     optimal_architecture: "64x64"

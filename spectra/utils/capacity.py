@@ -23,6 +23,7 @@ class CapacityAnalysis:
         architecture_type: Type of architecture (MLP, CNN, etc.)
         optimal_params: Optimal parameter count for dataset
         dataset_name: Dataset used for capacity calculation
+        capacity_category: Capacity category (under_parameterized, optimal, over_parameterized)
     """
     total_params: int
     layer_params: Dict[str, int] 
@@ -30,6 +31,7 @@ class CapacityAnalysis:
     architecture_type: str
     optimal_params: int
     dataset_name: str
+    capacity_category: str
 
 
 def count_model_parameters(model: nn.Module, trainable_only: bool = True) -> int:
@@ -163,13 +165,17 @@ def analyze_model_capacity(model: nn.Module, dataset_name: str) -> CapacityAnaly
         if all(isinstance(layer, nn.Linear) for layer in model.layers if isinstance(layer, nn.Module)):
             architecture_type = "MLP"
     
+    # Calculate capacity category
+    capacity_category = categorize_capacity(capacity_ratio)
+    
     return CapacityAnalysis(
         total_params=total_params,
         layer_params=layer_params,
         capacity_ratio=capacity_ratio,
         architecture_type=architecture_type,
         optimal_params=optimal_params,
-        dataset_name=dataset_name
+        dataset_name=dataset_name,
+        capacity_category=capacity_category
     )
 
 

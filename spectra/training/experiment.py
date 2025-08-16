@@ -289,7 +289,7 @@ class SPECTRAExperiment:
             dataset_name = 'two_moons'
         elif data_config['type'] == 'Circles':
             dataset_name = 'circles'
-        elif data_config['type'] == 'BelgiumNetherlands':
+        elif data_config['type'] == 'BaarleMap':
             dataset_name = 'belgium_netherlands'
         else:
             dataset_name = 'two_moons'  # Default fallback

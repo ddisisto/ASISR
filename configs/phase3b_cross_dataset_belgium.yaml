@@ -24,7 +24,7 @@ model:
   # hidden_dims set by architecture sweep
 
 data:
-  type: "BelgiumNetherlands"  # High boundary complexity from Phase 2C
+  type: "BaarleMap"  # High boundary complexity from Phase 2C
   resolution: 200
   boundary_width: 3
   
