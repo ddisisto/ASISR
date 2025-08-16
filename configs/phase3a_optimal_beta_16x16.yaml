@@ -5,6 +5,8 @@
 experiment:
   name: "phase3a_optimal_beta_16x16"
   description: "Validate capacity-adaptive scheduling maintains benefits for optimal-capacity 16x16 networks"
+  phase: "phase3a"
+  output_base: "phase3a"
   log_interval: 10
   seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
 

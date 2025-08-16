@@ -5,6 +5,8 @@
 experiment:
   name: "phase3b_cross_dataset_circles"
   description: "Capacity-adaptive scheduling validation on Circles medium-complexity dataset"
+  phase: "phase3b"
+  output_base: "phase3b"
   log_interval: 10
   seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
 

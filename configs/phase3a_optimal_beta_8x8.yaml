@@ -5,6 +5,8 @@
 experiment:
   name: "phase3a_optimal_beta_8x8"
   description: "Validate optimal β for 8x8 under-parameterized networks to eliminate negative effects"
+  phase: "phase3a"
+  output_base: "phase3a"
   log_interval: 10
   # 15 seeds for high-confidence validation of the critical 8x8 case
   seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066, 

@@ -5,6 +5,8 @@
 experiment:
   name: "phase3c_universal_validation" 
   description: "Comprehensive validation of capacity-adaptive scheduling across all datasets and architectures"
+  phase: "phase3c"
+  output_base: "phase3c"
   log_interval: 10
   seeds: [42, 123, 456, 789, 999, 2022, 3033, 4044, 5055, 6066]
 

@@ -183,6 +183,32 @@ class SPECTRAExperiment:
         self.data_loader = None
         self.criticality_monitor = CriticalityMonitor()
         
+        # Phase-aware output directory management
+        self.output_dir = self._determine_output_directory()
+    
+    def _determine_output_directory(self) -> Path:
+        """Determine output directory from configuration with phase-aware defaults."""
+        experiment_config = self.config.experiment
+        
+        # Priority 1: Explicit output_base in config
+        if 'output_base' in experiment_config:
+            output_base = experiment_config['output_base']
+        # Priority 2: Extract from phase field
+        elif 'phase' in experiment_config:
+            output_base = experiment_config['phase']
+        # Priority 3: Extract from experiment name (phase3a_something → phase3a)
+        elif experiment_config['name'].startswith('phase'):
+            name_parts = experiment_config['name'].split('_')
+            output_base = name_parts[0] if name_parts else 'unknown'
+        # Priority 4: Default fallback
+        else:
+            output_base = 'experiments'
+        
+        experiment_name = experiment_config['name']
+        base_plots_dir = Path("plots")
+        
+        return base_plots_dir / output_base / experiment_name
+        
     def _setup_data(self) -> Tuple[torch.Tensor, torch.Tensor]:
         """Setup data loading based on configuration."""
         data_config = self.config.data
