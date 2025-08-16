@@ -170,20 +170,27 @@ class Phase2BComparisonExperiment(BaseExperiment):
         output_dir = result.output_dir
         plot_paths = []
         
+        # Generate experiment-specific filename suffix
+        if result.comparison_results:
+            # Use the first comparison strategy name for filename
+            experiment_suffix = result.comparison_results[0].experiment_name
+        else:
+            experiment_suffix = "baseline"
+        
         # Set plotting style
         plt.style.use('seaborn-v0_8')
         sns.set_palette("Set2")
         
         # 1. Accuracy and Variance Comparison
         comparison_plot = self._generate_comparison_plot(result)
-        comparison_path = output_dir / "phase2b_comparison.png"
+        comparison_path = output_dir / f"phase2b_comparison_{experiment_suffix}.png"
         comparison_plot.savefig(comparison_path, dpi=300, bbox_inches='tight')
         plt.close(comparison_plot)
         plot_paths.append(comparison_path)
         
         # 2. Training Dynamics
         dynamics_plot = self._generate_dynamics_plot(result)
-        dynamics_path = output_dir / "phase2b_dynamics.png"
+        dynamics_path = output_dir / f"phase2b_dynamics_{experiment_suffix}.png"
         dynamics_plot.savefig(dynamics_path, dpi=300, bbox_inches='tight')
         plt.close(dynamics_plot)
         plot_paths.append(dynamics_path)

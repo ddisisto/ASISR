@@ -95,6 +95,69 @@ SPECTRA/
 
 **Testing Symmetry**: Test structure mirrors package structure for clear correspondence and comprehensive coverage.
 
+## Output File Management
+
+### **Standardized Plot and Result Organization**
+
+**Authority**: All experimental output must follow standardized naming and directory structure to prevent overwrites and enable systematic analysis.
+
+#### **Directory Structure**
+```
+plots/
+├── phase1/                           # Fixed phase directories
+├── phase2b/                          
+├── phase2c/
+├── phase2d/
+└── phase3/
+    ├── {experiment_name}/            # Experiment-specific subdirectories
+    │   ├── comparison_plots/
+    │   ├── dynamics_plots/
+    │   └── analysis_plots/
+    └── cross_experiment/             # Multi-experiment comparisons
+```
+
+#### **File Naming Convention**
+**Rule**: All plot files must include experiment identifier to prevent overwrites
+
+**Pattern**: `{plot_type}_{experiment_name}_{timestamp}.png`
+
+**Examples**:
+```
+phase2b_comparison_Linear-8x8_20241216.png
+phase2b_dynamics_Linear-16x16_20241216.png  
+phase2b_comparison_Linear-32x32_20241216.png
+```
+
+#### **Implementation Requirements**
+
+1. **BaseExperiment.get_output_dir()**: Creates experiment-specific directories
+2. **Plot generation**: Must use experiment_name in filename, never hardcode
+3. **Timestamp inclusion**: Optional for uniqueness during development
+4. **Cross-experiment plots**: Stored in `cross_experiment/` with descriptive names
+
+#### **Non-Compliant Patterns** ❌
+```python
+# WRONG: Hardcoded filenames that overwrite
+plot_path = output_dir / "phase2b_comparison.png"  
+plot_path = output_dir / "phase2b_dynamics.png"
+```
+
+#### **Compliant Patterns** ✅
+```python  
+# CORRECT: Experiment-specific filenames
+comparison_path = output_dir / f"phase2b_comparison_{experiment_name}.png"
+dynamics_path = output_dir / f"phase2b_dynamics_{experiment_name}.png"
+
+# BETTER: Timestamp for development iterations
+timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+comparison_path = output_dir / f"phase2b_comparison_{experiment_name}_{timestamp}.png"
+```
+
+#### **Result File Standards**
+- **Configuration snapshots**: Save exact config used for each experiment
+- **Statistical summaries**: JSON/CSV files with standardized metric names
+- **Raw data preservation**: Enable reanalysis without re-running experiments
+
 ## Core Interfaces
 
 ### **1. Model Interface**
