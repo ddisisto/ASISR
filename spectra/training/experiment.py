@@ -22,7 +22,9 @@ from ..regularization import (
     FixedSpectralRegularizer, 
     create_edge_of_chaos_regularizer,
     create_dynamic_regularizer,
-    DynamicSpectralRegularizer
+    DynamicSpectralRegularizer,
+    CapacityAdaptiveSpectralRegularizer,
+    create_capacity_adaptive_regularizer
 )
 from ..metrics import CriticalityMonitor
 
@@ -219,7 +221,7 @@ class SPECTRAExperiment:
             
         return model.to(self.device)
     
-    def _create_regularizer(self) -> Optional[Union[FixedSpectralRegularizer, DynamicSpectralRegularizer]]:
+    def _create_regularizer(self) -> Optional[Union[FixedSpectralRegularizer, DynamicSpectralRegularizer, CapacityAdaptiveSpectralRegularizer]]:
         """Create regularizer based on configuration."""
         reg_config = self.config.regularization
         
@@ -265,8 +267,44 @@ class SPECTRAExperiment:
             # Extract schedule type
             schedule_type = reg_config['type'].replace('_schedule', '')
             return create_dynamic_regularizer(schedule_type, **schedule_kwargs)
+        
+        elif reg_config['type'] == 'capacity_adaptive':
+            # Phase 3: Capacity-adaptive spectral regularization
+            # Note: Actual regularizer creation deferred until model is available
+            return 'capacity_adaptive_deferred'
         else:
             raise ValueError(f"Unsupported regularization type: {reg_config['type']}")
+    
+    def _create_capacity_adaptive_regularizer(self, model: nn.Module) -> CapacityAdaptiveSpectralRegularizer:
+        """Create capacity-adaptive regularizer with model parameters."""
+        reg_config = self.config.regularization
+        
+        # Calculate model parameters
+        from ..utils.capacity import count_model_parameters
+        model_params = count_model_parameters(model)
+        
+        # Determine dataset name for capacity calculation
+        data_config = self.config.data
+        if data_config['type'] == 'TwoMoons':
+            dataset_name = 'two_moons'
+        elif data_config['type'] == 'Circles':
+            dataset_name = 'circles'
+        elif data_config['type'] == 'BelgiumNetherlands':
+            dataset_name = 'belgium_netherlands'
+        else:
+            dataset_name = 'two_moons'  # Default fallback
+        
+        # Create capacity-adaptive regularizer
+        return create_capacity_adaptive_regularizer(
+            model_params=model_params,
+            dataset_name=dataset_name,
+            beta=reg_config.get('beta', -0.2),
+            sigma_base=reg_config.get('sigma_base', 2.5),
+            final_sigma=reg_config.get('final_sigma', 1.0),
+            total_epochs=self.config.training['epochs'],
+            regularization_strength=reg_config.get('strength', 0.1),
+            warmup_epochs=reg_config.get('warmup_epochs', 0)
+        )
     
     def _create_optimizer(self, model: nn.Module) -> optim.Optimizer:
         """Create optimizer based on configuration."""
@@ -297,6 +335,11 @@ class SPECTRAExperiment:
             coords, labels = self._setup_data()
             model = self._create_model()
             regularizer = self._create_regularizer()
+            
+            # Handle deferred capacity-adaptive regularizer creation
+            if regularizer == 'capacity_adaptive_deferred':
+                regularizer = self._create_capacity_adaptive_regularizer(model)
+            
             optimizer = self._create_optimizer(model)
             criterion = nn.BCEWithLogitsLoss()
             
