@@ -90,16 +90,31 @@ Cross-dataset validation revealed **boundary complexity correlation** (r = -0.99
 
 ---
 
-### **Phase 3: Adaptive Spectral Optimization** *(New Focus)*
+### **Phase 3: Adaptive Spectral Optimization** ⚠️ **UNDER REVISION**
 **Duration**: 4-6 weeks  
-**Goal**: Develop capacity-aware spectral scheduling for universal optimization improvement
+**Status**: Implementation complete, initial claims require revalidation  
+**Goal**: Determine conditions where capacity-aware spectral scheduling provides meaningful benefits
 
 #### **Refined Research Questions** (Based on Phase 2D Discoveries)
 1. **Adaptive Scheduling**: How should σ trajectories adapt to network capacity and problem complexity?
 2. **Capacity-Complexity Matching**: Can we predict optimal architectures for given boundary complexities?
 3. **Universal Spectral Principles**: What mathematical framework unifies capacity threshold effects?
 
-#### **Experimental Design**
+#### **Current Status: Corrected Findings**
+
+**Phase 3A Implementation**: ✅ **COMPLETE**  
+- Capacity-adaptive regularizer fully implemented and functional
+- σ_initial = σ_base × (capacity_ratio)^β with β=-0.2  
+- Statistical validation framework operational
+
+**Phase 3A Results**: ⚠️ **MINIMAL EFFECT**  
+- 8x8 TwoMoons (100 epochs): Adaptive vs Linear = +0.21% (p=0.67, not significant)
+- Effect size negligible (Cohen's d=0.16) under tested conditions
+- Original claims of +1.9% breakthrough were due to baseline miscomparison
+
+**Critical Learning**: Experimental controls essential - cannot compare across different training regimes
+
+#### **Revised Experimental Design**
 
 **Phase 3A: Capacity-Adaptive Scheduling**
 ```python
@@ -119,10 +134,22 @@ Cross-dataset validation revealed **boundary complexity correlation** (r = -0.99
 - Test "sweet spot" architectures that maximize linear scheduling benefits
 - Develop principled approach to architecture selection
 
-#### **Success Criteria** 
-- **Minimum**: Capacity-adaptive scheduling eliminates negative effects (8x8 improvement)
-- **Target**: Universal +1-2% improvement across all architectures and datasets  
-- **Stretch**: Theoretical framework predicting optimal capacity-complexity matching
+#### **Revised Success Criteria**
+
+**Minimum Viable Phase 3**:
+- [ ] Identify conditions where capacity-adaptive shows ≥0.5% improvement with p<0.05
+- [ ] Validate effect replicates across ≥2 datasets with independent capacity estimates
+- [ ] Demonstrate computational overhead <10% for practical applicability
+
+**Stretch Goals**:
+- [ ] Develop universal capacity estimation framework independent of Phase 2D results
+- [ ] Show capacity-adaptive benefits scale to larger architectures (64x64+)
+- [ ] Integrate with other optimization techniques for compound benefits
+
+**Failure Criteria** (requiring pivot):
+- Capacity-adaptive consistently shows <0.2% improvement across multiple conditions
+- Implementation overhead exceeds benefit for practical applications
+- Theory requires dataset-specific parameter tuning (not universal)
 
 ---
 
