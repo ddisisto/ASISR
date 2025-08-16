@@ -10,6 +10,12 @@ from .dynamic import (
     AdaptiveScheduleRegularizer,
     create_dynamic_regularizer
 )
+from .adaptive import (
+    CapacityAdaptiveSpectralRegularizer,
+    calculate_capacity_ratio,
+    create_capacity_adaptive_regularizer,
+    CriticalityAdaptiveRegularizer
+)
 
 __all__ = [
     'SpectralRegularizer',
@@ -20,5 +26,10 @@ __all__ = [
     'ExponentialScheduleRegularizer', 
     'StepScheduleRegularizer',
     'AdaptiveScheduleRegularizer',
-    'create_dynamic_regularizer'
+    'create_dynamic_regularizer',
+    # Phase 3: Capacity-Adaptive Regularization
+    'CapacityAdaptiveSpectralRegularizer',
+    'calculate_capacity_ratio', 
+    'create_capacity_adaptive_regularizer',
+    'CriticalityAdaptiveRegularizer'
 ]
