@@ -16,10 +16,10 @@
 
 ## Current Focus *(Update as project progresses)*
 
-**Active Phase**: Phase 2D ✅ **COMPLETE** - Capacity Threshold Discovery  
+**Active Phase**: Phase 3 🔄 **IN PROGRESS** - Adaptive Spectral Optimization  
 **Major Scientific Breakthrough**: **Capacity-dependent spectral scheduling** - Linear scheduling effectiveness depends on network capacity relative to problem complexity  
-**Next Milestone**: Phase 3 - Adaptive Spectral Optimization  
-**Status**: Breakthrough validated, capacity threshold discovered, ready for universal optimization framework
+**Current Goal**: Develop universal adaptive optimization framework eliminating negative effects while preserving benefits  
+**Status**: Implementing capacity-adaptive scheduling (σ_initial ∝ capacity_ratio^β) for +1-2% universal improvement
 
 **Phase 2D Achievements**:
 1. **Statistical Validation**: 20-seed replication confirms Phase 2B (+1.04%, p=0.032)
@@ -124,12 +124,12 @@ git status --porcelain
 **Phase Discipline**: Never mix implementation across phases. Complete current phase validation before proceeding.
 
 **Current Phase 3 Requirements**:
-- Implement scale-invariant learning rate scheduling: lr(t) = lr_base * |σ(t) - 1.0|^(-α)
-- Validate power-law scaling hypothesis across multiple α values
-- Study self-organized criticality: natural evolution toward σ ≈ 1.0
-- Develop criticality-aware optimizers (SpectralMomentum, CriticalAdam)
+- Implement CapacityAdaptiveSpectralRegularizer: σ_initial = σ_base * (capacity_ratio)^β
+- Validate β parameter optimization across architecture sizes (8x8 → 128x128)
+- Eliminate negative effects for under-parameterized networks (8x8 from -1.1% to ≥0%)
+- Achieve universal +1-2% improvement across all architectures and datasets
 
-**Validation Gate**: Phase 3 complete when scale-invariant optimization methods demonstrate 5-10% improvement over standard training through physics-principled approaches.
+**Validation Gate**: Phase 3 complete when capacity-adaptive scheduling demonstrates universal positive improvements and explains Phase 2C cross-dataset variance through capacity-complexity matching theory.
 
 ### **Architecture Compliance** *(CRITICAL)*
 
