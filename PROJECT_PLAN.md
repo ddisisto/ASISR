@@ -49,23 +49,39 @@ Recent research validates our direction:
 
 ---
 
-### **Phase 2C: Cross-Dataset Validation** *(Current Focus)*
-**Duration**: 1-2 weeks  
+### **Phase 2C: Cross-Dataset Validation** ✅ **COMPLETE**
+**Duration**: 1-2 weeks completed  
 **Goal**: Validate Phase 2B linear scheduling breakthrough generalizes across boundary complexities
 
-#### **Critical Research Gap**
-Phase 2B achieved statistically significant +1.1% improvement on TwoMoons dataset, but validation was limited to single synthetic dataset. Cross-dataset validation required before Phase 3 investment.
+#### **Key Discovery**
+Cross-dataset validation revealed **boundary complexity correlation** (r = -0.99):
+- **TwoMoons** (simple): +1.0% improvement  
+- **Circles** (intermediate): -0.2% decrease
+- **Belgium** (complex): -2.5% decrease
+
+**Result**: TwoMoons breakthrough does NOT generalize universally
+
+---
+
+### **Phase 2D: TwoMoons Breakthrough Validation** *(Current Focus)*
+**Duration**: 2-3 weeks  
+**Goal**: Determine if Phase 2B TwoMoons "breakthrough" was genuine discovery or statistical artifact
+
+#### **Critical Research Question**
+Phase 2B showed +1.0% improvement (p=0.0320) with only 5 seeds. Need high-powered validation to distinguish:
+- **Genuine optimization improvement** 
+- **Type I error (false positive)**
+- **Hyperparameter-specific artifact**
 
 #### **Experimental Design**
-**Dataset Validation Protocol**:
-- **Belgium-Netherlands**: Complex real-world boundary (highest complexity test)
-- **Circles**: Concentric circular boundaries (intermediate complexity)  
-- **TwoMoons**: Control baseline (simple complexity)
+**Phase 2D-1**: Statistical robustness (20-seed replication)  
+**Phase 2D-2**: Architecture sensitivity (32-32, 64-64, 128-128)  
+**Phase 2D-3**: Hyperparameter interactions (LR, optimizer, batch size)
 
 **Success Criteria**:
-- ✅ **Universal**: Linear schedule improves all datasets → confident Phase 3 progression
-- ⚠️ **Mixed**: Some datasets work → boundary-specific optimization approach  
-- ❌ **TwoMoons-only**: No generalization → major research direction reassessment
+- ✅ **Confirmed Breakthrough**: 20-seed p < 0.01, consistent across architectures
+- ⚠️ **Conditional Effect**: Specific to certain model/hyperparameter combinations  
+- ❌ **Statistical Artifact**: 20-seed p > 0.05, inconsistent effects
 
 ---
 
