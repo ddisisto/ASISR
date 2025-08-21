@@ -35,7 +35,7 @@ def main():
         ],
         regularization_configs=[
             {"type": "none"},       # Baseline
-            {"type": "linear", "initial": 2.5, "final": 1.0, "strength": 0.1}  # Phase 2B method
+            {"type": "linear_schedule", "initial_sigma": 2.5, "final_sigma": 1.0, "strength": 0.1}  # Phase 2B method
         ],
         n_seeds=3,  # Minimal for speed
         device="auto"

@@ -70,8 +70,8 @@ class Phase4AExperimentConfig:
         if self.regularization_configs is None:
             self.regularization_configs = [
                 {"type": "none"},  # Baseline
-                {"type": "linear", "initial": 2.5, "final": 1.0, "strength": 0.1},  # Phase 2 validated
-                {"type": "adaptive", "beta": -0.2, "strength": 0.1}  # Phase 3 implementation
+                {"type": "linear_schedule", "initial_sigma": 2.5, "final_sigma": 1.0, "strength": 0.1},  # Phase 2B validated
+                {"type": "capacity_adaptive", "beta": -0.2, "strength": 0.1}  # Phase 3 implementation
             ]
 
 
@@ -357,16 +357,10 @@ class Phase4AExperiment(BaseExperiment):
         tested_conditions = set()
         for baseline in baseline_results:
             if "error" not in baseline:
-                condition_key = (
-                    baseline["architecture"], 
-                    tuple(baseline["regularization_config"]['type'] == 'none'),  # placeholder
-                    baseline["dataset"],
-                    baseline["training_config"]["epochs"]
-                )
                 tested_conditions.add((
                     baseline["architecture"],
                     baseline["dataset"], 
-                    baseline["training_config"]
+                    tuple(sorted(baseline["training_config"].items()))  # Convert dict to hashable tuple
                 ))
         
         # Run spectral regularization on same conditions
@@ -375,9 +369,12 @@ class Phase4AExperiment(BaseExperiment):
             if reg_config["type"] != "none"
         ]
         
-        for arch_name, dataset, training_config in tested_conditions:
+        for arch_name, dataset, training_config_tuple in tested_conditions:
             # Get architecture dimensions
             arch_dims = dict(self.config.architectures)[arch_name]
+            
+            # Convert training config tuple back to dict
+            training_config = dict(training_config_tuple)
             
             for reg_config in spectral_reg_configs:
                 result = self.run_single_condition(
