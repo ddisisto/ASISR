@@ -1,0 +1,144 @@
+{
+  "config": {
+    "architectures": [
+      [
+        "8x8",
+        [
+          8,
+          8
+        ]
+      ]
+    ],
+    "datasets": [
+      "TwoMoons"
+    ],
+    "training_configs": [
+      {
+        "epochs": 30,
+        "learning_rate": 0.01,
+        "optimizer": "adam"
+      }
+    ],
+    "regularization_configs": [
+      {
+        "type": "none"
+      },
+      {
+        "type": "linear_schedule",
+        "initial_sigma": 2.5,
+        "final_sigma": 1.0,
+        "strength": 0.1
+      }
+    ],
+    "n_seeds": 2,
+    "device": "cuda"
+  },
+  "results_db": [
+    {
+      "condition_name": "8x8_TwoMoons_none",
+      "architecture": "8x8",
+      "dataset": "TwoMoons",
+      "training_config": {
+        "epochs": 30,
+        "learning_rate": 0.01,
+        "optimizer": "adam"
+      },
+      "regularization_config": {
+        "type": "none"
+      },
+      "n_valid_seeds": 2,
+      "accuracy_mean": 0.8580000400543213,
+      "accuracy_std": 0.03394110998691403,
+      "accuracy_min": 0.8340000510215759,
+      "accuracy_max": 0.8820000290870667,
+      "total_execution_time": 7.2037670612335205,
+      "seed_results": [
+        {
+          "seed": 0,
+          "execution_time": 3.482910633087158,
+          "final_accuracy": 0.8820000290870667,
+          "final_loss": Infinity,
+          "final_criticality": 0.2388362237445575
+        },
+        {
+          "seed": 1,
+          "execution_time": 3.7208564281463623,
+          "final_accuracy": 0.8340000510215759,
+          "final_loss": Infinity,
+          "final_criticality": 0.2341003787512128
+        }
+      ]
+    },
+    {
+      "condition_name": "8x8_TwoMoons_linear_schedule",
+      "architecture": "8x8",
+      "dataset": "TwoMoons",
+      "training_config": {
+        "epochs": 30,
+        "learning_rate": 0.01,
+        "optimizer": "adam"
+      },
+      "regularization_config": {
+        "type": "linear_schedule",
+        "initial_sigma": 2.5,
+        "final_sigma": 1.0,
+        "strength": 0.1
+      },
+      "n_valid_seeds": 2,
+      "accuracy_mean": 0.858500063419342,
+      "accuracy_std": 0.06151829872977412,
+      "accuracy_min": 0.815000057220459,
+      "accuracy_max": 0.9020000696182251,
+      "total_execution_time": 7.809741735458374,
+      "seed_results": [
+        {
+          "seed": 0,
+          "execution_time": 3.8867027759552,
+          "final_accuracy": 0.9020000696182251,
+          "final_loss": Infinity,
+          "final_criticality": 0.3031165287885882
+        },
+        {
+          "seed": 1,
+          "execution_time": 3.923038959503174,
+          "final_accuracy": 0.815000057220459,
+          "final_loss": Infinity,
+          "final_criticality": 0.28576835115690924
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "total_experiments": 2,
+    "successful_experiments": 2,
+    "comparisons": [
+      {
+        "condition": "8x8_TwoMoons_30ep",
+        "regularization_type": "linear_schedule",
+        "baseline_accuracy": 0.8580000400543213,
+        "spectral_accuracy": 0.858500063419342,
+        "improvement_absolute": 0.000500023365020752,
+        "improvement_relative": 0.000582777787503477,
+        "effect_size": 0.010064581580742872,
+        "potentially_significant": "False",
+        "practically_meaningful": "False"
+      }
+    ],
+    "summary_statistics": {
+      "mean_relative_improvement": 0.000582777787503477,
+      "std_relative_improvement": 0.0,
+      "max_improvement": 0.000582777787503477,
+      "min_improvement": 0.000582777787503477,
+      "n_positive_effects": 1,
+      "n_meaningful_effects": 0,
+      "fraction_positive": 1.0
+    },
+    "recommendations": {
+      "decision": "PIVOT",
+      "rationale": "No meaningful improvements found - spectral regularization hurts performance",
+      "next_steps": "Document negative results and consider alternative approaches"
+    },
+    "total_execution_time": 15.024442434310913
+  },
+  "timestamp": "2025-08-21 14:52:31"
+}

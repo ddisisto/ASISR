@@ -446,12 +446,12 @@ class Phase4AExperiment(BaseExperiment):
                     "improvement_relative": relative_improvement,
                     "effect_size": effect_size,
                     "potentially_significant": abs(effect_size) > 0.5,  # Rough threshold
-                    "practically_meaningful": abs(relative_improvement) > 0.01  # >1% improvement
+                    "practically_meaningful": relative_improvement > 0.01  # >1% IMPROVEMENT (not just change)
                 }
                 
                 analysis["comparisons"].append(comparison)
                 
-                if comparison["practically_meaningful"] and comparison["potentially_significant"]:
+                if comparison["practically_meaningful"] and comparison["improvement_relative"] > 0:
                     significant_improvements.append(comparison)
         
         # Summary statistics
@@ -480,8 +480,8 @@ class Phase4AExperiment(BaseExperiment):
             analysis["recommendations"]["next_steps"] = "Focus on promising condition with more seeds"
         else:
             analysis["recommendations"]["decision"] = "PIVOT"
-            analysis["recommendations"]["rationale"] = "No meaningful improvements found in strategic sample"
-            analysis["recommendations"]["next_steps"] = "Consider alternative research directions"
+            analysis["recommendations"]["rationale"] = "No meaningful improvements found - spectral regularization hurts performance"
+            analysis["recommendations"]["next_steps"] = "Document negative results and consider alternative approaches"
         
         return analysis
     

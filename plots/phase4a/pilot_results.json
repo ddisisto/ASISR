@@ -1,0 +1,43 @@
+{
+  "total_experiments": 4,
+  "successful_experiments": 4,
+  "comparisons": [
+    {
+      "condition": "32x32_TwoMoons_50ep",
+      "regularization_type": "linear_schedule",
+      "baseline_accuracy": 0.9813333749771118,
+      "spectral_accuracy": 0.8980000416437784,
+      "improvement_absolute": -0.08333333333333337,
+      "improvement_relative": -0.08491847465727638,
+      "effect_size": -4.237893589900182,
+      "potentially_significant": "True",
+      "practically_meaningful": "True"
+    },
+    {
+      "condition": "8x8_TwoMoons_50ep",
+      "regularization_type": "linear_schedule",
+      "baseline_accuracy": 0.8810000419616699,
+      "spectral_accuracy": 0.8576667110125223,
+      "improvement_absolute": -0.02333333094914758,
+      "improvement_relative": -0.026485050894200474,
+      "effect_size": -1.0011747856255193,
+      "potentially_significant": "True",
+      "practically_meaningful": "True"
+    }
+  ],
+  "summary_statistics": {
+    "mean_relative_improvement": -0.05570176277573843,
+    "std_relative_improvement": 0.029216711881537953,
+    "max_improvement": -0.026485050894200474,
+    "min_improvement": -0.08491847465727638,
+    "n_positive_effects": 0,
+    "n_meaningful_effects": 2,
+    "fraction_positive": 0.0
+  },
+  "recommendations": {
+    "decision": "CONTINUE",
+    "rationale": "Found 2 conditions with >1% improvements",
+    "next_steps": "Expand to full systematic sweep"
+  },
+  "total_execution_time": 73.53448724746704
+}
