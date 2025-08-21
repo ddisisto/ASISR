@@ -328,20 +328,14 @@ class Phase4AExperiment(BaseExperiment):
         baseline_results = []
         baseline_reg_config = {"type": "none"}
         
-        # Run baselines for strategic subset first
-        strategic_conditions = [
-            ("8x8", [8, 8], "TwoMoons"),      # Known baseline
-            ("32x32", [32, 32], "TwoMoons"),  # Scale-up test
-            ("8x8", [8, 8], "Circles"),       # Complexity test
-            ("32x32", [32, 32], "MNIST")      # Realistic scale
-        ]
-        
-        for arch_name, arch_dims, dataset in strategic_conditions:
-            for training_config in self.config.training_configs:
-                result = self.run_single_condition(
-                    arch_name, arch_dims, dataset, training_config, baseline_reg_config
-                )
-                baseline_results.append(result)
+        # Run baselines for all configured conditions
+        for arch_name, arch_dims in self.config.architectures:
+            for dataset in self.config.datasets:
+                for training_config in self.config.training_configs:
+                    result = self.run_single_condition(
+                        arch_name, arch_dims, dataset, training_config, baseline_reg_config
+                    )
+                    baseline_results.append(result)
         
         return baseline_results
     
