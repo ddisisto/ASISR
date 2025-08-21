@@ -140,12 +140,18 @@ Cross-dataset validation revealed **boundary complexity correlation** (r = -0.99
 
 ---
 
-## **Phase 4: Practical Applications and Realistic Scope** 🎯 **NEXT FOCUS**
+## **Phase 4: Systematic Conditions Discovery** 🎯 **CURRENT FOCUS**
 
-### **Immediate Technical Needs**
-- [ ] **CUDA Fix**: Enable larger networks and longer training for meaningful effect detection
-- [ ] **Computational Scaling**: Profile overhead vs benefits at practical scales
-- [ ] **Condition Identification**: Find scenarios where spectral regularization provides >1% improvements
+### **Research Philosophy: Systematic Falsification** 
+**Null Hypothesis**: Spectral regularization provides no practically meaningful benefits (>1%) under rigorous testing  
+**Approach**: Design experiments that give spectral regularization every reasonable chance to succeed  
+**Expected Outcome (80%)**: Accept null hypothesis and document systematic evaluation
+
+### **Phase 4A: Conditions Discovery** ⏳ **ACTIVE** (4 weeks)
+- [x] **CUDA Capability**: GTX 1070, 8.5GB VRAM, networks up to 25k parameters ✅
+- [ ] **Systematic Parameter Sweep**: Architecture sizes, training regimes, datasets, hyperparameters
+- [ ] **Statistical Power**: 10+ seeds minimum, effect detection threshold ~0.5%  
+- [ ] **Comprehensive Documentation**: Map conditions where effects >1% emerge (if any)
 
 ### **Realistic Research Directions**
 #### **High-Value, Achievable Goals**:

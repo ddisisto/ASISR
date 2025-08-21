@@ -16,7 +16,7 @@ from scipy import stats
 
 from ..utils.config import SPECTRAConfig
 from ..utils.seed import SeedManager, set_seed
-from ..data import BaarleMapLoader, create_synthetic_loader
+from ..data import BaarleMapLoader, create_synthetic_loader, create_real_dataset_loader
 from ..models import SpectralMLP, create_boundary_mlp
 from ..regularization import (
     FixedSpectralRegularizer, 
@@ -230,10 +230,18 @@ class SPECTRAExperiment:
             coords, labels = synthetic_loader.load_data()
             
             return coords.to(self.device), labels.to(self.device)
+        
+        elif data_type in ['MNIST', 'FashionMNIST', 'CIFAR10']:
+            # Real dataset loading
+            loader_kwargs = {k: v for k, v in data_config.items() if k != 'type'}
+            real_loader = create_real_dataset_loader(data_type, **loader_kwargs)
+            features, labels = real_loader.load_data()
+            
+            return features.to(self.device), labels.to(self.device)
             
         else:
             raise ValueError(f"Unsupported data type: {data_type}. "
-                           f"Supported: BaarleMap, TwoMoons, Circles, Checkerboard")
+                           f"Supported: BaarleMap, TwoMoons, Circles, Checkerboard, MNIST, FashionMNIST, CIFAR10")
     
     def _create_model(self) -> SpectralMLP:
         """Create model based on configuration."""

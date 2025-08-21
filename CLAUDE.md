@@ -16,10 +16,10 @@
 
 ## Current Focus *(Update as project progresses)*
 
-**Active Phase**: Phase 3 ✅ **COMPLETE** - Lessons Learned & Reality Check  
-**Major Discovery**: **Experimental control errors in initial claims** - Proper baselines show minimal effect sizes (~0.2%)  
-**Current Goal**: Fix CUDA compatibility, identify conditions where spectral regularization provides meaningful benefits  
-**Status**: Implementation functional, theory partially validated, effect sizes much smaller than claimed
+**Active Phase**: Phase 4A ⏳ **CONDITIONS DISCOVERY** - Systematic Falsification Approach  
+**Research Philosophy**: Design experiments that give spectral regularization every reasonable chance to succeed  
+**Current Goal**: GPU-enabled systematic parameter sweep to identify conditions with >1% improvements  
+**Status**: CUDA operational (GTX 1070), comprehensive experimental framework ready, honest null hypothesis testing
 
 **Phase 3 Critical Learnings**:
 1. **Implementation Success**: Capacity-adaptive regularizer works correctly, framework is robust
